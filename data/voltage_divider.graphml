@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d11" for="edge" attr.name="delta_rho" attr.type="long" />
+  <key id="d10" for="edge" attr.name="pressure" attr.type="long" />
+  <key id="d9" for="edge" attr.name="rbrt" attr.type="long" />
+  <key id="d8" for="edge" attr.name="length" attr.type="long" />
+  <key id="d7" for="edge" attr.name="conductance" attr.type="double" />
+  <key id="d6" for="edge" attr.name="resistance" attr.type="long" />
+  <key id="d5" for="node" attr.name="desired" attr.type="long" />
+  <key id="d4" for="node" attr.name="voltage" attr.type="long" />
+  <key id="d3" for="node" attr.name="pressure" attr.type="long" />
+  <key id="d2" for="node" attr.name="rho" attr.type="double" />
+  <key id="d1" for="node" attr.name="color" attr.type="string" />
+  <key id="d0" for="node" attr.name="type" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="0">
+      <data key="d0">source</data>
+      <data key="d1">forestgreen</data>
+      <data key="d2">0.2</data>
+      <data key="d3">0</data>
+      <data key="d4">5</data>
+    </node>
+    <node id="1">
+      <data key="d0">target</data>
+      <data key="d1">blueviolet</data>
+      <data key="d2">0.2</data>
+      <data key="d3">0</data>
+      <data key="d5">4</data>
+    </node>
+    <node id="2">
+      <data key="d0">source</data>
+      <data key="d1">forestgreen</data>
+      <data key="d2">0.2</data>
+      <data key="d3">0</data>
+      <data key="d4">0</data>
+    </node>
+    <edge source="0" target="1">
+      <data key="d6">50</data>
+      <data key="d7">0.02</data>
+      <data key="d8">10</data>
+      <data key="d9">4</data>
+      <data key="d10">0</data>
+      <data key="d11">0</data>
+    </edge>
+    <edge source="1" target="2">
+      <data key="d6">50</data>
+      <data key="d7">0.02</data>
+      <data key="d8">10</data>
+      <data key="d9">4</data>
+      <data key="d10">0</data>
+      <data key="d11">0</data>
+    </edge>
+  </graph>
+</graphml>
