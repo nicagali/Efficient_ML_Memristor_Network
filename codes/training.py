@@ -13,7 +13,6 @@ def write_weights_to_file(G, step, weight_type, path_patch):
     
     for index, edge in enumerate(G.edges()): 
         if weight_type=='length' or weight_type=='rbrt':
-            print(G.edges[edge][weight_type])
             file.write(f"{index}\t{G.edges[edge][weight_type]}\n")
     for node in G.nodes():
         if weight_type=='pressure' or weight_type=='rho':  
@@ -110,15 +109,9 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
                 
             gradients.append((new_error - base_error)/denominator)
 
-            # print((new_error - base_error), denominator)
-        
         for node in G.nodes():
 
             G.nodes[node][f'{weight_type}'] -= learning_rate*gradients[int(node)]
-            # print(G.nodes[node][f'{weight_type}'])
-
-            # print(learning_rate, gradients[int(node)], learning_rate*gradients[int(node)])
-             
     else:
 
         for index, edge in enumerate(G.edges()):
@@ -134,13 +127,10 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
                 denominator = delta_weight
             
             gradients.append((new_error - base_error)/delta_weight)
-            # print((new_error - base_error), delta_weight)
-
             
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
             G.edges[edge][f'{weight_type}'] -= learning_rate*gradients[index]
-            # print(learning_rate, gradients[index],learning_rate*gradients[index])
 
         
     return G

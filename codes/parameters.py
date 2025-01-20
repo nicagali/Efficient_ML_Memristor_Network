@@ -18,6 +18,7 @@ color_font_edges = 'white'
 # --------- PLOTS STYLES ---------
 
 figsize_2horizontal = (11,5)
+figsize_3horizontal = (13,5)
 figsize_1 = (4.4,4)
 
 legend_size = 15
@@ -27,7 +28,7 @@ marker_size = 10
 
 
 mse_styles = {
-    'allostery_length': dict(c = "mediumpurple", lw=3, label = rf'$L$'),
+    'allostery_length': dict(c = "green", lw=3, label = rf'$L$'),
     'allostery_rho': dict(c = "plum", lw=3, label = rf'$\rho$'),
     'allostery_rbrt': dict(c = "darkgray", lw=3, label = rf'$R_b/R_t$'),
     'allostery_pressure': dict(c = 'mediumpurple', lw=3, label = rf'$P$')
