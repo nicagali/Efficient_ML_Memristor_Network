@@ -32,10 +32,6 @@ mse_styles = {
     'allostery_rho': dict(c = "plum", lw=3, label = rf'$\rho$'),
     'allostery_rbrt': dict(c = "darkgray", lw=3, label = rf'$R_b/R_t$'),
     'allostery_pressure': dict(c = 'mediumpurple', lw=3, label = rf'$P$'),
-    # 'allostery_pressure_1e-6': dict(c = 'blue', lw=3, label = rf'$\Delta w = 10^{-6}$'),
-    # 'allostery_pressure_1e-4': dict(c = 'green', lw=3, label = rf'$\Delta w = 10^{-4}$'),
-    # 'allostery_pressure_1e-3': dict(c = 'red', lw=3, label = rf'$\Delta w = 10^{-3}$'),
-    # 'allostery_pressure_1e-2': dict(c = 'black', lw=3, label = rf'$\Delta w = 10^{-2}$')
 }
 
 
