@@ -1,17 +1,17 @@
 # Fdb version 3
-["bibtex paper"] 1737371005 "paper.aux" "paper.bbl" "paper" 1737371007
+["bibtex paper"] 1737371005 "paper.aux" "paper.bbl" "paper" 1737627969
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
   "biblio.bib" 1737037276 1741 bd880a73a84c23486f812a32a5715236 ""
-  "paper.aux" 1737371006 8386 c7f5641559bdf15acb499d29f5a6b3f7 "xelatex"
-  "paperNotes.bib" 1737371006 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
+  "paper.aux" 1737627969 8386 c7f5641559bdf15acb499d29f5a6b3f7 "xelatex"
+  "paperNotes.bib" 1737627969 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
   (generated)
   "paper.bbl"
   "paper.blg"
-["xdvipdfmx"] 1737371006 "paper.xdv" "paper.pdf" "paper" 1737371007
-  "paper.xdv" 1737371006 176880 c8a089071584cb8ee01ba10bc28d4d1f "xelatex"
+["xdvipdfmx"] 1737627969 "paper.xdv" "paper.pdf" "paper" 1737627969
+  "paper.xdv" 1737627969 176880 9b3cc5158519fc815a13499d57f563f6 "xelatex"
   (generated)
   "paper.pdf"
-["xelatex"] 1737371006 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1737371007
+["xelatex"] 1737627968 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1737627969
   "/etc/texmf/web2c/texmf.cnf" 1697810815 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1737371004 22688 5e8dd068f3603b13d64465b2d8fdda6c ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -202,19 +202,19 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1729165427 5133632 6da276505c61ffff742236c11e5db81e ""
-  "paper.aux" 1737371006 8386 c7f5641559bdf15acb499d29f5a6b3f7 "xelatex"
+  "paper.aux" 1737627969 8386 c7f5641559bdf15acb499d29f5a6b3f7 "xelatex"
   "paper.bbl" 1737371006 851 c8f8ab31b3b059908cf39e27f7870547 "bibtex paper"
-  "paper.out" 1737371006 1479 a4a36edc4348982c027cfd7ccb24375d "xelatex"
+  "paper.out" 1737627969 1479 a4a36edc4348982c027cfd7ccb24375d "xelatex"
   "paper.tex" 1737371004 22688 5e8dd068f3603b13d64465b2d8fdda6c ""
   "plots/memristor/memristor_network.pdf" 1737037276 55427 88e76c41eca0a3201ee3488c32d62e7c ""
   "plots/memristor/memristor_scheme.pdf" 1737037276 133755 ed59a9f1372df888253042382644dbf4 ""
   "plots/training/training_scheme.pdf" 1737037276 151872 1a6c7580134401316befe6c019253d3d ""
   "plots/training/two_types_weights.pdf" 1737037276 65085 a8a9cf30f257289908a84292cf19d22a ""
-  "plots/voltage_divider/evolution_finalnw.pdf" 1737370969 10937 b3e71ea1ec7c39ab28cd7439646378d2 ""
-  "plots/voltage_divider/mse_others.pdf" 1737370969 13271 5d667291b97f64301def28736ce24047 ""
-  "plots/voltage_divider/mse_weights.pdf" 1737370969 13626 deb2e9ac316b4bf906b2fc00de5b2299 ""
+  "plots/voltage_divider/evolution_finalnw.pdf" 1737626763 10937 b1e6b0b60be47dfab7823d77acc51449 ""
+  "plots/voltage_divider/mse_others.pdf" 1737626763 13271 5ce445746e7869ff429c16718cb4dab0 ""
+  "plots/voltage_divider/mse_weights.pdf" 1737627968 10619 1088e93006170431940579c601666584 ""
   "plots/voltage_divider/vd_scheme.pdf" 1737037276 42398 3d2bbbcb96e00226623d6a2b17536cc0 ""
-  "plots/voltage_divider/weights_others.pdf" 1737370970 15828 5a8d673626c3cfcd8724699aabe1fc9b ""
+  "plots/voltage_divider/weights_others.pdf" 1737626764 15828 dca41195616cb746681a6a3ae4835101 ""
   (generated)
   "paper.aux"
   "paper.log"

@@ -24,7 +24,7 @@ fig.savefig(f"../plots/voltage_divider/graph.pdf")
 training_steps = 20
 
 G_ml = G.copy(as_view=False)  
-training.train(G_ml, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-5, learning_rate=100)
+training.train(G_ml, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
 
 # --------- PLOT ERROR AND WEIGHTS WITH PRESSURE ---------
 

@@ -28,7 +28,7 @@ marker_size = 10
 
 
 mse_styles = {
-    'allostery_length': dict(c = "green", lw=3, label = rf'$L$'),
+    'allostery_length': dict(c = "mediumpurple", lw=3, label = rf'$L$'),
     'allostery_rho': dict(c = "plum", lw=3, label = rf'$\rho$'),
     'allostery_rbrt': dict(c = "darkgray", lw=3, label = rf'$R_b/R_t$'),
     'allostery_pressure': dict(c = 'mediumpurple', lw=3, label = rf'$P$')

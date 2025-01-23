@@ -46,7 +46,8 @@ def plot_mse(ax, fig, rule):
     y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{rule}.txt", unpack=True)
     x = range(0,len(y))
 
-    ax.semilogy(x, y, **par.mse_styles[f'{rule}'])     
+    # ax.semilogy(x, y, **par.mse_styles[f'{rule}'])     
+    ax.semilogy(x, y, )     
     
     # ax.legend(fontsize = par.legend_size)
     ax.set_ylabel(r'Error', fontsize = par.axis_fontsize)
