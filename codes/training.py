@@ -125,8 +125,8 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
                 denominator = delta_weight*1e-6
             else:
                 denominator = delta_weight
-            
-            gradients.append((new_error - base_error)/delta_weight)
+
+            gradients.append((new_error - base_error)/denominator)
             
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
@@ -165,8 +165,8 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
         error = cost_function(G, potential_drops_file, update_initial_res=False)
-
-        print('Step:', step+1, error)
+        if step==(range(training_steps)[-1]):
+            print('Step:', step+1, error)
         mse_file.write(f"{error/error_normalization}\n")
 
     mse_file.close()
