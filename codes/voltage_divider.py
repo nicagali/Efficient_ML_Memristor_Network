@@ -21,10 +21,11 @@ fig.savefig(f"../plots/voltage_divider/graph.pdf")
 
 # --------- TRAIN NETWORK WITH PRESSURE ---------
 
-training_steps = 20
+training_steps = 30
 
 G_ml = G.copy(as_view=False)  
 training.train(G_ml, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
+
 
 # --------- PLOT ERROR AND WEIGHTS WITH PRESSURE ---------
 
@@ -44,11 +45,11 @@ fig.savefig(f"../paper/plots/voltage_divider/evolution_finalnw.pdf")
 # --------- PLOT ERROR AND WEIGHTS WITH OTHER WEIGHTS ---------
 
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=10)
-G_ml = G.copy(as_view=False)  
+training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-2, learning_rate=10)
+# G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=2)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='rho', delta_weight = 1e-5, learning_rate=1e-3)
+# training.train(G_ml, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
 
 fig, ax = plt.subplots(figsize = par.figsize_1)
 plotting.plot_mse(ax, fig, f'allostery_length')

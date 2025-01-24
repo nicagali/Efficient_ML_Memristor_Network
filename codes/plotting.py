@@ -44,19 +44,9 @@ def plot_graph(name_graph):
 def plot_mse(ax, fig, rule):
     
     y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{rule}.txt", unpack=True)
-    precision_check = y[1]
-    y = y[0]
-    print(y)
     x = range(0,len(y))
 
-    for index in x:
-        if precision_check[index]==3:
-            xprecision_check = index
-            yprecision_check = y[index]
-            break
-
     ax.semilogy(x, y, **par.mse_styles[f'{rule}'])   
-    ax.scatter(xprecision_check, yprecision_check)  
     
     # ax.legend(fontsize = par.legend_size)
     ax.set_ylabel(r'Error', fontsize = par.axis_fontsize)

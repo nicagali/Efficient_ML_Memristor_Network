@@ -48,18 +48,6 @@ def voltage_drop_element(circuit, result, element):
 
     return voltage_drop
 
-def check_precision_weights(G_old, G_new, delta_weight):
-    precision_check = 0
-    for node in G_old.nodes():
-
-        print(G_old.nodes[node]['pressure'], G_new.nodes[node]['pressure'], G_old.nodes[node]['pressure'] - G_new.nodes[node]['pressure'])
-
-        if G_old.nodes[node]['pressure'] - G_new.nodes[node]['pressure'] < delta_weight:
-
-            precision_check += 1
-
-    return precision_check
-
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -111,8 +99,6 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
 
             G_increment = G.copy(as_view=False)
             
-            print(G_increment.nodes[node][f'{weight_type}'])
-
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
 
             new_error = cost_function(G_increment)
@@ -166,7 +152,7 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     error = cost_function(G, potential_drops_file, update_initial_res=False)    #compute initial error
     error_normalization = error #define it as normalization error
 
-    mse_file.write(f"{error/error_normalization}\t 0 \n")
+    mse_file.write(f"{error/error_normalization}\n")
 
     print('Step:', 0, error)
     
@@ -178,16 +164,13 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
         update_weights(G, error, weight_type, delta_weight, learning_rate)
 
         # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
-
-        precision_check = check_precision_weights(G_old, G, delta_weight)
-        print(precision_check)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
         error = cost_function(G, potential_drops_file, update_initial_res=False)
 
         print('Step:', step+1, error)
-        mse_file.write(f"{error/error_normalization}\t {precision_check}\n")
+        mse_file.write(f"{error/error_normalization}\n")
 
     mse_file.close()
     potential_drops_file.close()
