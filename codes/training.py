@@ -127,6 +127,8 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
             else:
                 denominator = delta_weight
 
+            # print(new_error- base_error)
+
             gradients.append((new_error - base_error)/denominator)
             
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet

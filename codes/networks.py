@@ -15,7 +15,7 @@ def initialize_nodes(G, voltage_input, voltage_desired):
 
     # Initialize every node with the same values of pressure = initial_pressure and rho = initial_rho
     initial_rho = 0.2
-    initial_pressure = 0
+    initial_pressure = 1
 
     index_sources=0
     index_desired=0
