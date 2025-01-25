@@ -19,6 +19,7 @@ color_font_edges = 'white'
 
 figsize_2horizontal = (11,5)
 figsize_3horizontal = (13,5)
+figsize_4horizontal = (13,5)
 figsize_1 = (4.4,4)
 
 legend_size = 15
@@ -26,12 +27,17 @@ axis_fontsize = 19
 size_ticks = 20
 marker_size = 10
 
+# -> MSE style
+
+from pypalettes import load_cmap
+cmap = load_cmap("facelift")
+# cmap = load_cmap("Andri")
 
 mse_styles = {
-    'allostery_length': dict(c = "mediumpurple", lw=3, label = rf'$L$'),
-    'allostery_rho': dict(c = "plum", lw=3, label = rf'$\rho$'),
-    'allostery_rbrt': dict(c = "darkgray", lw=3, label = rf'$R_b/R_t$'),
-    'allostery_pressure': dict(c = 'mediumpurple', lw=3, label = rf'$P$'),
+    'allostery_length': dict(c = cmap.colors[0], lw=3, label = rf'$L$'),
+    'allostery_rho': dict(c = cmap.colors[1], lw=3, label = rf'$\rho$'),
+    'allostery_rbrt': dict(c = cmap.colors[2], lw=3, label = rf'$R_b/R_t$'),
+    'allostery_pressure': dict(c = cmap.colors[3], lw=3, label = rf'$P$'),
 }
 
 
