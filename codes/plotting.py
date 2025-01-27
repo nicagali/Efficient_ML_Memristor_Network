@@ -57,9 +57,13 @@ def plot_graph(name_graph):
 
     return  
 
-def plot_mse(ax, fig, rule, show_xlabel=True):
+def plot_mse(ax, fig, rule, show_xlabel=True, saved_graph=None):
     
-    y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{rule}.txt", unpack=True)
+    if saved_graph==None:
+        y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{rule}.txt", unpack=True)
+    else:
+        y = np.loadtxt(f"{par.DATA_PATH}mse/{saved_graph}/mse_{rule}.txt", unpack=True)
+
     x = range(0,len(y))
 
     style = par.mse_styles[f'{rule}']
