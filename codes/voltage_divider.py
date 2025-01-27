@@ -27,7 +27,7 @@ training_steps = 50
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=3e-6)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1.5)
+# training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1)
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=4e-4)
 G_pressure = G.copy(as_view=False)  
@@ -42,47 +42,27 @@ G_pressure = G.copy(as_view=False)
 
 # --------- PLOT ERROR AND WEIGHTS WITH OTHER WEIGHTS ---------
 
-
-# fig, ax = plt.subplots(figsize = par.figsize_1)
-# plotting.plot_mse(ax, fig, f'allostery_length')
-# plotting.plot_mse(ax, fig, f'allostery_rbrt')
-# plotting.plot_mse(ax, fig, f'allostery_rho')
-# plotting.plot_mse(ax, fig, f'allostery_pressure')
-# ax.legend()
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/voltage_divider/mse_others.pdf")
-
-# fig, ax = plt.subplots(1, 4, figsize = par.figsize_4horizontal)
-# plotting.plot_weights(ax[0], G, training_steps=training_steps, training_job='allostery', weight_type='length')
-# plotting.plot_weights(ax[1], G, training_steps=training_steps, training_job='allostery', weight_type='rbrt')
-# plotting.plot_weights(ax[2], G, training_steps=training_steps, training_job='allostery', weight_type='rho')
-# plotting.plot_weights(ax[2], G, training_steps=training_steps, training_job='allostery', weight_type='pressure')
-# # ax.legend()
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
-
-
 fig = plt.figure(figsize=(12, 8))
 gs = gridspec.GridSpec(2, 3, height_ratios=[1, 1])
 
 ax1 = fig.add_subplot(gs[0, 0:2]) 
-plotting.plot_mse(ax1, fig, f'allostery_pressure')
-plotting.plot_mse(ax1, fig, f'allostery_rho')
-plotting.plot_mse(ax1, fig, f'allostery_length')
-plotting.plot_mse(ax1, fig, f'allostery_rbrt')
+plotting.plot_mse(ax1, fig, f'allostery_pressure', show_xlabel = False)
+plotting.plot_mse(ax1, fig, f'allostery_rho', show_xlabel = False)
+plotting.plot_mse(ax1, fig, f'allostery_length', show_xlabel = False)
+plotting.plot_mse(ax1, fig, f'allostery_rbrt', show_xlabel = False)
 ax1.legend()
 
 ax2 = fig.add_subplot(gs[1, 0])
-plotting.plot_weights(ax2, G, training_steps=training_steps, rule=f'allostery_rho', training_job='allostery', weight_type='rho')
+plotting.plot_weights(ax2, G, training_steps=training_steps, rule=f'allostery_rho', show_xlabel=False)
 
 ax3 = fig.add_subplot(gs[1, 1])
-plotting.plot_weights(ax3, G, training_steps=training_steps, rule=f'allostery_length', training_job='allostery', weight_type='length')
+plotting.plot_weights(ax3, G, training_steps=training_steps, rule=f'allostery_length')
 
 ax4 = fig.add_subplot(gs[1, 2])
-plotting.plot_weights(ax4, G, training_steps=training_steps, rule=f'allostery_rbrt',training_job='allostery', weight_type='rbrt')
+plotting.plot_weights(ax4, G, training_steps=training_steps, rule=f'allostery_rbrt', show_xlabel=False)
 
 ax5 = fig.add_subplot(gs[0, 2:3])
-plotting.plot_weights(ax5, G, training_steps=training_steps, rule=f'allostery_pressure', training_job='allostery', weight_type='pressure')
+plotting.plot_weights(ax5, G, training_steps=training_steps, rule=f'allostery_pressure', show_xlabel=False)
 
 # ax6 = fig.add_subplot(gs[0, 2:4])
 # plotting.plot_potential_drops_each_node(ax6, G_pressure)

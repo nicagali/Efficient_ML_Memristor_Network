@@ -57,41 +57,48 @@ def plot_graph(name_graph):
 
     return  
 
-def plot_mse(ax, fig, rule):
+def plot_mse(ax, fig, rule, show_xlabel=True):
     
     y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{rule}.txt", unpack=True)
     x = range(0,len(y))
 
-    ax.semilogy(x, y, **par.mse_styles[f'{rule}'])   
+    style = par.mse_styles[f'{rule}']
+    ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
+    ax.set_yscale('log')   
     
     # ax.legend(fontsize = par.legend_size)
     ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
-    ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
+    if show_xlabel:
+        ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
 
 import colormaps
 from pypalettes import load_cmap
 
-def plot_weights(ax, G, training_steps, rule, training_job, weight_type):
+def plot_weights(ax, G, training_steps, rule, show_xlabel=True):
 
     x =list(range(training_steps+1))
     
-    dictionary = par.weight_styles[f'weight_{rule}']
+    text = rule.split('_')
+    training_job = text[0]
+    weight_type = text[1]
 
-    if dictionary['type_weights'] == 'edge':
+    if weight_type == 'length' or weight_type == 'rbrt':
         number_weights = G.number_of_edges()
     else:
         number_weights = G.number_of_nodes()
         
+    # CREATE color palettes with lighter shades of base color (the color of the mse)
     if number_weights == 2:
         color_factor = 0.75
     if number_weights == 3:
         color_factor = 0.4
-        
     
-    base_color = dictionary['base_color']
+    style = par.mse_styles[f'{rule}']
+    base_color = style['c']
     palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
       
+    # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
     for weight_indx in range(number_weights):
 
         weight = []
@@ -100,13 +107,18 @@ def plot_weights(ax, G, training_steps, rule, training_job, weight_type):
             y = data[1]
             weight.append(y[weight_indx])
 
-        ax.plot(x, weight, color=palette[weight_indx], **dictionary['plot_style'])
+        label_without_weightindex = style['label'][1:-1]
+        ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{weight_indx+1}$')
         
-    label = dictionary['label']
+    label = style['ylabel_weights']
     ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
-    ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
+    if show_xlabel:
+        ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
-    ax.legend()
+    if weight_type == 'pressure':
+        ax.legend(loc='lower left')
+    else:
+        ax.legend()
         # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_potential_drops_each_node(ax, G):
