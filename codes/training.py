@@ -148,7 +148,11 @@ def compute_single_gradient_parallel_helper(G, weight_index, base_error, weight_
     G_increment = G.copy(as_view=False)
     if weight_type=='pressure' or weight_type == 'rho':
 
-        G_increment.nodes[weight_index][f'{weight_type}'] += delta_weight
+        # TRANSFORM weight_index into integer. If the graph is read, weight_index is a string, if the graph is generated, weight_index is an integer 
+        # if isinstance(weight_index, str):
+        #     weight_index = int(weight_index)
+
+        G_increment.nodes[f'{weight_index}'][f'{weight_type}'] += delta_weight
 
         if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -158,8 +162,15 @@ def compute_single_gradient_parallel_helper(G, weight_index, base_error, weight_
         gradient = (cost_function(G_increment) - base_error) / denominator
 
     else:
+        
         edge = list(G.edges)[weight_index]
         G_increment.edges[edge][f'{weight_type}'] += delta_weight
+
+        if weight_type == 'length':
+            denominator = delta_weight*1e-6
+        else:
+            denominator = delta_weight
+
         gradient = (cost_function(G_increment) - base_error) / denominator
 
     with lock:
@@ -184,7 +195,7 @@ def  update_weights_parallel(G, base_error, weight_type, delta_weight, learning_
         number_of_weights = G.number_of_nodes()
     else:
         # batch_size = int(G.number_of_edges()/4)
-        batch_size = G.number_of_edges
+        batch_size = G.number_of_edges()
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
@@ -253,9 +264,9 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # LOOP over training steps
     for step in range(training_steps): 
 
-        update_weights(G, error, weight_type, delta_weight, learning_rate)
+        # update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 

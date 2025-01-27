@@ -26,18 +26,22 @@ fig.savefig(f"../plots/general_network/graph.pdf")
 training_steps = 100
 
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=3e-6)
+training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-7)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1)
+# training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=0.1)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_scteps, weight_type='rho', delta_weight = 1e-4, learning_rate=4e-4)
+# training.train(G_ml, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
 G_pressure = G.copy(as_view=False)  
-training.train(G_pressure, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-4, learning_rate=1e3)
+# training.train(G_pressure, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e3)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 
 fig, ax = plt.subplots()
 plotting.plot_mse(ax, fig, f'allostery_pressure')
+plotting.plot_mse(ax, fig, f'allostery_length')
+plotting.plot_mse(ax, fig, f'allostery_rbrt')
+plotting.plot_mse(ax, fig, f'allostery_rho')
+ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/general_network/mse_random1.pdf")
 

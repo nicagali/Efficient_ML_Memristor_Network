@@ -75,10 +75,11 @@ fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
 
 G_target1 = networks.voltage_divider(save_data=True, voltage_desired=[2]) 
 
+fig, ax = plt.subplots(figsize = par.figsize_1)
+
 G_target1 = G_target1.copy(as_view=False)  
 training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
 
-fig, ax = plt.subplots(figsize = par.figsize_1)
 plotting.plot_potential_drops_each_node(ax, G_target1)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/voltage_divider/evolution_target1.pdf")
