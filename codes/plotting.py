@@ -7,6 +7,22 @@ sys.path.append(par.PACKAGE_PATH)
 import ahkab  
 import networks
 
+from matplotlib.colors import to_rgb, to_hex
+def lighten_color(base_color, factor=0.5):
+    """
+    Lightens a given color by blending it with a lighter shade of itself.
+    
+    Parameters:
+    - base_color: A HEX color or an (R, G, B) tuple in normalized [0, 1] range.
+    - factor: Float, how much to lighten the color (0 = no change, 1 = fully white).
+    
+    Returns:
+    - Lightened color as a HEX string.
+    """
+    base = to_rgb(base_color)  # Convert to RGB if it's a HEX string
+    lightened = [(1 - factor) * c + factor for c in base]  # Blend toward lighter version of itself
+    return to_hex(lightened)
+
 def plot_graph(name_graph):
 
     # GET graph data
@@ -49,46 +65,32 @@ def plot_mse(ax, fig, rule):
     ax.semilogy(x, y, **par.mse_styles[f'{rule}'])   
     
     # ax.legend(fontsize = par.legend_size)
-    ax.set_ylabel(r'Error', fontsize = par.axis_fontsize)
+    ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
     ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
 
 import colormaps
 from pypalettes import load_cmap
 
-def plot_weights(ax, G, training_steps, training_job, weight_type):
+def plot_weights(ax, G, training_steps, rule, training_job, weight_type):
 
     x =list(range(training_steps+1))
+    
+    dictionary = par.weight_styles[f'weight_{rule}']
 
-    if weight_type=='rho':
-        color_map = colormaps.rdpu
-        number_weights = G.number_of_nodes()
-        label = r'$\rho$[mM]'
-        label_legend = r'\rho'
-
-    if weight_type=='length':
-        color_map =load_cmap('green_material')
+    if dictionary['type_weights'] == 'edge':
         number_weights = G.number_of_edges()
-        label = r'$L$[$\mu$ m]'
-        label_legend = r'L'
-
-
-    if weight_type=='rbrt':
-        color_map = colormaps.greys
-        number_weights = G.number_of_edges()
-        label = r'$R$'
-        label_legend = r'R'
-
-
-    if weight_type=='pressure':
-        color_map = load_cmap('Purp')
+    else:
         number_weights = G.number_of_nodes()
-        label = r'$P$[bar]'
-        label_legend = r'P'
         
-    start_index = int((1/3)*len(color_map.colors))
-    color_map_colors = color_map.colors[start_index:]
-    color_map = plt.cm.colors.ListedColormap(color_map_colors)
+    if number_weights == 2:
+        color_factor = 0.75
+    if number_weights == 3:
+        color_factor = 0.4
+        
+    
+    base_color = dictionary['base_color']
+    palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
       
     for weight_indx in range(number_weights):
 
@@ -98,14 +100,13 @@ def plot_weights(ax, G, training_steps, training_job, weight_type):
             y = data[1]
             weight.append(y[weight_indx])
 
-        norm = plt.Normalize(0, y.shape[0] - 1)
-        color_index = norm(weight_indx)
-
-        ax.plot(x, weight, color=color_map(color_index), lw=3, label = f'${label_legend}_{weight_indx+1}$')
-        ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
-        ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
-        ax.tick_params(axis='both', labelsize=par.size_ticks)
-        # ax.legend()
+        ax.plot(x, weight, color=palette[weight_indx], **dictionary['plot_style'])
+        
+    label = dictionary['label']
+    ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
+    ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
+    ax.tick_params(axis='both', labelsize=par.size_ticks)
+    ax.legend()
         # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_potential_drops_each_node(ax, G):

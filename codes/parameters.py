@@ -2,8 +2,8 @@
 
 DATA_PATH = '../data/'
 PLOT_PATH = '../plots/'
-PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Learning_with_memristors/Learning_Neural_Networks/codes/ahkab'
-# PACKAGE_PATH = '/Users/monicaconte/PhD/Projects/Contrastive_Learning_Memristors/Learning_Neural_Networks_true/codes/ahkab'
+# PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Learning_with_memristors/Learning_Neural_Networks/codes/ahkab'
+PACKAGE_PATH = '/Users/monicaconte/PhD/Projects/Contrastive_Learning_Memristors/Learning_Neural_Networks_true/codes/ahkab'
 
 # --------- NETWORKS PLOTS STYLES ---------
 
@@ -30,8 +30,8 @@ marker_size = 10
 # -> MSE style
 
 from pypalettes import load_cmap
-cmap = load_cmap("facelift")
-# cmap = load_cmap("Andri")
+# cmap = load_cmap("facelift")
+cmap = load_cmap("Callanthias_australis")
 
 mse_styles = {
     'allostery_length': dict(c = cmap.colors[0], lw=3, label = rf'$L$'),
@@ -40,6 +40,28 @@ mse_styles = {
     'allostery_pressure': dict(c = cmap.colors[3], lw=3, label = rf'$P$'),
 }
 
+# -> WEIGHTS style
 
 
-
+weight_styles = {
+    'weight_allostery_length': {'plot_style' : dict(lw=3, label = rf'$L$'),
+                                'type_weights' : 'edge',
+                                'label' : r'$L$[$\mu$ m]',
+                                'base_color' : cmap.colors[0]
+    },
+    'weight_allostery_rho': {'plot_style' : dict(lw=3, label = rf'$\rho$'),
+                            'type_weights' : 'node',
+                            'label' : r'$\rho$[mM]',
+                            'base_color' : cmap.colors[1]
+    },
+    'weight_allostery_rbrt': {'plot_style' : dict(lw=3, label = rf'$R$'),
+                            'type_weights' : 'edge',
+                            'label' : 'R',
+                            'base_color' : cmap.colors[2]
+    },
+    'weight_allostery_pressure': {'plot_style' : dict(lw=3, label = rf'$P$'),
+                            'type_weights' : 'node',
+                            'label' : r'$P$[bar]',
+                            'base_color' : cmap.colors[3]
+    }, 
+}
