@@ -20,7 +20,7 @@ pos = plotting.plot_graph('voltage_divider')
 fig.tight_layout()
 fig.savefig(f"../plots/voltage_divider/graph.pdf")
 
-# --------- TRAIN NETWORK WITH PRESSURE ---------
+# --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
 training_steps = 50
 
@@ -66,7 +66,6 @@ plotting.plot_weights(ax5, G, training_steps=training_steps, rule=f'allostery_pr
 
 # ax6 = fig.add_subplot(gs[0, 2:4])
 # plotting.plot_potential_drops_each_node(ax6, G_pressure)
-
 
 # Adjust layout and save the figure
 fig.tight_layout()

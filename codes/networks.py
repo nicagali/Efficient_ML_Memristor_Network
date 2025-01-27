@@ -3,6 +3,7 @@ import parameters as par
 import sys
 sys.path.append(par.PACKAGE_PATH)
 import ahkab    
+import random
 
 # This module contains functions to:
 # 1 - Initialize graph parameters
@@ -77,6 +78,50 @@ def voltage_divider(save_data=False):
     # SAVE to data folder
     if save_data:
         nx.write_graphml(G, f"{par.DATA_PATH}voltage_divider.graphml")
+
+    return G
+
+# RANDOM NETWORK
+
+
+def random_graph(save_data=False, res_change=False):
+
+    # CREATE random graph with number_nodes conected by number_edges
+    number_nodes = 9
+    number_edges = 15
+    G = nx.gnm_random_graph(number_nodes, number_edges)
+
+    # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
+    number_sources = 3
+    number_targets = 2
+    sources = random.sample(G.nodes(), number_sources)
+    target_sampling_list = [x for x in G.nodes() if x not in sources]
+    targets = random.sample(target_sampling_list, number_targets)
+
+    volt_input = []
+    # Assign attributes nodes
+    volt_index=0
+    for node in range(len(G.nodes)):
+        if node in sources:
+            G.nodes[node]['type'] = 'source'
+            G.nodes[node]['color'] = par.color_dots[0]
+        elif node in targets:
+            G.nodes[node]['type'] = 'target'
+            G.nodes[node]['color'] = par.color_dots[1]
+        else:
+            G.nodes[node]['type'] = 'hidden'
+            G.nodes[node]['color'] = par.color_dots[2]
+
+    # INITIALIZE nodes and edges
+    voltage_input = [5, 1, 0] # node initialized here because different for differnent nw
+    voltage_desired = [3, 4]
+
+    initialize_nodes(G, voltage_input, voltage_desired)
+    initialize_edges(G)
+
+    if save_data:
+
+        nx.write_graphml(G, f"{par.DATA_PATH}random_graph.graphml")
 
     return G
 
