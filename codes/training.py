@@ -247,7 +247,8 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
-    potential_drops_file = open(f"{par.DATA_PATH}potential_drops.txt", "w") #write potential drops across links       
+    desired_voltage = G.nodes[1]['desired']
+    potential_drops_file = open(f"{par.DATA_PATH}potential_drops{desired_voltage}.txt", "w") #write potential drops across links       
 
     path_patch = 'allostery' 
 
@@ -261,12 +262,13 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
     print('Step:', 0, error)
     
+    
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, error, weight_type, delta_weight, learning_rate)
+        update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
@@ -277,3 +279,4 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
     mse_file.close()
     potential_drops_file.close()
+    

@@ -2,8 +2,8 @@
 
 DATA_PATH = '../data/'
 PLOT_PATH = '../plots/'
-PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Learning_with_memristors/Learning_Neural_Networks/codes/ahkab'
-# PACKAGE_PATH = '/Users/monicaconte/PhD/Projects/Contrastive_Learning_Memristors/Learning_Neural_Networks_true/codes/ahkab'
+# PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Learning_with_memristors/Learning_Neural_Networks/codes/ahkab'
+PACKAGE_PATH = '/Users/monicaconte/PhD/Projects/Contrastive_Learning_Memristors/Learning_Neural_Networks_true/codes/ahkab'
 
 # --------- NETWORKS PLOTS STYLES ---------
 

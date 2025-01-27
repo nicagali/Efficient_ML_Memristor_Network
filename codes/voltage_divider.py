@@ -22,7 +22,7 @@ fig.savefig(f"../plots/voltage_divider/graph.pdf")
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 10
+training_steps = 20
 
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=3e-6)
@@ -73,26 +73,48 @@ fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
 
 # --------- TRAIN NETWORK WITH DIFFERENT TARGETS ---------
 
-G_target1 = networks.voltage_divider(save_data=True, voltage_desired=[2]) 
+# G_target1 = networks.voltage_divider(save_data=True, voltage_desired=[1]) 
+
+# fig, ax = plt.subplots(figsize = par.figsize_1)
+
+# training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
+# final_resistances = plotting.plot_potential_drops_each_node(ax, G_target1)
+
+# G_target1.nodes[1]['desired'] = 3
+# for index, edge in enumerate(G.edges()):
+#     resistance = final_resistances[-1][index]
+#     G_target1.edges[edge]['conductance'] = resistance
+# training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
+# final_resistances = plotting.plot_potential_drops_each_node(ax, G_target1, factor_time=2)
+
+# G_target1.nodes[1]['desired'] = 4
+# for index, edge in enumerate(G.edges()):
+#     resistance = final_resistances[-1][index]
+#     G_target1.edges[edge]['conductance'] = resistance
+# training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
+# final_resistances = plotting.plot_potential_drops_each_node(ax, G_target1, factor_time=3)
+
+# # ax.legend()
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/voltage_divider/evolution_targets.pdf")
 
 fig, ax = plt.subplots(figsize = par.figsize_1)
+import numpy as np
+targets = [1, 3, 4]
+voltage_during_training = []
+for targets_number in range(3):
+    
+    voltage_data = np.loadtxt(f"{par.DATA_PATH}potential_drops{targets[targets_number]}.txt", unpack=True)
+    for steps in range(training_steps):
+        print((voltage_data[0][steps]-voltage_data[1][steps]-5)/2)
+        voltage_during_training.append((voltage_data[0][steps]-voltage_data[1][steps]-5)/2)
+        
+print(range(0,len(voltage_during_training)))
+print(len(voltage_during_training))
+ax.plot(range(0,len(voltage_during_training)), voltage_during_training)
 
-G_target1 = G_target1.copy(as_view=False)  
-training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
-
-plotting.plot_potential_drops_each_node(ax, G_target1)
 fig.tight_layout()
-fig.savefig(f"../paper/plots/voltage_divider/evolution_target1.pdf")
-
-
-G_target1.nodes[1]['desired'] = 3
-
-training.train(G_target1, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
-
-fig, ax = plt.subplots(figsize = par.figsize_1)
-plotting.plot_potential_drops_each_node(ax, G_target1)
-fig.tight_layout()
-fig.savefig(f"../paper/plots/voltage_divider/evolution_target2.pdf")
+fig.savefig(f"../paper/plots/voltage_divider/evolution_targets.pdf")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

@@ -129,10 +129,12 @@ def plot_potential_drops_each_node(ax, G, factor_time=1):
 
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
     result = ahkab.run(circuit, an_list=tran_analysis)  
+    final_resistances = result[1]
     result = result[0]
     print(result['tran'].keys())
 
-    time = result['tran']['T']  + factor_time*result['tran']['T']
+    time = result['tran']['T']  + (factor_time-1)*0.1
+    # print(result['tran']['T'], time)
 
     index_input = 0
     index_target = 0
@@ -149,6 +151,7 @@ def plot_potential_drops_each_node(ax, G, factor_time=1):
             desired_value = G.nodes[node]['desired']
             ax.plot(time, potential, lw=3, color = 'darkslateblue', label = fr"$V_{int(node)+1}$")
             index_target += 1
+            # print(time)
             print(f'Final potential node {int(node)+1} = ', potential[-1])
             
         if G.nodes[node]['type'] == 'hidden':
@@ -164,7 +167,9 @@ def plot_potential_drops_each_node(ax, G, factor_time=1):
     ax.plot((time[0], time[-1]), (desired_value, desired_value), color='mediumpurple', lw=1.5, ls='--', label=r'$V_D$')
 
     ax.margins(x=0)
-    ax.legend()
+    
     ax.set_ylabel(r'$V[V]$', fontsize = par.axis_fontsize)
     ax.set_xlabel(r't[s]', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
+    
+    return final_resistances
