@@ -75,6 +75,7 @@ def cost_function(G, write_potential_drops_to_file=None, update_initial_res = Fa
     for node in G.nodes():
         target_index=0
         if G.nodes[node]['type']=='target':  
+            # print(G.nodes[node]['desired'])
             error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
             target_index+=1
             
@@ -147,7 +148,7 @@ def compute_single_gradient_parallel_helper(G, weight_index, base_error, weight_
     G_increment = G.copy(as_view=False)
     if weight_type=='pressure' or weight_type == 'rho':
 
-        G_increment.nodes[f'{weight_index}'][f'{weight_type}'] += delta_weight
+        G_increment.nodes[weight_index][f'{weight_type}'] += delta_weight
 
         if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -252,9 +253,9 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, error, weight_type, delta_weight, learning_rate)
+        update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
