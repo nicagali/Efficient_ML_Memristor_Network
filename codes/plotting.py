@@ -93,6 +93,8 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True):
         color_factor = 0.75
     if number_weights == 3:
         color_factor = 0.4
+    else:
+        color_factor = 1 / (number_weights - 1)
     
     style = par.mse_styles[f'{rule}']
     base_color = style['c']

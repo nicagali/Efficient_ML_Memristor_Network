@@ -1,6 +1,7 @@
 import parameters as par
 import networks
-
+import multiprocessing as mp
+import numpy as np
 import sys
 sys.path.append(par.PACKAGE_PATH)
 import ahkab 
@@ -138,6 +139,96 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
         
     return G
 
+# FUNC----------- PARALLEL
+
+def compute_single_gradient_parallel_helper(G, weight_index, base_error, weight_type, delta_weight, stored_gradient, lock):
+    
+    gradient = 0
+    G_increment = G.copy(as_view=False)
+    if weight_type=='pressure' or weight_type == 'rho':
+
+        G_increment.nodes[f'{weight_index}'][f'{weight_type}'] += delta_weight
+
+        if weight_type == 'pressure':
+                denominator = delta_weight*1e5
+        else:
+                denominator = delta_weight
+
+        gradient = (cost_function(G_increment) - base_error) / denominator
+
+    else:
+        edge = list(G.edges)[weight_index]
+        G_increment.edges[edge][f'{weight_type}'] += delta_weight
+        gradient = (cost_function(G_increment) - base_error) / denominator
+
+    with lock:
+        stored_gradient[weight_index] = gradient
+
+    return stored_gradient
+     
+def to_shared_array(array):
+    shared_array = mp.Array('d', array.size, lock=False)
+    temp = np.frombuffer(shared_array, dtype=array.dtype)
+    temp[:] = array.flatten(order = "C")
+    return shared_array
+
+def to_numpy_array(shared_array, shape):
+    array = np.ctypeslib.as_array(shared_array)
+    return array.reshape(shape)
+
+def  update_weights_parallel(G, base_error, weight_type, delta_weight, learning_rate):
+
+    if weight_type=='pressure' or weight_type=='rho':
+        batch_size = G.number_of_nodes()
+        number_of_weights = G.number_of_nodes()
+    else:
+        # batch_size = int(G.number_of_edges()/4)
+        batch_size = G.number_of_edges
+        number_of_weights = G.number_of_edges()
+
+    # Check if numb_nodes is a multiple of batch_size
+    assert(number_of_weights%batch_size == 0)
+
+    # Initialize gradient vector
+    init_gradient = np.zeros((number_of_weights), dtype = np.float64)  
+
+    # Create multiprocessing array to which the different processes can access to. 
+    # Thanks to temp, we can write a numpy array to a mp array and initialize it in this case.
+    shared_gradient = to_shared_array(init_gradient)    #Returns initialized shared array
+
+    # Create bridge to a nupy vector 
+    stored_gradient = to_numpy_array(shared_gradient, init_gradient.shape)
+
+    lock = mp.Lock()
+    # execute in batches
+    for i in range(0, number_of_weights, batch_size):
+        # execute all tasks in a batch
+        processes = [mp.Process(target = compute_single_gradient_parallel_helper, 
+                                args=(G, p, base_error, weight_type, delta_weight, stored_gradient, lock)) for p in range(i, i + batch_size)]
+
+        # start all processes
+        for process in processes:
+            process.start()
+        # wait for all processes to complete
+        for process in processes:
+            process.join()
+
+    if weight_type == "pressure" or weight_type=='rho':
+
+        for node in G.nodes():
+            G.nodes[node][f'{weight_type}'] -= learning_rate*stored_gradient[int(node)]
+
+    else:
+
+        for index, edge in enumerate(G.edges()):  
+
+            G.edges[edge][f'{weight_type}'] -= learning_rate*stored_gradient[index]
+            # print(learning_rate, gradients[index],learning_rate*gradients[index])
+
+
+    return G
+
+
 # --------- TRAINING FUNCTIONS ---------
 
 def train(G, training_steps, weight_type, delta_weight, learning_rate):
@@ -161,11 +252,9 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # LOOP over training steps
     for step in range(training_steps): 
 
-        G_old = G.copy(as_view=False)
+        # update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        update_weights(G, error, weight_type, delta_weight, learning_rate)
-
-        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 

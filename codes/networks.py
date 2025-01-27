@@ -83,7 +83,7 @@ def voltage_divider(save_data=False):
 
 # RANDOM NETWORK
 
-
+ 
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges

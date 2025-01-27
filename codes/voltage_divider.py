@@ -71,7 +71,10 @@ plotting.plot_weights(ax5, G, training_steps=training_steps, rule=f'allostery_pr
 fig.tight_layout()
 fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
 
+# --------- TRAIN NETWORK WITH DIFFERENT TARGETS ---------
+
+
+
 
 end = time.time()
-
 print("Running time = ", end-start, "seconds")
