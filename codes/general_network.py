@@ -19,24 +19,25 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 fig, ax = plt.subplots()
 pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
-fig.savefig(f"../plots/general_network/graph3.pdf")
+fig.savefig(f"../plots/general_network/graph.pdf")
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
 training_steps = 100
+training_type = 'allostery'
 weight_type_vec = ['length', 'rbrt', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3]
 learning_rate_vec_random2 = [1e-5, 1, 1e-4, 1e2]
 learning_rate_vec_random3 = [5e-6, 1, 1e-3, 1e2]
 
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=5e-6)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=5e-6)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1)
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
 G_pressure = G.copy(as_view=False)  
-# training.train(G_pressure, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 
@@ -47,12 +48,7 @@ plotting.plot_mse(ax, fig, f'allostery_rbrt')
 plotting.plot_mse(ax, fig, f'allostery_rho')
 ax.legend()
 fig.tight_layout()
-fig.savefig(f"../paper/plots/general_network/mse_random.pdf")
-
-# fig, ax = plt.subplots()
-# plotting.plot_weights(ax, G, training_steps=training_steps, rule = f'allostery_pressure')
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/general_network/weights_random2.pdf")
+fig.savefig(f"../paper/plots/general_network/mse_random.pdf", transparent=True)
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

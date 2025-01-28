@@ -234,7 +234,7 @@ def  update_weights_parallel(G, base_error, weight_type, delta_weight, learning_
 
 # --------- TRAINING FUNCTIONS ---------
 
-def train(G, training_steps, weight_type, delta_weight, learning_rate):
+def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
 
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
@@ -243,10 +243,8 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     else:
         potential_target_file = None     
 
-    path_patch = 'allostery' 
-
     # WRITE initial condition: intialized wieghts and intial error
-    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=path_patch)
+    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
     
     error = cost_function(G, potential_target_file, update_initial_res=False)    #compute initial error
     error_normalization = error #define it as normalization error
@@ -262,7 +260,7 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
         update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
-        write_weights_to_file(G, step+1, weight_type, path_patch)
+        write_weights_to_file(G, step+1, weight_type, training_type)
 
         error = cost_function(G, potential_target_file, update_initial_res=False)
 

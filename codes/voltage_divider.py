@@ -24,6 +24,7 @@ fig.savefig(f"../plots/voltage_divider/graph.pdf")
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
 training_steps = 50
+training_type = 'allostery'
 weight_type_vec = ['length', 'rbrt', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3]
 learning_rate_vec = [3e-6, 1, 4e-4, 100]
@@ -31,7 +32,7 @@ learning_rate_vec = [3e-6, 1, 4e-4, 100]
 for weight_type_index in range(len(weight_type_vec)):
 
     G_ml = G.copy(as_view=False)  
-    training.train(G_ml, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+    training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
 # --------- PLOT EVOLUTION OF TRAINED NW ---------
 
@@ -83,7 +84,7 @@ fig.savefig(f"../paper/plots/voltage_divider/evolution_finalnw.pdf")
 
 #     G_target.nodes[1]['desired'] = target_values[target_index]
 
-#     training.train(G_target, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
+#     training.train(G_target, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=100)
 
 #     plotting.plot_weights(ax[1], G_target, training_steps=training_steps, rule=f'allostery_pressure', show_xlabel=True, starting_step=(target_index*training_steps))
 

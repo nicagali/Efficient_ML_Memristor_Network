@@ -1,19 +1,19 @@
 # Fdb version 3
-["bibtex paper"] 1737976905 "paper.aux" "paper.bbl" "paper" 1737976906
+["bibtex paper"] 1738072745 "paper.aux" "paper.bbl" "paper" 1738072746
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "biblio.bib" 1737037276 1741 bd880a73a84c23486f812a32a5715236 ""
-  "paper.aux" 1737976906 7824 50f8754d2f4e1a6cb08d6eec4343a778 "xelatex"
-  "paperNotes.bib" 1737976906 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
+  "biblio.bib" 1738063142 1741 bd880a73a84c23486f812a32a5715236 ""
+  "paper.aux" 1738072746 8888 4e84166162d93586e0cc1ffbbc60f444 "xelatex"
+  "paperNotes.bib" 1738072746 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
   (generated)
   "paper.bbl"
   "paper.blg"
-["xdvipdfmx"] 1737976906 "paper.xdv" "paper.pdf" "paper" 1737976906
-  "paper.xdv" 1737976906 179904 fadade53562d371d36c80fec04f3b1df "xelatex"
+["xdvipdfmx"] 1738072746 "paper.xdv" "paper.pdf" "paper" 1738072746
+  "paper.xdv" 1738072746 183208 08ad7feb956889af8075284aa3d1cdc9 "xelatex"
   (generated)
   "paper.pdf"
-["xelatex"] 1737976905 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1737976906
+["xelatex"] 1738072745 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1738072746
   "/etc/texmf/web2c/texmf.cnf" 1697810815 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1737976902 22713 a4d93af12deaa84b620ef1008442d2d6 ""
+  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1738072740 23313 26bcbb2f9005ed2d5452564f04adf1ac ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -202,14 +202,16 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1729165427 5133632 6da276505c61ffff742236c11e5db81e ""
-  "paper.aux" 1737976906 7824 50f8754d2f4e1a6cb08d6eec4343a778 "xelatex"
-  "paper.bbl" 1737976905 851 c8f8ab31b3b059908cf39e27f7870547 "bibtex paper"
-  "paper.out" 1737976906 1479 a4a36edc4348982c027cfd7ccb24375d "xelatex"
-  "paper.tex" 1737976902 22713 a4d93af12deaa84b620ef1008442d2d6 ""
+  "paper.aux" 1738072746 8888 4e84166162d93586e0cc1ffbbc60f444 "xelatex"
+  "paper.bbl" 1738072745 851 c8f8ab31b3b059908cf39e27f7870547 "bibtex paper"
+  "paper.out" 1738072746 1702 4881dc22d86e9bb4772272f850a45dcf "xelatex"
+  "paper.tex" 1738072740 23313 26bcbb2f9005ed2d5452564f04adf1ac ""
+  "plots/general_network/mse_general.pdf" 1738062642 146385 e7e34758f4e0557bb7fa25bfccfefa2f ""
   "plots/memristor/memristor_network.pdf" 1737037276 55427 88e76c41eca0a3201ee3488c32d62e7c ""
   "plots/memristor/memristor_scheme.pdf" 1737037276 133755 ed59a9f1372df888253042382644dbf4 ""
   "plots/training/training_scheme.pdf" 1737037276 151872 1a6c7580134401316befe6c019253d3d ""
   "plots/training/two_types_weights.pdf" 1737037276 65085 a8a9cf30f257289908a84292cf19d22a ""
+  "plots/voltage_divider/evolution_targets.pdf" 1738061612 21283 3294cf48d889eb3ff2e7e904edd85166 ""
   "plots/voltage_divider/mse_weights_vd.pdf" 1737976217 102263 1535da33626c61ac9a55ea1b7fb9e306 ""
   "plots/voltage_divider/vd_scheme.pdf" 1737037276 42398 3d2bbbcb96e00226623d6a2b17536cc0 ""
   (generated)

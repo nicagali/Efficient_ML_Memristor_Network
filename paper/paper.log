@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  27 JAN 2025 12:21
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 JAN 2025 14:59
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -778,98 +778,27 @@ File: plots/voltage_divider/vd_scheme.pdf Graphic file (type pdf)
 <use plots/voltage_divider/vd_scheme.pdf>
 File: plots/voltage_divider/mse_weights_vd.pdf Graphic file (type pdf)
 <use plots/voltage_divider/mse_weights_vd.pdf>
- [5] (./paper.bbl [6]) [7] (./paper.aux)
+File: plots/voltage_divider/evolution_targets.pdf Graphic file (type pdf)
+<use plots/voltage_divider/evolution_targets.pdf>
+ [5]
+File: plots/general_network/mse_general.pdf Graphic file (type pdf)
+<use plots/general_network/mse_general.pdf>
+
+Overfull \hbox (264.0pt too wide) in paragraph at lines 241--242
+ [][] 
+ []
+
+[6] (./paper.bbl [7]) [8] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: A4A36EDC4348982C027CFD7Cs/memristor/memristor_network.pdf Graphic file (type pdf)
-<use plots/memristor/memristor_network.pdf>
-
-LaTeX Warning: Reference `eq:eqofmotconductance' on page 1 undefined on input line 163.
-
-File: plots/training/two_types_weights.pdf Graphic file (type pdf)
-<use plots/training/two_types_weights.pdf>
-File: plots/training/training_scheme.pdf Graphic file (type pdf)
-<use plots/training/training_scheme.pdf>
-
-LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 185.
-
-
-LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 185.
-
-
-LaTeX Warning: Reference `fig:training_scheme' on page 1 undefined on input line 185.
-
-[3]
-
-Package natbib Warning: Citation `steepest_descent_book' on page 4 undefined on input line 198.
-
-
-LaTeX Warning: Reference `sec:memristor_network' on page 1 undefined on input line 205.
-
-
-LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 205.
-
-
-LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 205.
-
-
-LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 205.
-
-[4]
-
-LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 207.
-
-
-LaTeX Warning: Reference `fig:vd_scheme' on page 1 undefined on input line 211.
-
-File: plots/voltage_divider/vd_scheme.pdf Graphic file (type pdf)
-<use plots/voltage_divider/vd_scheme.pdf>
-
-LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 220.
-
-
-LaTeX Warning: Reference `fig:mse_weights_vd' on page 1 undefined on input line 221.
-
-File: plots/voltage_divider/mse_weights_vd.pdf Graphic file (type pdf)
-<use plots/voltage_divider/mse_weights_vd.pdf>
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5] (./paper.bbl [6]
-
-LaTeX Warning: Reference `LastBibItem' on page 7 undefined on input line 1.
-
-)
-
-Package natbib Warning: There were undefined citations.
-
-[7] (./paper.aux
-
-Package natbib Warning: Citation(s) may have changed.
-(natbib)                Rerun to get citations correct.
-
-)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  A4A36EDC4348982C027CFD7CCB24375D;1479.
+(rerunfilecheck)             Checksum: 4881DC22D86E9BB4772272F850A45DCF;1702.
  ) 
 Here is how much of TeX's memory you used:
- 28067 strings out of 476191
- 527464 string characters out of 5812071
- 929876 words of memory out of 5000000
- 48309 multiletter control sequences out of 15000+600000
- 479544 words of font info for 81 fonts, out of 8000000 for 9000
+ 28087 strings out of 476191
+ 528192 string characters out of 5812071
+ 930101 words of memory out of 5000000
+ 48329 multiletter control sequences out of 15000+600000
+ 479536 words of font info for 80 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,12n,94p,1276b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (7 pages, 177228 bytes).
+Output written on paper.xdv (8 pages, 183208 bytes).
