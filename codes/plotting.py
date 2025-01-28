@@ -136,7 +136,7 @@ def plot_potential_each_node(ax, G, factor_time=1):
     result = result[0]
     print(result['tran'].keys())
 
-    time = result['tran']['T']  + factor_time*result['tran']['T']
+    time = result['tran']['T']  
 
     index_input = 0
     index_target = 0
@@ -151,7 +151,7 @@ def plot_potential_each_node(ax, G, factor_time=1):
             
         if G.nodes[node]['type'] == 'target':
             desired_value = G.nodes[node]['desired']
-            ax.plot(time, potential, lw=3, color = par.color_dots[1], label = fr"$V_{int(node)+1}$")
+            ax.plot(time, potential, lw=1, marker = 'o', color = par.color_dots[1], label = fr"$V_{int(node)+1}$")
             index_target += 1
             print(f'Final potential node {int(node)+1} = ', potential[-1])
             
