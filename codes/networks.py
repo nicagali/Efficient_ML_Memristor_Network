@@ -56,6 +56,7 @@ def initialize_edges(G):
 def voltage_divider(save_data=False, voltage_desired = [4]):
 
     G = nx.DiGraph()    # I am using directed graphs to keep trak of sign when def circuit
+    G.name = 'voltage_divider'
 
     # ADD nodes
     attributes = {"type" : "source", 'color' : par.color_dots[0]}

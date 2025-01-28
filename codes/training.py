@@ -80,7 +80,7 @@ def cost_function(G, write_potential_target_to_file=None, update_initial_res = F
             target_index+=1
             
     # WRITE last element potential drop each edge (useful in the voltage divider case, otherwise too many)
-    if G.number_of_nodes() == 3 and write_potential_target_to_file is not None:
+    if G.name == 'voltage_divider' and write_potential_target_to_file is not None:
 
         write_potential_target_to_file.write(f"{result['tran'][f'VN{1}'][-1]}\n")
 
@@ -143,11 +143,8 @@ def compute_single_gradient_parallel_helper(G, weight_index, base_error, weight_
     G_increment = G.copy(as_view=False)
     if weight_type=='pressure' or weight_type == 'rho':
 
-        # TRANSFORM weight_index into integer. If the graph is read, weight_index is a string, if the graph is generated, weight_index is an integer 
-        # if isinstance(weight_index, str):
-        #     weight_index = int(weight_index)
-
-        G_increment.nodes[f'{weight_index}'][f'{weight_type}'] += delta_weight
+        node = list(G.nodes)[weight_index]
+        G_increment.nodes[node][f'{weight_type}'] += delta_weight
 
         if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -194,7 +191,8 @@ def  update_weights_parallel(G, base_error, weight_type, delta_weight, learning_
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
-    assert(number_of_weights%batch_size == 0)
+    if number_of_weights % batch_size != 0:
+        raise ValueError(f"number_of_weights ({number_of_weights}) must be a multiple of batch_size ({batch_size}).")
 
     # Initialize gradient vector
     init_gradient = np.zeros((number_of_weights), dtype = np.float64)  
@@ -230,8 +228,6 @@ def  update_weights_parallel(G, base_error, weight_type, delta_weight, learning_
         for index, edge in enumerate(G.edges()):  
 
             G.edges[edge][f'{weight_type}'] -= learning_rate*stored_gradient[index]
-            # print(learning_rate, gradients[index],learning_rate*gradients[index])
-
 
     return G
 
@@ -242,7 +238,10 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
-    potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_tagets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)       
+    if G.name == 'voltage_divider': 
+        potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_tagets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
+    else:
+        potential_target_file = None     
 
     path_patch = 'allostery' 
 
@@ -259,9 +258,9 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # LOOP over training steps
     for step in range(training_steps): 
 
-        update_weights(G, error, weight_type, delta_weight, learning_rate)
+        # update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
@@ -270,7 +269,6 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
         print('Step:', step+1, error)
         mse_file.write(f"{error/error_normalization}\n")
 
-    # 
-
     mse_file.close()
-    potential_target_file.close()
+    if G.name == 'voltage_divider':
+        potential_target_file.close()
