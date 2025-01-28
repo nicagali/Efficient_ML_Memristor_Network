@@ -127,7 +127,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True):
         ax.legend()
         # ax.legend(bbox_to_anchor=(1, 1))
 
-def plot_potential_drops_each_node(ax, G, factor_time=1):
+def plot_potential_each_node(ax, G, factor_time=1):
 
     circuit = networks.circuit_from_graph(G, type='memristors')
 
@@ -146,25 +146,20 @@ def plot_potential_drops_each_node(ax, G, factor_time=1):
         potential = result['tran'][f'VN{node}']
 
         if G.nodes[node]['type'] == 'source':
-            ax.plot(time, potential, lw=3, color = 'forestgreen', label = fr"$V_{int(node)+1}$")
+            ax.plot(time, potential, lw=3, color = par.color_dots[0], label = fr"$V_{int(node)+1}$")
             index_input += 1
             
         if G.nodes[node]['type'] == 'target':
             desired_value = G.nodes[node]['desired']
-            ax.plot(time, potential, lw=3, color = 'darkslateblue', label = fr"$V_{int(node)+1}$")
+            ax.plot(time, potential, lw=3, color = par.color_dots[1], label = fr"$V_{int(node)+1}$")
             index_target += 1
             print(f'Final potential node {int(node)+1} = ', potential[-1])
             
         if G.nodes[node]['type'] == 'hidden':
-            ax.plot(time, potential, lw=3, color = 'darkgray', label = fr"$V_{int(node)+1}$")
+            ax.plot(time, potential, lw=3, color = par.color_dots[2], label = fr"$V_{int(node)+1}$")
             index_hidden += 1
 
 
-    # plot desired voltages lines
-
-    # for desired_nodes_index in range(inp.numb_target_nodes):
-
-    # ax.axhline(4, color='mediumpurple', xmin=0, xmax=0.1, lw=1.5, ls='--', label=r'$V_D$')
     ax.plot((time[0], time[-1]), (desired_value, desired_value), color='mediumpurple', lw=1.5, ls='--', label=r'$V_D$')
 
     ax.margins(x=0)

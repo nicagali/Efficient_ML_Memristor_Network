@@ -7,7 +7,7 @@ PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Learning_with_memristors/Lea
 
 # --------- NETWORKS PLOTS STYLES ---------
 
-color_dots = ['forestgreen','blueviolet','silver'] # color of the three types of nodes: input, output, hidden
+color_dots = ['forestgreen','darkslateblue','silver'] # color of the three types of nodes: input, output, hidden
 font_size_nw = 12 #size font on nodes
 nodes_size = 3000 #size nodes
 width = 5 #width connecting edges

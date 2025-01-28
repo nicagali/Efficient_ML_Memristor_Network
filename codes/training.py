@@ -52,23 +52,23 @@ def voltage_drop_element(circuit, result, element):
 
 # --------- ALGORITHM FUNCTIONS ---------
 
-def cost_function(G, write_potential_drops_to_file=None, update_initial_res = False):
+def cost_function(G, write_potential_target_to_file=None, update_initial_res = False):
     
     # TRANSFORM graph into circuit
     circuit = networks.circuit_from_graph(G, type='memristors') 
 
     # DEFINE a transient analysis (analysis of the circuit over time)
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
-    result = ahkab.run(circuit, an_list=tran_analysis) #returns two arrays: conductance over time of the memristors, voltages over time in the nodes
+    result = ahkab.run(circuit, an_list=tran_analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
 
-    conductance_vec = result[1]
+    resistance_vec = result[1]
     result = result[0]
 
     # UPDATE the value of the initial conductance to the last in the tran simulation to speed up (in a voltage divider 5 steps speeds of 0.01s giving same results)
     if update_initial_res:
         for index, edge in enumerate(G.edges()):
-            conductance = conductance_vec[index][-1]
-            G.edges[edge]['conductance'] = conductance
+            resistance = resistance_vec[-1][index]
+            G.edges[edge]['conductance'] = resistance
 
     # COMPUTE error     
     error=0
@@ -80,14 +80,9 @@ def cost_function(G, write_potential_drops_to_file=None, update_initial_res = Fa
             target_index+=1
             
     # WRITE last element potential drop each edge (useful in the voltage divider case, otherwise too many)
-    if write_potential_drops_to_file is not None:
+    if G.number_of_nodes() == 3 and write_potential_target_to_file is not None:
 
-        for index, edge in enumerate(G.edges()):
-
-            voltage_drop_vec = voltage_drop_element(circuit, result, f"R{index+1}")
-
-            write_potential_drops_to_file.write(f"{voltage_drop_vec[-1]}\t")
-        write_potential_drops_to_file.write(f"\n")
+        write_potential_target_to_file.write(f"{result['tran'][f'VN{1}'][-1]}\n")
 
     return error    
 
@@ -247,14 +242,14 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
 
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
-    potential_drops_file = open(f"{par.DATA_PATH}potential_drops.txt", "w") #write potential drops across links       
+    potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_tagets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)       
 
     path_patch = 'allostery' 
 
     # WRITE initial condition: intialized wieghts and intial error
     write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=path_patch)
     
-    error = cost_function(G, potential_drops_file, update_initial_res=False)    #compute initial error
+    error = cost_function(G, potential_target_file, update_initial_res=False)    #compute initial error
     error_normalization = error #define it as normalization error
 
     mse_file.write(f"{error/error_normalization}\n")
@@ -264,16 +259,18 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, error, weight_type, delta_weight, learning_rate)
+        update_weights(G, error, weight_type, delta_weight, learning_rate)
 
-        update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
+        # update_weights_parallel(G, error, weight_type, delta_weight, learning_rate)
             
         write_weights_to_file(G, step+1, weight_type, path_patch)
 
-        error = cost_function(G, potential_drops_file, update_initial_res=False)
+        error = cost_function(G, potential_target_file, update_initial_res=False)
 
         print('Step:', step+1, error)
         mse_file.write(f"{error/error_normalization}\n")
 
+    # 
+
     mse_file.close()
-    potential_drops_file.close()
+    potential_target_file.close()
