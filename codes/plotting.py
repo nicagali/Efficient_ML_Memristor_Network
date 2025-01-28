@@ -79,9 +79,9 @@ def plot_mse(ax, fig, rule, show_xlabel=True, saved_graph=None):
 import colormaps
 from pypalettes import load_cmap
 
-def plot_weights(ax, G, training_steps, rule, show_xlabel=True):
+def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 0):
 
-    x =list(range(training_steps+1))
+    x =list(range(starting_step, starting_step + training_steps+1))
     
     text = rule.split('_')
     training_job = text[0]
@@ -121,10 +121,10 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True):
     if show_xlabel:
         ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
-    if weight_type == 'pressure':
-        ax.legend(loc='lower left')
-    else:
-        ax.legend()
+    if weight_type == 'pressure' and starting_step==0:
+        ax.legend(fontsize = par.legend_size, loc='lower left')
+    elif starting_step ==0 :
+        ax.legend(fontsize = par.legend_size)
         # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_potential_each_node(ax, G, factor_time=1):
@@ -167,3 +167,30 @@ def plot_potential_each_node(ax, G, factor_time=1):
     ax.set_ylabel(r'$V[V]$', fontsize = par.axis_fontsize)
     ax.set_xlabel(r't[s]', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
+
+def plot_final_potential_vd(ax, target_values):
+    
+    for target_index, target_value in enumerate(target_values):
+
+        y = np.loadtxt(f"{par.DATA_PATH}potential_targets/potential_targets{target_value}.txt", unpack=True)
+        x = np.array(range(len(y))) + target_index*(len(y)-1)
+
+        # PLOT 
+
+        # Target
+        ax.plot(x, y, lw=1, marker = 'o', color = par.color_dots[1], label="$V_2$" if target_index == 0 else "_nolegend_", zorder = 1)        
+        # Inputs
+        ax.plot(x, [5 for _ in range(len(x))], lw=3, color = par.color_dots[0], label="$V_1$" if target_index == 0 else "_nolegend_")
+        ax.plot(x, [0 for _ in range(len(x))], lw=3, color = par.color_dots[0], label = "$V_3$" if target_index == 0 else "_nolegend_")
+        # Desired
+        ax.plot(x, [target_value for _ in range(len(x))],lw=1.5, ls='--', color = 'mediumpurple', label = "$V_D$" if target_index == 0 else "_nolegend_", zorder = 0)
+
+    ax.set_ylabel(r'$V[V]$', fontsize = par.axis_fontsize)
+    # ax.set_xlabel(r'Time steps', fontsize = par.axis_fontsize)
+    ax.tick_params(axis='both', labelsize=par.size_ticks)
+
+
+
+
+    
+

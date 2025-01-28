@@ -239,7 +239,7 @@ def train(G, training_steps, weight_type, delta_weight, learning_rate):
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
     if G.name == 'voltage_divider': 
-        potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_tagets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
+        potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
     else:
         potential_target_file = None     
 
