@@ -19,4 +19,33 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 fig, ax = plt.subplots()
 pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
-fig.savefig(f"../plots/general_network/graph.pdf")
+fig.savefig(f"../paper/plots/linear_regression/graph.pdf")
+
+
+training_steps = 10
+training_type = 'linear_regression'
+weight_type_vec = ['length', 'rbrt', 'rho', 'pressure']
+
+G_ml = G.copy(as_view=False)  
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=5e-6)
+G_ml = G.copy(as_view=False)  
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='rbrt', delta_weight = 1e-3, learning_rate=1)
+G_ml = G.copy(as_view=False)  
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
+G_pressure = G.copy(as_view=False)  
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
+
+
+training.test_regression(G, step=2, weight_type='pressure')
+training.test_regression(G, step=5, weight_type='pressure')
+training.test_regression(G, step=10, weight_type='pressure')
+
+fig, ax = plt.subplots(1, 3, figsize=(15,5))
+plotting.plot_regression(ax[0], step=2)
+plotting.plot_regression(ax[1], step=5)
+plotting.plot_regression(ax[2], step=10)
+fig.tight_layout()
+fig.savefig(f"../paper/plots/linear_regression/snapshots.pdf")
+
+
+

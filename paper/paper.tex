@@ -247,6 +247,13 @@ In \cref{fig:mse_weights_vd} we show that the cost function decreases of many or
 \cleardoublepage
 \subsection{Linear Regression}
 
+We broaden the training capability of the network by including a linear regression task, where, in its simplest form, the network is trained to give potential output $V^{\text{out}}$ related to the input potential $V^{\text{in}}$ via a linear relationship
+\begin{equation}
+    V_{\text{out}} = \text{c} V_{\text{in}} + \text{b}.
+\label{eq:linear_relationship}
+\end{equation}
+Firstly, we generate a data set of input and output potential values, $\{ V^{in}_{i} \}_{i=1}^{}$ and $\{ V^{out}_{i} \}_{i}$ , that verify \cref{eq:linear_relationship}
+
 \section{Conclusion}
 
 \appendix

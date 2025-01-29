@@ -6,6 +6,7 @@ import sys
 sys.path.append(par.PACKAGE_PATH)
 import ahkab  
 import networks
+import training
 
 from matplotlib.colors import to_rgb, to_hex
 def lighten_color(base_color, factor=0.5):
@@ -189,7 +190,36 @@ def plot_final_potential_vd(ax, target_values):
     # ax.set_xlabel(r'Time steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
 
+def plot_regression(ax, step):
+    
+    data = np.loadtxt(f"{par.DATA_PATH}regression_relations/relations_regression{step}.txt", unpack=True)
+    
+    x = data[0]
+    y1 = data[1]
+    
+    x_interval = np.linspace(np.min(x),np.max(x))
 
+    y1_desired = training.linear_function(x_interval)
+
+    
+    # if inp.weight_type=='rhob':
+    ax.plot(x_interval, y1_desired, **par.reg_desired_rhob, zorder=0)
+    # ax.plot(x_interval, y2_desired, **par.reg_desired2, zorder=0)
+    
+    ax.scatter(x, y1, **par.reg_output1)
+    # ax.scatter(x, y2, **par.reg_output2)
+    
+    # ax.legend()
+    ax.set_ylabel(r'$V_{out}$', fontsize = axis_fontsize)
+    ax.set_xlabel(r'$V_{in}$', fontsize = axis_fontsize)
+    # ax.set_title(f"Step {step}")
+    
+    # ax.set_xlim([-0.2, 5.2])
+    # ax.set_ylim([-0.2, 2])
+    ax.grid(ls=":")
+    ax.tick_params(axis='both', labelsize=size_ticks)
+    
+    return
 
 
     

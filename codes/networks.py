@@ -95,7 +95,7 @@ def random_graph(save_data=False, res_change=False):
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 2
-    number_targets = 3
+    number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
@@ -126,6 +126,7 @@ def random_graph(save_data=False, res_change=False):
         nx.write_graphml(G, f"{par.DATA_PATH}random_graph.graphml")
 
     return G
+
 
 # 3 --------- GRAPH -> CIRCUIT ---------
 # Create a the class 'Circuit' used in the package ahkab from the desired graph.
