@@ -52,3 +52,6 @@ fig.savefig(f"../paper/plots/general_network/mse_random.pdf", transparent=True)
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
+
+# --------- PRE-TRAIN NETWORK WITH LENGTH/RADIUS ---------
+
