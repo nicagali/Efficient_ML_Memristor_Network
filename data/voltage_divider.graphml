@@ -2,7 +2,7 @@
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
   <key id="d12" for="edge" attr.name="delta_rho" attr.type="long" />
   <key id="d11" for="edge" attr.name="pressure" attr.type="long" />
-  <key id="d10" for="edge" attr.name="rbrt" attr.type="long" />
+  <key id="d10" for="edge" attr.name="radius_base" attr.type="long" />
   <key id="d9" for="edge" attr.name="length" attr.type="long" />
   <key id="d8" for="edge" attr.name="conductance" attr.type="double" />
   <key id="d7" for="edge" attr.name="resistance" attr.type="long" />
@@ -39,7 +39,7 @@
       <data key="d7">50</data>
       <data key="d8">0.02</data>
       <data key="d9">10</data>
-      <data key="d10">4</data>
+      <data key="d10">200</data>
       <data key="d11">0</data>
       <data key="d12">0</data>
     </edge>
@@ -47,7 +47,7 @@
       <data key="d7">50</data>
       <data key="d8">0.02</data>
       <data key="d9">10</data>
-      <data key="d10">4</data>
+      <data key="d10">200</data>
       <data key="d11">0</data>
       <data key="d12">0</data>
     </edge>

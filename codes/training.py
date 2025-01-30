@@ -13,7 +13,7 @@ def write_weights_to_file(G, step, weight_type, path_patch):
     file = open(f"{par.DATA_PATH}weights/{path_patch}/{weight_type}/{weight_type}{step}.txt", "w")
     
     for index, edge in enumerate(G.edges()): 
-        if weight_type=='length' or weight_type=='rbrt':
+        if weight_type=='length' or weight_type=='radius_base':
             file.write(f"{index}\t{G.edges[edge][weight_type]}\n")
     for node in G.nodes():
         if weight_type=='pressure' or weight_type=='rho':  
@@ -133,7 +133,7 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
             if weight_type == 'length':
                 denominator = delta_weight*1e-6
             else:
-                denominator = delta_weight
+                denominator = delta_weight*1e-9
 
             gradients.append((new_error - base_error)/denominator)
             
@@ -184,7 +184,7 @@ def compute_single_gradient_parallel_helper(G, weight_index, training_type, base
         if weight_type == 'length':
             denominator = delta_weight*1e-6
         else:
-            denominator = delta_weight
+            denominator = delta_weight*1e-9
 
         if training_type == 'allostery':
             error = cost_function(G_increment)  

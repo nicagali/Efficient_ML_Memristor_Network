@@ -87,16 +87,19 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     text = rule.split('_')
     training_job = text[0]
     weight_type = text[1]
+    if weight_type == 'radius':
+        weight_type = 'radius_base'
 
-    if weight_type == 'length' or weight_type == 'rbrt':
-        number_weights = G.number_of_edges()
-    else:
+    if weight_type == 'pressure' or weight_type == 'rho':
         number_weights = G.number_of_nodes()
+    else:
+        number_weights = G.number_of_edges()
         
     # CREATE color palettes with lighter shades of base color (the color of the mse)
     if number_weights == 2:
-        color_factor = 0.75
-    if number_weights == 3:
+        print(weight_type)
+        color_factor = 0.6
+    elif number_weights == 3:
         color_factor = 0.4
     else:
         color_factor = 1 / (number_weights - 1)

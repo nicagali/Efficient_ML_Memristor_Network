@@ -35,7 +35,7 @@ cmap = load_cmap("Callanthias_australis")
 mse_styles = {
     'allostery_length': dict(marker = 'o', c = cmap.colors[0], lw=1, label = rf'$L$', ylabel_weights = r'$L$[$\mu$ m]'),
     'allostery_rho': dict(marker = 'o', c = cmap.colors[1], lw=1, label = rf'$\rho$', ylabel_weights = r'$\rho$[mM]'),
-    'allostery_rbrt': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R$', ylabel_weights = 'R'),
+    'allostery_radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$', ylabel_weights = r'$R_b$[nm]'),
     'allostery_pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$', ylabel_weights = r'$P$[bar]'),
 }
 
