@@ -69,7 +69,7 @@ def plot_mse(ax, fig, rule, show_xlabel=True, saved_graph=None):
 
     style = par.mse_styles[f'{rule}']
     ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
-    ax.set_yscale('log')   
+    # ax.set_yscale('log')   
     
     # ax.legend(fontsize = par.legend_size)
     ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
@@ -195,7 +195,7 @@ def plot_final_potential_vd(ax, target_values):
 
 def plot_regression(ax, step):
     
-    data = np.loadtxt(f"{par.DATA_PATH}regression_relations/relations_regression{step}.txt", unpack=True)
+    data = np.loadtxt(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", unpack=True)
     
     x = data[0]
     y1 = data[1]
@@ -206,21 +206,21 @@ def plot_regression(ax, step):
 
     
     # if inp.weight_type=='rhob':
-    ax.plot(x_interval, y1_desired, **par.reg_desired_rhob, zorder=0)
+    ax.plot(x_interval, y1_desired, **par.reg_desired, zorder=0)
     # ax.plot(x_interval, y2_desired, **par.reg_desired2, zorder=0)
     
-    ax.scatter(x, y1, **par.reg_output1)
+    ax.scatter(x, y1, **par.reg_output)
     # ax.scatter(x, y2, **par.reg_output2)
     
     # ax.legend()
-    ax.set_ylabel(r'$V_{out}$', fontsize = axis_fontsize)
-    ax.set_xlabel(r'$V_{in}$', fontsize = axis_fontsize)
+    ax.set_ylabel(r'$V_{out}$', fontsize = par.axis_fontsize)
+    ax.set_xlabel(r'$V_{in}$', fontsize = par.axis_fontsize)
     # ax.set_title(f"Step {step}")
     
     # ax.set_xlim([-0.2, 5.2])
     # ax.set_ylim([-0.2, 2])
     ax.grid(ls=":")
-    ax.tick_params(axis='both', labelsize=size_ticks)
+    ax.tick_params(axis='both', labelsize=par.size_ticks)
     
     return
 

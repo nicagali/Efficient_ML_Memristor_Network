@@ -39,4 +39,8 @@ mse_styles = {
     'allostery_pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$', ylabel_weights = r'$P$[bar]'),
 }
 
+reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')
+reg_output = dict(c = 'mediumblue', marker='o', label = rf'$V_1$')
+
+
 

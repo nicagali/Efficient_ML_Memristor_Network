@@ -147,7 +147,7 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 def generate_dataset():
 
-    input_voltage = np.linspace(-5,5,10)
+    input_voltage = np.linspace(0.1,5,18)
 
     desired_output = linear_function(input_voltage)
 
@@ -276,7 +276,6 @@ def update_input_output_volt(G, input_voltage, desired_voltage):
 
 def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
 
-
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
     if G.name == 'voltage_divider': 
@@ -300,7 +299,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
     error_normalization = error #define it as normalization error
 
-    mse_file.write(f"{error/error_normalization}\n")
+    # mse_file.write(f"{error/error_normalization}\n")
+    mse_file.write(f"{error}\n")
 
     print('Step:', 0, error)
     
@@ -321,6 +321,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         print('Step:', step+1, error)
         mse_file.write(f"{error/error_normalization}\n")
+        mse_file.write(f"{error}\n")
+
 
     mse_file.close()
     if G.name == 'voltage_divider':

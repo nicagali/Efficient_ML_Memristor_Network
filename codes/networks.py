@@ -89,8 +89,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 10
-    number_edges = 15
+    number_nodes = 7
+    number_edges = 12
     G = nx.gnm_random_graph(number_nodes, number_edges)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
@@ -115,8 +115,8 @@ def random_graph(save_data=False, res_change=False):
             G.nodes[node]['color'] = par.color_dots[2]
 
     # INITIALIZE nodes and edges
-    voltage_input = [5, 0] # node initialized here because different for differnent nw
-    voltage_desired = [3, 4, 2]
+    voltage_input = [5, 0, 0] # node initialized here because different for differnent nw
+    voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
     initialize_edges(G)
