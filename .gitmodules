@@ -1,7 +1,3 @@
 
 
 
-[submodule "codes/ahkab"]
-	path = codes/ahkab
-	url = git@github.com:nicagali/ahkab.git
-	branch = potentialandpressure
