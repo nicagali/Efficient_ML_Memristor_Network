@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def linear_function(input):
-    return 0.7*input + 0.5
+    return input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -157,7 +157,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 def generate_dataset():
 
-    input_voltage = np.linspace(-3,3,18)
+    input_voltage = np.linspace(0.1,2,18)
 
     desired_output = linear_function(input_voltage)
 
