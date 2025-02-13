@@ -33,7 +33,7 @@ training_type = 'linear_regression'
 
 G_ml = G.copy(as_view=False)  
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=5e-6)
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=800)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=800)
 # G_pressure = G.copy(as_view=False)  
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
 
