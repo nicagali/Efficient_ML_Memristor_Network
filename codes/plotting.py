@@ -42,8 +42,8 @@ def plot_graph(name_graph):
     bbox = {'facecolor': 'lightblue', 'edgecolor': par.color_edges, 'alpha': 1, 'boxstyle': 'round,pad=0.5'}
     
     # GENERATE determined positions - Check out better with general nw
-    pos = nx.kamada_kawai_layout(G, scale=2)
-    # pos = nx.arf_layout(G)
+    # pos = nx.kamada_kawai_layout(G, scale=2)
+    pos = nx.spring_layout(G)
 
     # DRAW the network
     nx.draw(G, with_labels=True, node_color=color_attributes,  

@@ -13,7 +13,7 @@ def write_weights_to_file(G, step, weight_type, path_patch):
     file = open(f"{par.DATA_PATH}weights/{path_patch}/{weight_type}/{weight_type}{step}.txt", "w")
     
     for index, edge in enumerate(G.edges()): 
-        if weight_type=='length' or weight_type=='radius_base':
+        if weight_type=='length' or weight_type=='radius_base' or weight_type=='resistance':
             file.write(f"{index}\t{G.edges[edge][weight_type]}\n")
     for node in G.nodes():
         if weight_type=='pressure' or weight_type=='rho':  
@@ -50,14 +50,14 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def linear_function(input):
-    return 0.7*input+0.4
+    return input + 0.2
 
 # --------- ALGORITHM FUNCTIONS ---------
 
 def cost_function(G, write_potential_target_to_file=None, update_initial_res = False):
     
     # TRANSFORM graph into circuit
-    circuit = networks.circuit_from_graph(G, type='memristors') 
+    circuit = networks.circuit_from_graph(G, type='resistors') 
 
     # DEFINE a transient analysis (analysis of the circuit over time)
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
@@ -125,6 +125,31 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
         for node in G.nodes():
 
             G.nodes[node][f'{weight_type}'] -= learning_rate*gradients[int(node)]
+
+    elif weight_type == 'resistance':
+
+        for index, edge in enumerate(G.edges()):
+
+            G_increment = G.copy(as_view=False)
+  
+            G_increment.edges[edge][f'{weight_type}'] += delta_weight
+            
+            if training_type == 'allostery':
+                error = cost_function(G_increment)  
+            else:
+                error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
+
+            # print(index, base_error, error, (error - base_error), (error - base_error)/delta_weight)
+
+            gradients.append((error - base_error)/delta_weight)
+            
+        for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
+
+            # print(G.edges[edge][f'{weight_type}'])
+            G.edges[edge][f'{weight_type}'] -= learning_rate*gradients[index]
+            # print(G.edges[edge][f'{weight_type}'])
+
+
     else:
 
         for index, edge in enumerate(G.edges()):
@@ -157,7 +182,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 def generate_dataset():
 
-    input_voltage = np.linspace(-3,3,18)
+    input_voltage = np.linspace(-3,3,19)
 
     desired_output = linear_function(input_voltage)
 
@@ -273,9 +298,11 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
 def update_input_output_volt(G, input_voltage, desired_voltage):
     
     for node in G.nodes():
+
+        # print(node, G.nodes[node]['type'], G.nodes[node]['constant_source'])
         
-        if G.nodes[node]['type'] == 'source' and G.nodes[node]['voltage']!=0 and not G.nodes[node]['constant_source']:
-            # print('input voltage', input_voltage)
+        if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
+            # print('input voltage', node, input_voltage)
             
             G.nodes[node]['voltage'] = input_voltage
 
@@ -356,7 +383,12 @@ def test_regression(G, step, weight_type):
             G.edges[edge][f'{weight_type}'] = weight_vec[index]
             
     reg_file = open(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", "w") 
-    
+
+    # for node in G.nodes():
+    #     if G.nodes[node]['type']=='source':
+
+    #         print(node, G.nodes[node]['constant_source'])
+        
 
     dataset_input_voltage, dataset_output_voltage = generate_dataset()
 
@@ -365,12 +397,21 @@ def test_regression(G, step, weight_type):
 
 
         update_input_output_volt(G, dataset_input_voltage[datastep], dataset_output_voltage[datastep])
+
+        # print(dataset_input_voltage[datastep])
         
         
-        circuit = networks.circuit_from_graph(G, type='memristors') 
+        # circuit = networks.circuit_from_graph(G, type='memristors') 
+        circuit = networks.circuit_from_graph(G, type='resistors') 
         tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
         result = ahkab.run(circuit, an_list=tran_analysis)  
         result = result[0]
+        # print(result['tran'].keys())
+        # print(result['tran']['VN2'][-1])
+        # print(result['tran']['VN3'][-1])
+        # print(result['tran']['VN0'][-1])
+        # print(result['tran']['VN1'][-1])
+
         
         output_voltage_target = []
         for node in G.nodes():
