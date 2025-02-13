@@ -91,8 +91,10 @@ def random_graph(save_data=False, res_change=False):
     # CREATE random graph with number_nodes conected by number_edges
     number_nodes = 5
     number_edges = 8
-    G = nx.gnm_random_graph(number_nodes, number_edges)
-    # G = nx.house_graph()
+    # G = nx.gnm_random_graph(number_nodes, number_edges)
+    G = nx.house_graph()
+    G = nx.grid_2d_graph(2, 2)
+    G = nx.convert_node_labels_to_integers(G)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 2
@@ -110,12 +112,16 @@ def random_graph(save_data=False, res_change=False):
         if node in sources:
             G.nodes[node]['type'] = 'source'
             G.nodes[node]['color'] = par.color_dots[0]
+            G.nodes[node]['constant_source'] = False
+
         elif node in targets:
             G.nodes[node]['type'] = 'target'
             G.nodes[node]['color'] = par.color_dots[1]
         else:
             G.nodes[node]['type'] = 'hidden'
             G.nodes[node]['color'] = par.color_dots[2]
+
+    G.nodes[3]['constant_source'] = True
 
     # INITIALIZE nodes and edges
     voltage_input = [5, 2, 0] # node initialized here because different for differnent nw

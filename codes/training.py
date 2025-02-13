@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def linear_function(input):
-    return 0.3*input
+    return 0.7*input + 0.5
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -92,12 +92,13 @@ def cost_function_regression(G, dataset_input_voltage, dataset_output_voltage):
     error = 0
     for datastep in range(len(dataset_input_voltage)):
         update_input_output_volt(G, dataset_input_voltage[datastep], dataset_output_voltage[datastep])
+        # print(dataset_input_voltage[datastep], dataset_output_voltage[datastep])
         error += cost_function(G) 
     error = error/len(dataset_input_voltage)
 
     return error
 
-def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
+def update_weights(G, training_type, base_error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage):
 
     gradients = []
     
@@ -109,14 +110,17 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
             
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
 
-            new_error = cost_function(G_increment)
+            if training_type == 'allostery':
+                error = cost_function(G_increment)  
+            else:
+                error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
 
             if weight_type == 'pressure':
                 denominator = delta_weight*1e5
             else:
                 denominator = delta_weight
                 
-            gradients.append((new_error - base_error)/denominator)
+            gradients.append((error - base_error)/denominator)
 
         for node in G.nodes():
 
@@ -128,14 +132,20 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
             G_increment = G.copy(as_view=False)
   
             G_increment.edges[edge][f'{weight_type}'] += delta_weight
-            new_error = cost_function(G_increment)
+            
+            if training_type == 'allostery':
+                error = cost_function(G_increment)  
+            else:
+                error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
 
             if weight_type == 'length':
                 denominator = delta_weight*1e-6
             else:
                 denominator = delta_weight*1e-9
 
-            gradients.append((new_error - base_error)/denominator)
+            # print(index, base_error, G_increment.edges[edge][f'{weight_type}'], error)
+
+            gradients.append((error - base_error)/denominator)
             
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
@@ -147,7 +157,7 @@ def update_weights(G,base_error, weight_type, delta_weight, learning_rate):
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 def generate_dataset():
 
-    input_voltage = np.linspace(0.1,5,18)
+    input_voltage = np.linspace(-3,3,18)
 
     desired_output = linear_function(input_voltage)
 
@@ -264,7 +274,8 @@ def update_input_output_volt(G, input_voltage, desired_voltage):
     
     for node in G.nodes():
         
-        if G.nodes[node]['type'] == 'source' and G.nodes[node]['voltage']!=0:
+        if G.nodes[node]['type'] == 'source' and G.nodes[node]['voltage']!=0 and not G.nodes[node]['constant_source']:
+            # print('input voltage', input_voltage)
             
             G.nodes[node]['voltage'] = input_voltage
 
@@ -307,9 +318,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, error, weight_type, delta_weight, learning_rate)
+        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 
