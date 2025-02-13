@@ -38,6 +38,14 @@ G_ml = G.copy(as_view=False)
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
 
 
+fig, ax = plt.subplots()
+plotting.plot_mse(ax, fig, f'allostery_resistance')
+# plotting.plot_mse(ax, fig, f'allostery_length')
+ax.legend()
+fig.tight_layout()
+fig.savefig(f"../paper/plots/linear_regression/mse.pdf", transparent=True)
+
+
 training.test_regression(G, step=0, weight_type='resistance')
 training.test_regression(G, step=10, weight_type='resistance')
 training.test_regression(G, step=20, weight_type='resistance')

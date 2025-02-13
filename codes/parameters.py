@@ -37,6 +37,7 @@ mse_styles = {
     'allostery_rho': dict(marker = 'o', c = cmap.colors[1], lw=1, label = rf'$\rho$', ylabel_weights = r'$\rho$[mM]'),
     'allostery_radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$', ylabel_weights = r'$R_b$[nm]'),
     'allostery_pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$', ylabel_weights = r'$P$[bar]'),
+    'allostery_resistance': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$R$', ylabel_weights = r'$P$[bar]'),
 }
 
 reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')

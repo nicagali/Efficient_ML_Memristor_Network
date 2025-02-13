@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def linear_function(input):
-    return input + 0.2
+    return input + 0.4
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -337,8 +337,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
     error_normalization = error #define it as normalization error
 
-    # mse_file.write(f"{error/error_normalization}\n")
-    mse_file.write(f"{error}\n")
+    mse_file.write(f"{error/error_normalization}\n")
+    # mse_file.write(f"{error}\n")
 
     print('Step:', 0, error)
     
@@ -359,7 +359,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         print('Step:', step+1, error)
         mse_file.write(f"{error/error_normalization}\n")
-        mse_file.write(f"{error}\n")
+        # mse_file.write(f"{error}\n")
 
 
     mse_file.close()

@@ -124,7 +124,7 @@ def random_graph(save_data=False, res_change=False):
     G.nodes[3]['constant_source'] = True
 
     # INITIALIZE nodes and edges
-    voltage_input = [0, 1, 0] # node initialized here because different for differnent nw
+    voltage_input = [0, 2, 0] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
