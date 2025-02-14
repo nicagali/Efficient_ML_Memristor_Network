@@ -22,7 +22,7 @@ pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/linear_regression/graph.pdf")
 
-training_steps = 10
+training_steps = 20
 training_type = 'linear_regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/linear_regression/length/length100.txt", unpack=True)
