@@ -50,14 +50,14 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def linear_function(input):
-    return input 
+    return input  + 0.14
 
 # --------- ALGORITHM FUNCTIONS ---------
 
 def cost_function(G, write_potential_target_to_file=None, update_initial_res = False):
     
     # TRANSFORM graph into circuit
-    circuit = networks.circuit_from_graph(G, type='memristors') 
+    circuit = networks.circuit_from_graph(G, type='resistors') 
 
     # DEFINE a transient analysis (analysis of the circuit over time)
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
@@ -400,9 +400,8 @@ def test_regression(G, step, weight_type):
 
         # print(dataset_input_voltage[datastep])
         
-        
         # circuit = networks.circuit_from_graph(G, type='memristors') 
-        circuit = networks.circuit_from_graph(G, type='memristors') 
+        circuit = networks.circuit_from_graph(G, type='resistors') 
         tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
         result = ahkab.run(circuit, an_list=tran_analysis)  
         result = result[0]

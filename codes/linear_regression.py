@@ -39,16 +39,16 @@ G_ml = G.copy(as_view=False)
 
 
 fig, ax = plt.subplots()
-# plotting.plot_mse(ax, fig, f'allostery_resistance')
-plotting.plot_mse(ax, fig, f'allostery_length')
+plotting.plot_mse(ax, fig, f'allostery_resistance')
+# plotting.plot_mse(ax, fig, f'allostery_length')
 ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/linear_regression/mse.pdf", transparent=True)
 
 
-training.test_regression(G, step=0, weight_type='length')
-training.test_regression(G, step=5, weight_type='length')
-training.test_regression(G, step=10, weight_type='length')
+training.test_regression(G, step=0, weight_type='resistance')
+training.test_regression(G, step=5, weight_type='resistance')
+training.test_regression(G, step=10, weight_type='resistance')
 
 fig, ax = plt.subplots(1, 3, figsize=(15,5))
 plotting.plot_regression(ax[0], step=0)
