@@ -69,7 +69,7 @@ def plot_mse(ax, fig, rule, show_xlabel=True, saved_graph=None):
 
     style = par.mse_styles[f'{rule}']
     ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
-    # ax.set_yscale('log')   
+    ax.set_yscale('log')   
     
     # ax.legend(fontsize = par.legend_size)
     ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
