@@ -14,7 +14,8 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.voltage_divider(save_data=True) 
 
 
 # -> PLOT graph in /plots 
@@ -23,7 +24,7 @@ pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/linear_regression/graph.pdf")
 
-training_steps = 20
+training_steps = 100
 training_type = 'linear_regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/linear_regression/length/length10.txt", unpack=True)
@@ -33,7 +34,7 @@ training_type = 'linear_regression'
 #         G.edges[edge][f'length'] = weight_vec[index]
 
 G_ml = G.copy(as_view=False)  
-training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-5)
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=800)
 # G_pressure = G.copy(as_view=False)  
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
@@ -48,13 +49,13 @@ fig.savefig(f"../paper/plots/linear_regression/mse.pdf", transparent=True)
 
 
 training.test_regression(G, step=0, weight_type='length')
-training.test_regression(G, step=15, weight_type='length')
-training.test_regression(G, step=20, weight_type='length')
+training.test_regression(G, step=50, weight_type='length')
+training.test_regression(G, step=100, weight_type='length')
 
 fig, ax = plt.subplots(1, 3, figsize=(15,5))
 plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=15)
-plotting.plot_regression(ax[2], step=20)
+plotting.plot_regression(ax[1], step=50)
+plotting.plot_regression(ax[2], step=100)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/linear_regression/snapshots.pdf")
 
