@@ -93,26 +93,30 @@ def random_graph(save_data=False, res_change=False):
     number_edges = 8
     # G = nx.gnm_random_graph(number_nodes, number_edges)
     G = nx.house_graph()
-    G = nx.grid_2d_graph(2, 2)
+    G = nx.grid_2d_graph(3, 3)
     G = nx.convert_node_labels_to_integers(G)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 2
     number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
-    sources = [2,3,4]
+    # sources = [2,3,4]
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
-    targets = [0]
+    # targets = [0]
 
     volt_input = []
     # Assign attributes nodes
-    volt_index=0
+    constantsource_index=0
     for node in range(len(G.nodes)):
         if node in sources:
             G.nodes[node]['type'] = 'source'
             G.nodes[node]['color'] = par.color_dots[0]
-            G.nodes[node]['constant_source'] = False
+            if constantsource_index == 0:
+                G.nodes[node]['constant_source'] = False
+                constantsource_index += 1
+            else:
+                G.nodes[node]['constant_source'] = True
 
         elif node in targets:
             G.nodes[node]['type'] = 'target'

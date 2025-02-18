@@ -247,8 +247,8 @@ def to_numpy_array(shared_array, shape):
 def  update_weights_parallel(G, training_type, base_error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage):
 
     if weight_type=='pressure' or weight_type=='rho':
-        # batch_size = G.number_of_nodes()
-        batch_size = 1
+        batch_size = G.number_of_nodes()
+        # batch_size = 1
         number_of_weights = G.number_of_nodes()
     else:
         # batch_size = int(G.number_of_edges()/4)
@@ -346,9 +346,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 

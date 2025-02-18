@@ -73,3 +73,5 @@ training.train(G_length, training_type=training_type, training_steps=training_st
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/general_network/mse_pretrained.pdf", transparent=True)
 
+end = time.time()
+print("Running time = ", end-start, "seconds")
