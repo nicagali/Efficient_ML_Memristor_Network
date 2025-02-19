@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def regression_function(input):
-    return input + 0.5
+    return input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -310,7 +310,8 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
             G.edges[edge][f'{weight_type}'] -= learning_rate*stored_gradient[index]
             # print(stored_gradient[index])
             if G.edges[edge][f'{weight_type}'] < 0:
-                sys.exit(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
+                G.edges[edge][f'{weight_type}'] += learning_rate*stored_gradient[index]
+                print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
 
 
 
