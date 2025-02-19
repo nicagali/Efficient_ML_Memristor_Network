@@ -36,7 +36,8 @@ def plot_graph(name_graph):
     labels = {node: fr'$V_{int(node)}$, $P_{int(node)}$, $\rho_{int(node)}$' for node in G.nodes()}
     
     # LABEL edges M_{i,j} : memristor that connect node i to node j (i = BASE, j = TIP)
-    edge_labels = {(u, v): fr'$M_{{ {int(u)}, {int(v)} }}$' for u, v in G.edges()}  
+    # edge_labels = {(u, v): fr'$M_{{ {int(u)}, {int(v)} }}$' for u, v in G.edges()}  
+    edge_labels = {(u, v): fr'$M_{{{index+1}}}$' for index, (u, v) in enumerate(G.edges())}
     
     # CREATE a box on the edge that represents the memristor
     bbox = {'facecolor': 'lightblue', 'edgecolor': par.color_edges, 'alpha': 1, 'boxstyle': 'round,pad=0.5'}
@@ -67,7 +68,12 @@ def plot_mse(ax, fig, rule, show_xlabel=True, saved_graph=None):
 
     x = range(0,len(y))
 
-    style = par.mse_styles[f'{rule}']
+    text = rule.split('_')
+    weight_type = text[1]
+    if weight_type == 'radius':
+        weight_type = 'radius_base'
+
+    style = par.weight_styles[f'{weight_type}']
     ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
     ax.set_yscale('log')   
     
@@ -104,9 +110,10 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     else:
         color_factor = 1 / (number_weights - 1)
     
-    style = par.mse_styles[f'{rule}']
+    style = par.weight_styles[f'{weight_type}']
     base_color = style['c']
     palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
+    palette = plt.get_cmap('tab20')
       
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
     for weight_indx in range(number_weights):
@@ -115,10 +122,12 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
         for step in range(training_steps+1):
             data = np.loadtxt(f"{par.DATA_PATH}weights/{training_job}/{weight_type}/{weight_type}{step}.txt", unpack=True)
             y = data[1]
+            # print(y)
             weight.append(y[weight_indx])
 
         label_without_weightindex = style['label'][1:-1]
-        ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{weight_indx+1}$')
+        ax.plot(x, weight, color=palette(weight_indx / number_weights), marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
+        # ax.plot(x, weight, marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
         
     label = style['ylabel_weights']
     ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
@@ -127,8 +136,8 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     ax.tick_params(axis='both', labelsize=par.size_ticks)
     if weight_type == 'pressure' and starting_step==0:
         ax.legend(fontsize = par.legend_size, loc='lower left')
-    elif starting_step ==0 :
-        ax.legend(fontsize = par.legend_size)
+    # elif starting_step ==0 :
+    #     ax.legend(fontsize = par.legend_size)
         # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_potential_each_node(ax, G, factor_time=1):
@@ -202,7 +211,7 @@ def plot_regression(ax, step):
     
     x_interval = np.linspace(np.min(x),np.max(x))
 
-    y1_desired = training.linear_function(x_interval)
+    y1_desired = training.regression_function(x_interval)
 
     
     # if inp.weight_type=='rhob':
