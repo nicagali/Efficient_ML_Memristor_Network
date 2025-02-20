@@ -13,16 +13,16 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.three_inout(save_data=True) 
+# G = nx.read_graphml(f'{par.DATA_PATH}three_inout_regression')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('random_graph')
+pos = plotting.plot_graph('three_inout')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 30
+training_steps = 0
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length10.txt", unpack=True)

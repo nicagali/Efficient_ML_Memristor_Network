@@ -142,6 +142,42 @@ def random_graph(save_data=False, res_change=False):
     return G
 
 
+
+
+def three_inout(save_data=False):
+
+    G = nx.Graph()
+
+    attributes = {"type" : "source", 'color' : par.color_dots[0]}
+    G.add_node(0, **attributes)
+    G.add_node(4, **attributes)
+    G.add_node(3, **attributes)
+    attributes = {"type" : "target", 'color' : par.color_dots[1]}
+    G.add_node(1, **attributes)
+    G.add_node(7, **attributes)
+    attributes = {"type" : "hidden", 'color' : par.color_dots[2]}
+    G.add_node(2, **attributes)
+    G.add_node(5, **attributes)
+    G.add_node(6, **attributes)
+    G.add_node(8, **attributes)
+
+
+    # G.add_edges_from([(0,5), (0,6), (0,7), (6,7), (5,7), (5,6), (3,6), (1,3)])
+    G.add_edges_from([(0,5), (0,6), (0,7), (6,7),  (5,6), (3,6), (1,3), (5,7)])    #   for graphical reprer without one edge
+    G.add_edges_from([(1,6), (1,5), (5,8), (1,8), (1,4), (4,8), (2,4), (2,8)])
+
+    voltage_input = [5, 2, 0] # node initialized here because different for differnent nw
+    voltage_desired = [3, 4]
+
+    initialize_nodes(G, voltage_input, voltage_desired)
+    initialize_edges(G)
+
+    if save_data:
+
+        nx.write_graphml(G, f"{par.DATA_PATH}three_inout.graphml")
+
+    return G
+
 # 3 --------- GRAPH -> CIRCUIT ---------
 # Create a the class 'Circuit' used in the package ahkab from the desired graph.
 def circuit_from_graph(G, type):

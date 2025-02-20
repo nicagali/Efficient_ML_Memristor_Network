@@ -49,8 +49,10 @@ def voltage_drop_element(circuit, result, element):
 
     return voltage_drop
 
-def regression_function(input):
-    return 0.3*input 
+def regression_function1(input1, input2):
+    return 0.15*input1 +0.2*input2
+def regression_function2(input1, inpu2):
+    return 0.25*input1 + 0.1*inpu2 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -100,7 +102,7 @@ def cost_function(G, weight_type, write_potential_target_to_file=None, update_in
 def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage):
 
     error = 0
-    for datastep in range(len(dataset_input_voltage)):
+    for datastep in range(len(dataset_input_voltage[0])):
         update_input_output_volt(G, dataset_input_voltage[datastep], dataset_output_voltage[datastep])
         # print(dataset_input_voltage[datastep], dataset_output_voltage[datastep])
         error += cost_function(G, weight_type) 
@@ -196,9 +198,14 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 def generate_dataset():
 
-    input_voltage = np.linspace(-3,3,19)
+    input_voltage1 = np.linspace(1,5,19)
+    input_voltage2 = np.linspace(1,5,19)
 
-    desired_output = regression_function(input_voltage)
+    desired_output1 = regression_function1(input_voltage1, input_voltage2)
+    desired_output2 = regression_function2(input_voltage1, input_voltage2)
+
+    input_voltage = [input_voltage1, input_voltage2]
+    desired_output = [desired_output1, desired_output2]
 
     return input_voltage, desired_output
 
