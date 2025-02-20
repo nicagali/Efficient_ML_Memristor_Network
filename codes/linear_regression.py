@@ -13,17 +13,17 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
-G = networks.voltage_divider(save_data=True) 
+G = networks.random_graph(save_data=True) 
+# G = networks.voltage_divider(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('voltage_divider')
+pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 30
+training_steps = 100
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length10.txt", unpack=True)
@@ -34,7 +34,7 @@ training_type = 'regression'
 
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=7e-5)
-training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=300)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=50)
 # G_pressure = G.copy(as_view=False)  
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
 
