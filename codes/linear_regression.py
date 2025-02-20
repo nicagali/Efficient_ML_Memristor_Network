@@ -23,7 +23,7 @@ pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 100
+training_steps = 50
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length10.txt", unpack=True)
@@ -34,7 +34,7 @@ training_type = 'regression'
 
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=7e-5)
-training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=50)
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=100)
 # G_pressure = G.copy(as_view=False)  
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
 

@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def regression_function(input):
-    return 0.3*input 
+    return 0.4*input + 1
 
 # --------- ALGORITHM FUNCTIONS ---------
 
