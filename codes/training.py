@@ -50,7 +50,7 @@ def voltage_drop_element(circuit, result, element):
     return voltage_drop
 
 def regression_function(input):
-    return 0.3*input 
+    return input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -123,7 +123,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if training_type == 'allostery':
                 error = cost_function(G_increment)  
             else:
-                error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
 
             if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -147,7 +147,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if training_type == 'allostery':
                 error = cost_function(G_increment)  
             else:
-                error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
 
             # print(index, base_error, error, (error - base_error), (error - base_error)/delta_weight)
 
@@ -367,9 +367,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 

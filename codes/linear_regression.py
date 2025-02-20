@@ -14,11 +14,12 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.voltage_divider(save_data=True) 
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('random_graph')
+pos = plotting.plot_graph('voltage_divider')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
@@ -33,7 +34,7 @@ training_type = 'regression'
 
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=7e-5)
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=300)
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=100)
 # G_pressure = G.copy(as_view=False)  
 # training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
 
@@ -41,7 +42,7 @@ training.train(G, training_type=training_type, training_steps=training_steps, we
 fig, ax = plt.subplots()
 # plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'regression_length', show_xlabel=False)
 plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'regression_resistance', show_xlabel=False)
-# ax.legend()
+ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 

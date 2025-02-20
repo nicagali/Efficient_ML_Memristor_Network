@@ -66,12 +66,15 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     attributes = {"type" : "source", 'color' : par.color_dots[0]}
     G.add_node(2, **attributes)
 
+    G.nodes[0]['constant_source'] = True
+    G.nodes[2]['constant_source'] = False
+
     # ADD edges
     G.add_edge(0,1)
     G.add_edge(1,2)
     
     # INITIALIZE nodes and edges
-    voltage_input = [5, 0] # node initialized here because different for differnent nw
+    voltage_input = [2, 0] # node initialized here because different for differnent nw
     # voltage_desired = [4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
