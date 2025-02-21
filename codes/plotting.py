@@ -33,7 +33,8 @@ def plot_graph(name_graph):
     color_attributes = [G.nodes[node]['color'] for node in G.nodes()]
     
     # LABEL nodes with potential, pressure and densty indeces
-    labels = {node: fr'$V_{int(node)}$, $P_{int(node)}$, $\rho_{int(node)}$' for node in G.nodes()}
+    # labels = {node: fr'$V_{int(node)}$, $P_{int(node)}$, $\rho_{int(node)}$' for node in G.nodes()}
+    labels = {node: fr'$V_{{{int(node)}}}$' for node in G.nodes()}
     
     # LABEL edges M_{i,j} : memristor that connect node i to node j (i = BASE, j = TIP)
     # edge_labels = {(u, v): fr'$M_{{ {int(u)}, {int(v)} }}$' for u, v in G.edges()}  
@@ -138,7 +139,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
         ax.legend(fontsize = par.legend_size, loc='lower left')
     # elif starting_step ==0 :
     #     ax.legend(fontsize = par.legend_size)
-        # ax.legend(bbox_to_anchor=(1, 1))
+    # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_potential_each_node(ax, G, factor_time=1):
 
