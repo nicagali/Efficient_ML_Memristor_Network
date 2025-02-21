@@ -14,12 +14,12 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-# G = networks.voltage_divider(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.voltage_divider(save_data=True) 
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('random_graph')
+pos = plotting.plot_graph('voltage_divider')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
