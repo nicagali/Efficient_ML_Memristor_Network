@@ -55,13 +55,13 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
 
 training.test_regression(G, step=0, weight_type='resistance')
-training.test_regression(G, step=25, weight_type='resistance')
 training.test_regression(G, step=50, weight_type='resistance')
+training.test_regression(G, step=100, weight_type='resistance')
 
 fig, ax = plt.subplots(1, 3, figsize=(15,5))
 plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=25)
-plotting.plot_regression(ax[2], step=50)
+plotting.plot_regression(ax[1], step=50)
+plotting.plot_regression(ax[2], step=100)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/snapshots.pdf")
 
