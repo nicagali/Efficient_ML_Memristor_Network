@@ -13,9 +13,9 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-G = networks.random_graph(save_data=True) 
+# G = networks.random_graph(save_data=True) 
 # G = networks.voltage_divider(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -23,7 +23,7 @@ pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 50
+training_steps = 100
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length10.txt", unpack=True)
@@ -55,13 +55,13 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
 
 training.test_regression(G, step=0, weight_type='resistance')
-training.test_regression(G, step=15, weight_type='resistance')
-training.test_regression(G, step=30, weight_type='resistance')
+training.test_regression(G, step=25, weight_type='resistance')
+training.test_regression(G, step=50, weight_type='resistance')
 
 fig, ax = plt.subplots(1, 3, figsize=(15,5))
 plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=15)
-plotting.plot_regression(ax[2], step=30)
+plotting.plot_regression(ax[1], step=25)
+plotting.plot_regression(ax[2], step=50)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/snapshots.pdf")
 
