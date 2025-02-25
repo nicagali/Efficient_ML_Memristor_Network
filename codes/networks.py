@@ -89,8 +89,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 14
-    number_edges = 28
+    number_nodes = 7
+    number_edges = 14
     G = nx.gnm_random_graph(number_nodes, number_edges)
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)
@@ -98,8 +98,8 @@ def random_graph(save_data=False, res_change=False):
     # G = nx.complete_graph(5)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
-    number_sources = 2
-    number_targets = 1
+    number_sources = 3
+    number_targets = 2
     sources = random.sample(G.nodes(), number_sources)
     # sources = [2,3,4]
     target_sampling_list = [x for x in G.nodes() if x not in sources]
@@ -129,7 +129,7 @@ def random_graph(save_data=False, res_change=False):
     # G.nodes[3]['constant_source'] = True
 
     # INITIALIZE nodes and edges
-    voltage_input = [0, 2, 0] # node initialized here because different for differnent nw
+    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
@@ -190,6 +190,7 @@ def circuit_from_graph(G, type):
 
         # Adding the voltage sources from ground to input nodes
         if G.nodes[node]['type'] == 'source':
+            # print(node, G.nodes[node]['type'])
             circuit.add_vsource(f"VN{node}", n1=f'n{node}', n2=circuit.gnd, dc_value=G.nodes[node]['voltage'])
             
     # ADD elements on links

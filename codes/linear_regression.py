@@ -13,23 +13,26 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.three_inout(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}three_inout_regression')
-G = networks.voltage_divider(save_data=True) 
+G = networks.three_inout(save_data=True) 
+# G = networks.random_graph(save_data=True) 
+# G = networks.voltage_divider(save_data=True) 
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('voltage_divider')
+# pos = plotting.plot_graph('three_inout')
+pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 50
+training_steps = 100
 training_type = 'allostery'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
 # weight_vec = data[1]
 
-# for index, edge in enumerate(G.edges):
+# for index, edge in enumerate(G.edges)x:
 #         G.edges[edge][f'resistance'] = weight_vec[index]
 
 G_ml = G.copy(as_view=False)  

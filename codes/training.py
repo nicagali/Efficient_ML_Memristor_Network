@@ -236,23 +236,27 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 def update_output(G, voltages):
 
     index_do = 0
-    eta = 0.5
+    eta = 0.3
 
     for node in G.nodes():
 
         if G.nodes[node]['type'] == 'target':
 
+            # print(node, eta*(G.nodes[node]['desired']) + (1 - eta) * (voltages[node]))
+
             G.nodes[node]['type'] = 'source'
 
-            G.nodes[node]['voltage'] = eta*(G.nodes[node]['desired']) + (1 - eta) * (voltages[node])
+            G.nodes[node]['voltage'] = eta*(G.nodes[node]['desired']) + (1 - eta) * (voltages[int(node)])
+            # G.nodes[node]['voltage'] = 1
+
 
     return G
 
 
 def update_resistances(G_free):
 
-    eta = 0.5
-    alpha = 2000
+    eta = 0.3
+    alpha = 1000
     gamma = alpha/(2*eta)
 
     # solve graph free
@@ -261,7 +265,10 @@ def update_resistances(G_free):
     analysis = ahkab.new_op()
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
     result = result[0]
-    voltages_free = np.array([result['op'][f'VN{node}'][0][0] for node in G_free.nodes()])
+    voltages_free = np.array([result['op'][f'VN{node}'][0][0] for node in range(len(G_free.nodes()))])
+    # print(result['op'])
+    # print(voltages_free)
+
 
     G_clamped = G_free.copy(as_view=False)
 
@@ -271,20 +278,22 @@ def update_resistances(G_free):
     analysis = ahkab.new_op()
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
     result = result[0]
-    voltages_clamped = np.array([result['op'][f'VN{node}'][0][0] for node in G_free.nodes()])
+    voltages_clamped = np.array([result['op'][f'VN{node}'][0][0] for node in G_clamped.nodes()])
+    # print(voltages_clamped)
 
 
     for edge in G_free.edges():
 
         u, v = edge
 
-        diff_free = np.abs(voltages_free[u] - voltages_free[v])
-        diff_clamped = np.abs(voltages_clamped[u] - voltages_clamped[v])
+        # print(u,v, voltages_free[u], voltages_free[v])
+
+        diff_free = np.abs(voltages_free[int(u)] - voltages_free[int(v)])
+        diff_clamped = np.abs(voltages_clamped[int(u)] - voltages_clamped[int(v)])
 
         delta_v = diff_clamped-diff_free
         delta_v_sq = diff_clamped**2 - diff_free**2
         
-
 
         prefac = gamma * (1 / (G_free.edges[edge]['resistance'])**2)
 
