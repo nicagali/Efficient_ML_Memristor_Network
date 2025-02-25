@@ -33,7 +33,7 @@ def plot_graph(name_graph):
     color_attributes = [G.nodes[node]['color'] for node in G.nodes()]
     
     # LABEL nodes with potential, pressure and densty indeces
-    labels = {node: fr'$V_{int(node)}$' for node in G.nodes()}
+    labels = {node: fr'$V_{int(node)+1}$' for node in G.nodes()}
     
     # LABEL edges M_{i,j} : memristor that connect node i to node j (i = BASE, j = TIP)
     # edge_labels = {(u, v): fr'$M_{{ {int(u)}, {int(v)} }}$' for u, v in G.edges()}  

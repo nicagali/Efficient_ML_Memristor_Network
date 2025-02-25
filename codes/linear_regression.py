@@ -37,7 +37,7 @@ training_type = 'allostery'
 
 G_ml = G.copy(as_view=False)  
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=50)
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=50)
 
 
 
