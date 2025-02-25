@@ -7,9 +7,9 @@ PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Netwo
 
 # --------- NETWORKS PLOTS STYLES ---------
 
-color_dots = ['forestgreen','darkslateblue','silver'] # color of the three types of nodes: input, output, hidden
+color_dots = ['red','darkslateblue','silver'] # color of the three types of nodes: input, output, hidden
 font_size_nw = 12 #size font on nodes
-nodes_size = 3000 #size nodes
+nodes_size = 1000 #size nodes
 width = 5 #width connecting edges
 
 color_edges = 'lightblue'
@@ -37,7 +37,7 @@ weight_styles = {
     'rho': dict(marker = 'o', c = cmap.colors[1], lw=1, label = rf'$\rho$', ylabel_weights = r'$\rho$[mM]'),
     'radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$', ylabel_weights = r'$R_b$[nm]'),
     'pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$', ylabel_weights = r'$P$[bar]'),
-    'resistance': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$R$', ylabel_weights = r'$P$[bar]'),
+    'resistance': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$R$', ylabel_weights = r'$R$[$\Omega$]'),
 }
 
 reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')

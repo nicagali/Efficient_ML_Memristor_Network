@@ -13,35 +13,35 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-G = networks.three_inout(save_data=True) 
+# G = networks.three_inout(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}three_inout_regression')
+G = networks.voltage_divider(save_data=True) 
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-pos = plotting.plot_graph('three_inout')
+pos = plotting.plot_graph('voltage_divider')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf")
 
-training_steps = 0
-training_type = 'regression'
+training_steps = 50
+training_type = 'allostery'
 
-# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length10.txt", unpack=True)
+# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
 # weight_vec = data[1]
 
 # for index, edge in enumerate(G.edges):
-#         G.edges[edge][f'length'] = weight_vec[index]
+#         G.edges[edge][f'resistance'] = weight_vec[index]
 
 G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=7e-5)
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-1, learning_rate=300)
-# G_pressure = G.copy(as_view=False)  
-# training.train(G_pressure, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e4)
+
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=50)
+
 
 
 fig, ax = plt.subplots()
 # plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'regression_length', show_xlabel=False)
-plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'regression_resistance', show_xlabel=False)
-# ax.legend()
+plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'allostery_resistance', show_xlabel=False)
+ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 
@@ -53,16 +53,16 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
 
-training.test_regression(G, step=0, weight_type='resistance')
-training.test_regression(G, step=15, weight_type='resistance')
-training.test_regression(G, step=30, weight_type='resistance')
+# training.test_regression(G, step=0, weight_type='resistance')
+# training.test_regression(G, step=15, weight_type='resistance')
+# training.test_regression(G, step=30, weight_type='resistance')
 
-fig, ax = plt.subplots(1, 3, figsize=(15,5))
-plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=15)
-plotting.plot_regression(ax[2], step=30)
-fig.tight_layout()
-fig.savefig(f"../paper/plots/regression/snapshots.pdf")
+# fig, ax = plt.subplots(1, 3, figsize=(15,5))
+# plotting.plot_regression(ax[0], step=0)
+# plotting.plot_regression(ax[1], step=15)
+# plotting.plot_regression(ax[2], step=30)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/regression/snapshots.pdf")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

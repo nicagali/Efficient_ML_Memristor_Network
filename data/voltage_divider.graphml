@@ -16,7 +16,7 @@
   <graph edgedefault="directed">
     <node id="0">
       <data key="d1">source</data>
-      <data key="d2">forestgreen</data>
+      <data key="d2">red</data>
       <data key="d3">0.2</data>
       <data key="d4">1</data>
       <data key="d5">5</data>
@@ -30,7 +30,7 @@
     </node>
     <node id="2">
       <data key="d1">source</data>
-      <data key="d2">forestgreen</data>
+      <data key="d2">red</data>
       <data key="d3">0.2</data>
       <data key="d4">1</data>
       <data key="d5">0</data>
