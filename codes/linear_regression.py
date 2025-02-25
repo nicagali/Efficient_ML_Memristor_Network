@@ -24,7 +24,7 @@ fig, ax = plt.subplots()
 # pos = plotting.plot_graph('three_inout')
 pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
-fig.savefig(f"../paper/plots/regression/graph.pdf")
+fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 training_steps = 100
 training_type = 'allostery'
