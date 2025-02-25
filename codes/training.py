@@ -481,11 +481,11 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
         # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        update_resistances(G)
+        # update_resistances(G)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 
