@@ -233,7 +233,27 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
         
     return G
 
+def update_output(G, voltages):
+
+    index_do = 0
+    eta = 0.5
+
+    for node in G.nodes():
+
+        if G.nodes[node]['type'] == 'target':
+
+            G.nodes[node]['type'] = 'source'
+
+            G.nodes[node]['voltage'] = eta*(G.nodes[node]['desired']) + (1 - eta) * (voltages[node])
+
+    return G
+
+
 def update_resistances(G_free):
+
+    eta = 0.5
+    alpha = 2000
+    gamma = alpha/(2*eta)
 
     # solve graph free
 
@@ -241,25 +261,36 @@ def update_resistances(G_free):
     analysis = ahkab.new_op()
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
     result = result[0]
-    print(result['op'])
+    voltages_free = np.array([result['op'][f'VN{node}'][0][0] for node in G_free.nodes()])
 
-    # for edge in G_free.edges():
+    G_clamped = G_free.copy(as_view=False)
 
-    #     u, v = edge
+    G_clamped = update_output(G_clamped, voltages_free)
 
-    #     diff_free = np.abs(G_free.nodes[u]['voltage'] - G_free.nodes[v]['voltage'])
-    #     diff_clamped = np.abs(G_clamped.nodes[u]['voltage'] - G_clamped.nodes[v]['voltage'])
+    circuit = networks.circuit_from_graph(G_clamped, type='resistors') 
+    analysis = ahkab.new_op()
+    result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
+    result = result[0]
+    voltages_clamped = np.array([result['op'][f'VN{node}'][0][0] for node in G_free.nodes()])
 
-    #     delta_v = diff_clamped-diff_free
-    #     delta_v_sq = diff_clamped**2 - diff_free**2
+
+    for edge in G_free.edges():
+
+        u, v = edge
+
+        diff_free = np.abs(voltages_free[u] - voltages_free[v])
+        diff_clamped = np.abs(voltages_clamped[u] - voltages_clamped[v])
+
+        delta_v = diff_clamped-diff_free
+        delta_v_sq = diff_clamped**2 - diff_free**2
         
 
 
-    #     prefac = inp.gamma_r * (1 / (G_free.edges[edge]['resistance'])**2)
+        prefac = gamma * (1 / (G_free.edges[edge]['resistance'])**2)
 
-    #     delta_R_cont = prefac * (delta_v_sq)
+        delta_R_cont = prefac * (delta_v_sq)
 
-    #     G_free.edges[edge]['resistance'] += delta_R_cont
+        G_free.edges[edge]['resistance'] += delta_R_cont
 
     #     if G_free.edges[edge]['resistance'] < 0 or G_free.edges[edge]['resistance']>100:
 
@@ -441,11 +472,11 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
         # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        # update_resistances(G)
+        update_resistances(G)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 

@@ -103,7 +103,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
         
     # CREATE color palettes with lighter shades of base color (the color of the mse)
     if number_weights == 2:
-        print(weight_type)
+        # print(weight_type)
         color_factor = 0.6
     elif number_weights == 3:
         color_factor = 0.4
@@ -147,7 +147,7 @@ def plot_potential_each_node(ax, G, factor_time=1):
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
     result = ahkab.run(circuit, an_list=tran_analysis)  
     result = result[0]
-    print(result['tran'].keys())
+    # print(result['tran'].keys())
 
     time = result['tran']['T']  
 
