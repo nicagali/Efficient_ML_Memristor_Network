@@ -89,8 +89,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 7
-    number_edges = 14
+    number_nodes = 9
+    number_edges = 16
     G = nx.gnm_random_graph(number_nodes, number_edges)
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)
@@ -98,8 +98,8 @@ def random_graph(save_data=False, res_change=False):
     # G = nx.complete_graph(5)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
-    number_sources = 3
-    number_targets = 2
+    number_sources = 2
+    number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
     # sources = [2,3,4]
     target_sampling_list = [x for x in G.nodes() if x not in sources]
@@ -114,10 +114,10 @@ def random_graph(save_data=False, res_change=False):
             G.nodes[node]['type'] = 'source'
             G.nodes[node]['color'] = par.color_dots[0]
             if constantsource_index == 0:
-                G.nodes[node]['constant_source'] = False
+                G.nodes[node]['constant_source'] = True
                 constantsource_index += 1
             else:
-                G.nodes[node]['constant_source'] = True
+                G.nodes[node]['constant_source'] = False
 
         elif node in targets:
             G.nodes[node]['type'] = 'target'
@@ -140,9 +140,6 @@ def random_graph(save_data=False, res_change=False):
         nx.write_graphml(G, f"{par.DATA_PATH}random_graph.graphml")
 
     return G
-
-
-
 
 def three_inout(save_data=False):
 
@@ -167,7 +164,7 @@ def three_inout(save_data=False):
     G.add_edges_from([(0,5), (0,6), (0,7), (3,6), (1,3), (5,7), (0,4), (4,7)])    #   for graphical reprer without one edge
     G.add_edges_from([(1,6), (1,8), (6,8), (3,5), (2,3), (2,5), (4,5), (0,3)])
 
-    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 4, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
