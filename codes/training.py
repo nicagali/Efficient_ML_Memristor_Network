@@ -55,7 +55,7 @@ def regression_function1(input1, input2):
 def regression_function2(input1, inpu2):
     return 0.25*input1 + 0.1*inpu2 
 def regression_function(input):
-    return 0.5*input 
+    return input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -258,7 +258,7 @@ def update_output(G, voltages):
 
     return G
 
-def update_resistances(G_free):
+def update_resistances(G_free, training_type, dataset_input_voltage, dataset_output_voltage, datastep):
 
     eta = 0.3
     alpha = 1000
@@ -274,6 +274,8 @@ def update_resistances(G_free):
     # print(result['op'])
     # print(voltages_free)
 
+    if training_type == 'regression':
+        update_input_output_volt(G_free, dataset_input_voltage, dataset_output_voltage, datastep)
 
     G_clamped = G_free.copy(as_view=False)
 
@@ -521,7 +523,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        # update_resistances(G)
+        # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage, step)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 

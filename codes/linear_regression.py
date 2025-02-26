@@ -37,7 +37,7 @@ training_type = 'regression'
 
 G_ml = G.copy(as_view=False)  
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
 
 
 
@@ -57,15 +57,21 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
 
 training.test_regression(G, step=0, weight_type='resistance')
-training.test_regression(G, step=50, weight_type='resistance')
-training.test_regression(G, step=100, weight_type='resistance')
+training.test_regression(G, step=int(training_steps/2), weight_type='resistance')
+training.test_regression(G, step=training_steps, weight_type='resistance')
 
 fig, ax = plt.subplots(1, 3, figsize=(15,5))
 plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=50)
-plotting.plot_regression(ax[2], step=100)
+plotting.plot_regression(ax[1], step=int(training_steps/2))
+plotting.plot_regression(ax[2], step=training_steps)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/snapshots.pdf")
+
+# fig, ax = plt.subplots()
+# # pos = plotting.plot_graph('three_inout')
+# pos = plotting.plot_graph('random_graph', step = training_steps)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

@@ -24,7 +24,7 @@ def lighten_color(base_color, factor=0.5):
     lightened = [(1 - factor) * c + factor for c in base]  # Blend toward lighter version of itself
     return to_hex(lightened)
 
-def plot_graph(name_graph):
+def plot_graph(name_graph, step = None):
 
     # GET graph data
     G = nx.read_graphml(f'{par.DATA_PATH}{name_graph}.graphml')
@@ -45,6 +45,8 @@ def plot_graph(name_graph):
     # GENERATE determined positions - Check out better with general nw
     # pos = nx.kamada_kawai_layout(G, scale=2)
     pos = nx.spring_layout(G)
+
+    
 
     # DRAW the network
     nx.draw(G, with_labels=True, node_color=color_attributes,  
