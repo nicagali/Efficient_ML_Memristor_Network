@@ -55,7 +55,7 @@ def regression_function1(input1, input2):
 def regression_function2(input1, inpu2):
     return 0.25*input1 + 0.1*inpu2 
 def regression_function(input):
-    return 0.2*input + 0.8
+    return 0.6*input + 0.8
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -478,7 +478,7 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
             # G.edges[edge][f'{weight_type}'] -= learning_rate*stored_gradient[index] + np.random.normal(0,0.1)
             
             # print(learning_rate*stored_gradient[index])
-            if G.edges[edge][f'{weight_type}'] < 10:
+            if G.edges[edge][f'{weight_type}'] < 0:
                 G.edges[edge][f'{weight_type}'] += learning_rate*stored_gradient[index]
                 print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
 

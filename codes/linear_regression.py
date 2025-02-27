@@ -26,8 +26,14 @@ G.nodes['3']['color'] = par.color_dots[0]
 G.nodes['3']['constant_source']  = True
 G.nodes['3']['voltage']  = 3
 
-G.add_edge(4,5)
-G.add_edge(4,7)
+# G.add_edge('6','2')
+# G.add_edge('6','4')
+# G.add_edge('4','5')
+# G.add_edge('6','7')
+# G.remove_edge('3', '4')
+# G.remove_edge('2', '9')
+# networks.initialize_edges(G)
+
 
 
 # for edge in G.edges():
@@ -46,7 +52,7 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 for edge in G.edges():
     G.edges[edge]['resistance'] = 100
 
-training_steps = 400
+training_steps = 100
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
@@ -57,7 +63,7 @@ training_type = 'regression'
 
 # G_ml = G.copy(as_view=False)  
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=500)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=300)
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-5)
 
 
