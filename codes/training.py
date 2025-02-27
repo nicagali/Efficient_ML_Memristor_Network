@@ -55,7 +55,7 @@ def regression_function1(input1, input2):
 def regression_function2(input1, inpu2):
     return 0.25*input1 + 0.1*inpu2 
 def regression_function(input):
-    return 0.5*input 
+    return 0.2*input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
