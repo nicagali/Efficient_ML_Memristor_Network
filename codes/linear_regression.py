@@ -41,7 +41,7 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 for edge in G.edges():
     G.edges[edge]['resistance'] = 50
 
-training_steps = 100
+training_steps = 200
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
@@ -53,7 +53,6 @@ training_type = 'regression'
 G_ml = G.copy(as_view=False)  
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
-
 
 
 fig, ax = plt.subplots()
