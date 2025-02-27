@@ -478,7 +478,7 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
             # G.edges[edge][f'{weight_type}'] -= learning_rate*stored_gradient[index] + np.random.normal(0,0.1)
             
             # print(learning_rate*stored_gradient[index])
-            if G.edges[edge][f'{weight_type}'] < 0:
+            if G.edges[edge][f'{weight_type}'] < 10:
                 G.edges[edge][f'{weight_type}'] += learning_rate*stored_gradient[index]
                 print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
 
