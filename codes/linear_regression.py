@@ -39,9 +39,9 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 for edge in G.edges():
-    G.edges[edge]['resistance'] = 50
+    G.edges[edge]['resistance'] = 100
 
-training_steps = 100
+training_steps = 150
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)

@@ -55,7 +55,7 @@ def regression_function1(input1, input2):
 def regression_function2(input1, inpu2):
     return 0.25*input1 + 0.1*inpu2 
 def regression_function(input):
-    return 0.2*input 
+    return 0.5*input 
 
 # --------- ALGORITHM FUNCTIONS ---------
 
@@ -270,7 +270,7 @@ def update_output(G, voltages):
 def update_resistances(G_free, training_type, dataset_input_voltage, dataset_output_voltage):
 
     eta = 0.1
-    alpha = 10000
+    alpha = 100000
     gamma = alpha/(2*eta)
 
     if training_type == 'regression':
@@ -538,9 +538,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
+        update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 
