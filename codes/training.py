@@ -216,6 +216,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
 
     else:
+        # print('updating')
 
         for index, edge in enumerate(G.edges()):
 
@@ -226,7 +227,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if training_type == 'allostery':
                 error = cost_function(G_increment, weight_type)  
             else:
-                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
             if weight_type == 'length':
                 denominator = delta_weight*1e-6
@@ -406,7 +407,9 @@ def compute_single_gradient_parallel_helper(G, weight_index, training_type, base
         else:
             error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
+
         gradient = (error - base_error) / denominator
+        # print(error - base_error)
 
     with lock:
         stored_gradient[weight_index] = gradient
@@ -535,9 +538,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
+        # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 

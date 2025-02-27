@@ -24,10 +24,10 @@ def lighten_color(base_color, factor=0.5):
     lightened = [(1 - factor) * c + factor for c in base]  # Blend toward lighter version of itself
     return to_hex(lightened)
 
-def plot_graph(name_graph, step = None):
+def plot_graph(G, weight_type = None):
 
     # GET graph data
-    G = nx.read_graphml(f'{par.DATA_PATH}{name_graph}.graphml')
+    # G = nx.read_graphml(f'{par.DATA_PATH}{name_graph}.graphml')
     
     # GET color of node depending on which type of node it is
     color_attributes = [G.nodes[node]['color'] for node in G.nodes()]
@@ -46,14 +46,16 @@ def plot_graph(name_graph, step = None):
     # pos = nx.kamada_kawai_layout(G, scale=2)
     pos = nx.spring_layout(G)
 
-    
+    edge_weights = [G[u][v].get(f'{weight_type}', 1) for u, v in G.edges()]  # Default weight = 1 if missing
+    max_weight = max(edge_weights) if edge_weights else 1
+    widths = [2 + 10 * (w / max_weight) for w in edge_weights]  # Normalize and scale widths
 
     # DRAW the network
     nx.draw(G, with_labels=True, node_color=color_attributes,  
             pos = pos,
             node_size=par.nodes_size,
             labels = labels,
-            width = par.width,
+            width = widths,
             font_size=par.font_size_nw,
             edge_color=par.color_edges)
     # adding the memristors on the edges

@@ -34,14 +34,14 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
 # pos = plotting.plot_graph('three_inout')
-pos = plotting.plot_graph('random_graph')
+pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 for edge in G.edges():
     G.edges[edge]['resistance'] = 50
 
-training_steps = 200
+training_steps = 100
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
@@ -50,9 +50,10 @@ training_type = 'regression'
 # for index, edge in enumerate(G.edges)x:
 #         G.edges[edge][f'resistance'] = weight_vec[index]
 
-G_ml = G.copy(as_view=False)  
+# G_ml = G.copy(as_view=False)  
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-5)
 
 
 fig, ax = plt.subplots()
@@ -79,13 +80,12 @@ plotting.plot_regression(ax[0], step=0)
 plotting.plot_regression(ax[1], step=int(training_steps/2))
 plotting.plot_regression(ax[2], step=training_steps)
 fig.tight_layout()
-fig.savefig(f"../paper/plots/regression/snapshots.pdf")
+fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 
-# fig, ax = plt.subplots()
-# # pos = plotting.plot_graph('three_inout')
-# pos = plotting.plot_graph('random_graph', step = training_steps)
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+fig, ax = plt.subplots()
+pos = plotting.plot_graph(G, weight_type = 'resistance')
+fig.tight_layout()
+fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
