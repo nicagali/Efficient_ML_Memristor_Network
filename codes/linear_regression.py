@@ -25,6 +25,12 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G.nodes['6']['constant_source']  = True
 # G.nodes['6']['voltage']  = 1
 
+# for edge in G.edges():
+#     print(edge)
+
+# G.remove_edge(1,2)
+# G.remove_node('1')
+
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
 # pos = plotting.plot_graph('three_inout')
