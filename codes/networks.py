@@ -27,7 +27,7 @@ def initialize_nodes(G, voltage_input, voltage_desired):
 
     # Initialize source and desired voltages
         if G.nodes[node]['type'] == 'source':
-            G.nodes[node]['voltage'] = voltage_input[index_sources]
+            G.nodes[node]['voltage'] = voltage_input[index_sources]            
             index_sources+=1
         if G.nodes[node]['type'] == 'target':
             # print(G.nodes[node]['desired'])
@@ -61,10 +61,13 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     # ADD nodes
     attributes = {"type" : "source", 'color' : par.color_dots[0]}
     G.add_node(0, **attributes)
+    G.nodes[0]['constant_source'] = False
     attributes = {"type" : "target", 'color' : par.color_dots[1]}
     G.add_node(1, **attributes)
     attributes = {"type" : "source", 'color' : par.color_dots[0]}
     G.add_node(2, **attributes)
+    G.nodes[2]['constant_source'] = True
+
 
     # ADD edges
     G.add_edge(0,1)
@@ -73,6 +76,7 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
     # voltage_desired = [4]
+
 
     initialize_nodes(G, voltage_input, voltage_desired)
     initialize_edges(G)
@@ -84,12 +88,11 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     return G
 
 # RANDOM NETWORK
-
  
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 9
+    number_nodes = 10
     number_edges = 16
     G = nx.gnm_random_graph(number_nodes, number_edges)
     # G = nx.house_graph()
@@ -113,11 +116,12 @@ def random_graph(save_data=False, res_change=False):
         if node in sources:
             G.nodes[node]['type'] = 'source'
             G.nodes[node]['color'] = par.color_dots[0]
-            if constantsource_index == 0:
+            if constantsource_index < (number_sources-1):
                 G.nodes[node]['constant_source'] = True
                 constantsource_index += 1
             else:
                 G.nodes[node]['constant_source'] = False
+            print(node, G.nodes[node]['constant_source'])
 
         elif node in targets:
             G.nodes[node]['type'] = 'target'
@@ -129,7 +133,7 @@ def random_graph(save_data=False, res_change=False):
     # G.nodes[3]['constant_source'] = True
 
     # INITIALIZE nodes and edges
-    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 2, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
@@ -151,11 +155,11 @@ def three_inout(save_data=False):
     G.add_node(2, **attributes)
     G.nodes[2]['constant_source'] = True
     G.add_node(7, **attributes)
-    G.nodes[7]['constant_source'] = False
+    G.nodes[7]['constant_source'] = True
     attributes = {"type" : "target", 'color' : par.color_dots[1]}
-    G.add_node(3, **attributes)
     G.add_node(4, **attributes)
     attributes = {"type" : "hidden", 'color' : par.color_dots[2]}
+    G.add_node(3, **attributes)
     G.add_node(0, **attributes)
     G.add_node(5, **attributes)
     G.add_node(6, **attributes)
@@ -164,7 +168,7 @@ def three_inout(save_data=False):
     G.add_edges_from([(0,5), (0,6), (0,7), (3,6), (1,3), (5,7), (0,4), (4,7)])    #   for graphical reprer without one edge
     G.add_edges_from([(1,6), (1,8), (6,8), (3,5), (2,3), (2,5), (4,5), (0,3)])
 
-    voltage_input = [0, 4, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 0, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
@@ -187,7 +191,7 @@ def circuit_from_graph(G, type):
 
         # Adding the voltage sources from ground to input nodes
         if G.nodes[node]['type'] == 'source':
-            # print(node, G.nodes[node]['type'])
+            # print(node, G.nodes[node]['type'], G.nodes[node]['voltage'])
             circuit.add_vsource(f"VN{node}", n1=f'n{node}', n2=circuit.gnd, dc_value=G.nodes[node]['voltage'])
             
     # ADD elements on links
@@ -204,3 +208,36 @@ def circuit_from_graph(G, type):
             circuit.add_resistor(f'R{index}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]['resistance'])
         
     return circuit
+
+
+def compute_regression_coefficients(G):
+
+    input_index = 0
+    output_index = 0
+
+    for node in G.nodes():
+        if G.nodes[node]['type'] == 'source':
+            # print(G.nodes[node]['constant_source']) 
+            if G.nodes[node]['constant_source'] == False:
+                input_index = int(node)
+        if G.nodes[node]['type'] == 'target':
+            output_index = int(node)
+    
+
+
+
+    # for node in G.nodes():
+
+    #     if G.edges[input_index][node] or G.edges[node][input_index]:
+
+    #     Gmn -= G.edges[input_index][node]
+
+    G_matrix = nx.laplacian_matrix(G).toarray()
+    
+    Gmn = G_matrix[output_index][input_index]
+    # print(Gmn)
+    Gmm = G_matrix[output_index][output_index]
+
+    a = - Gmn/Gmm
+
+    return a

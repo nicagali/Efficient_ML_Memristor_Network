@@ -18,6 +18,12 @@ start = time.time()
 # G = networks.voltage_divider(save_data=True) 
 G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
+# a = networks.compute_regression_coefficients(G)
+# print('Coefficient a:', a)
+
+# G.nodes['6']['type']  = 'source'
+# G.nodes['6']['constant_source']  = True
+# G.nodes['6']['voltage']  = 1
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -25,6 +31,9 @@ fig, ax = plt.subplots()
 pos = plotting.plot_graph('random_graph')
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+
+for edge in G.edges():
+    G.edges[edge]['resistance'] = 50
 
 training_steps = 100
 training_type = 'regression'
@@ -37,7 +46,7 @@ training_type = 'regression'
 
 G_ml = G.copy(as_view=False)  
 
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=200)
 
 
 
