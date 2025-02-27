@@ -24,7 +24,7 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 G.nodes['3']['type']  = 'source'
 G.nodes['3']['color'] = par.color_dots[0]
 G.nodes['3']['constant_source']  = True
-G.nodes['3']['voltage']  = 1
+G.nodes['3']['voltage']  = 8
 
 # for edge in G.edges():
 #     print(edge)
@@ -42,7 +42,7 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 for edge in G.edges():
     G.edges[edge]['resistance'] = 100
 
-training_steps = 500
+training_steps = 300
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/resistance/resistance1.txt", unpack=True)
@@ -53,7 +53,7 @@ training_type = 'regression'
 
 # G_ml = G.copy(as_view=False)  
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=1000)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=100)
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-5)
 
 
