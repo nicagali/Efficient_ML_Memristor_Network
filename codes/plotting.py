@@ -37,7 +37,7 @@ def plot_graph(G, weight_type = None):
     
     # LABEL edges M_{i,j} : memristor that connect node i to node j (i = BASE, j = TIP)
     # edge_labels = {(u, v): fr'$M_{{ {int(u)}, {int(v)} }}$' for u, v in G.edges()}  
-    edge_labels = {(u, v): fr'$R_{{{index+1}}}$' for index, (u, v) in enumerate(G.edges())}
+    edge_labels = {(u, v): fr'$M_{{{index+1}}}$' for index, (u, v) in enumerate(G.edges())}
     
     # CREATE a box on the edge that represents the memristor
     bbox = {'facecolor': 'lightblue', 'edgecolor': par.color_edges, 'alpha': 1, 'boxstyle': 'round,pad=0.5'}
