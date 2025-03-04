@@ -100,10 +100,10 @@ The PNN we consider is an electrical network make of nodes connected by resistiv
 \end{figure} 
 An azimuthally symmetric conical channel connects two reservoirs that contain an incompressible aqueous 1:1 electrolyte with viscosity $\eta=1.01mPa s$ containing ions with diffusion coefficients $D = 1.75\mu m^2 ms^{-1}$ and charge $\pm e$ with $e$ the proton charge. The cone has a base radius of $R_b = 200$nm, a tip radius of $R_t=50$nm and has a length $L = 10\mu$m, which sets it in the long channel limit where entrance and exit effects can be neglected. The walls of the channel are homogeneously charged and generate a surface potential $\psi_0$ that attracts the opposite-sign ions present in the solution due to the dissociation of the electrolyte. The electric potential decreases exponentially away from the surface due to the electrostatic screening of the attracted ions: an electric double layer (EDL) forms on the charged surfaces. 
 
-At the far side of both reservoirs, electrical potential, pressure and ion concentration are imposed. As a result, the memristor feels a potential drop $\Delta V = V_b - V_t$ defined as the difference between the potential in the base and in the tip. The ions within the EDL region generate an electro-osmotic fluid flow $Q_V = (\pi R_b R_t\epsilon\psi_0/L\eta)\Delta V$. Meanwhile, the pressure drop $\Delta P = P_b - P_t$, given by the difference between the base and the tip pressure, induces a Poiseuille-like flow $Q_P = (\pi R_b^3 R_t^3/8L\eta\langle R^2\rangle)\Delta P$. Finally, the ions experience a concentration gradient $\Delta \rho = \rho_b - \rho_t$, defined by the difference between the ion concentration in the reservoir connected to the base of the channel, $\rho_b$, and the concentration at the tip, $\rho_t$. Consequently, a diffusive fluid flow arises. However, we consider only the pressure and potential contributions to the total fluid flow, $Q = Q_P + Q_V$, assuming the diffusive flow to be negligible.  The resulting fluid flow generates non-trivial ion concentration profiles which, in turn, directly infulences the channel's conductance $g$. 
+At the far side of both reservoirs, electrical potential, pressure and ion concentration are imposed. As a result, the memristor feels a potential drop $\Delta V = V_b - V_t$ defined as the difference between the potential in the base and in the tip. The ions within the EDL region generate an electro-osmotic fluid flow $Q_V = (\pi R_b R_t\epsilon\psi_0/L\eta)\Delta V$. Meanwhile, the pressure drop $\Delta P = P_b - P_t$, given by the difference between the base and the tip pressure, induces a Poiseuille-like flow $Q_P = (\pi R_b^3 R_t^3/8L\eta\langle R^2\rangle)\Delta P$. Finally, the ions experience a concentration gradient $\Delta \rho = \rho_b - \rho_t$, defined by the difference between the ion concentration in the reservoir connected to the base of the channel, $\rho_b$, and the concentration at the tip, $\rho_t$. Consequently, a diffusive fluid flow arises. However, we consider only the pressure and potential contributions to the total fluid flow, $Q = Q_P + Q_V$, assuming the diffusive flow to be negligible.  The resulting fluid flow generates non-trivial ion concentration profiles which, in turn, directly infulence the channel's conductance $g$. 
 %It has already been shown that, for $\Delta P = 0$, the channel shows current rectification, thus working as a diode \cite{}, due to concentration polarization.  
 
-In the steady-state, the channel is exposed to constant chemical, pressure and electrical signal, the corresponding conductance $g_{\infty}\brac{\boldsymbol{\Delta}}$ depends on the three stimuli $\boldsymbol{\Delta}= (\boldsymbol{\Delta})$ and is determined by the ion concentration profiles according to 
+In the steady-state, the channel is exposed to constant chemical, pressure and electrical signal, the corresponding conductance $g_{\infty}\brac{\boldsymbol{\Delta}}$ depends on the three stimuli $\boldsymbol{\Delta}= (\Delta V, \Delta P, \Delta \rho)$ and is determined by the ion concentration profiles according to 
 \[
 \frac{g_{\infty}\brac{\boldsymbol{\Delta}}}{g_0} = \int_0^{L} \frac{\bar{\rho}\left(x, \boldsymbol{\Delta}\right)}{2\rho_b L} dx                                           
 \]
@@ -144,8 +144,8 @@ When the external stimuli vary dynamically in time, they generate ion accumulati
 \frac{\partial g\brac{\boldsymbol{\Delta}(t), t}}{\partial t} = \frac{g_{\infty}\brac{\boldsymbol{\Delta}(t)}-g\brac{\boldsymbol{\Delta}(t), t}}{\tau}
 \label{eq:eqofmotconductance}
 \end{equation}
-with $\boldsymbol{\Delta}(t) = \brac{\Delta V\brac{t},\Delta P\brac{t}, \Delta \rho\brac{t}}$
-As in Ref. \cite{Rene_IonicNeuromorphic}, we consider the time scale relative to voltage-driven ion accumulation or depletion in the channel. We justify this choice by stating that pressure-driven dynamics is faster and recalling that we neglect chemically-driven transport. Due to the fact that the conductance depends on the history of the signals applied, this system is called memristor. Aside from the direct dependence of the conductance on the external stimuli $\boldsymbol{\Delta}$, there is an implicit dependence on the geometricl properties such as lenght $L$ and radius ratio $R_b/R_t$ that we choose to consider.
+with $\boldsymbol{\Delta}(t) = \brac{\Delta V\brac{t},\Delta P\brac{t}, \Delta \rho\brac{t}}$.
+As in Ref. \cite{Rene_IonicNeuromorphic}, we consider the time scale relative to voltage-driven ion accumulation or depletion in the channel. We justify this choice by stating that pressure-driven dynamics is faster and recalling that we neglect chemically-driven transport. Due to the fact that the conductance depends on the history of the signals applied, this system is called memristor. Aside from the direct dependence of the conductance on the external stimuli, there is an implicit dependence on the geometrical properties such as lenght $L$ and radius ratio $R_b/R_t$ that we choose to consider.
 
 The PNN is composed of $\N$ nodes, an example is shown in \cref{fig:memristor_network}. 
 \begin{figure}[h]
@@ -207,7 +207,7 @@ Althought performed numerically in this work, we highlight that the feedforward 
 
 \subsection{Training a Voltage Divider}
 
-A voltage divider is an electrical circuit made of two resistances connected in series, that returns a fraction of the input voltage. Given the simplicity of its structure, we use it as an initial playground for the training algorithm described above. Specifically, we choose the lenghts of the memristor channels as the weights, to be trained such that giving $V_1 = 5V$ and $V_3 = 0V$ as inputs, we get $V_2 = 4V$ as output. In \cref{fig:vd_scheme} a schematic of the memristor voltage divider is shown.
+A voltage divider is an electrical circuit made of three nodes connected in series by two resistances, that returns a fraction of the input voltage. Given the simplicity of its structure, we use it as an initial playground for the training algorithm described above. Specifically, we replace the resistances with memristor channels, to be trained such that giving $V_1 = 5V$ and $V_3 = 0V$ as inputs, we get $V_2 = 4V$ as output. In \cref{fig:vd_scheme} a schematic of the memristor voltage divider is shown.
 
 \begin{figure}[h]
     \centering
@@ -252,7 +252,7 @@ We broaden the training capability of the network by including a linear regressi
     V_{\text{out}} = \text{c} V_{\text{in}} + \text{b}.
 \label{eq:linear_relationship}
 \end{equation}
-Firstly, we generate a data set of $$ input and output potential values, $\{ V^{in}_{i} \}_{i=1}^{}$ and $\{ V^{out}_{i} \}_{i}$ , that verify \cref{eq:linear_relationship}
+% Firstly, we generate a data set of $$ input and output potential values, $\{ V^{in}_{i} \}_{i=1}^{}$ and $\{ V^{out}_{i} \}_{i}$ , that verify \cref{eq:linear_relationship}
 
 \section{Conclusion}
 

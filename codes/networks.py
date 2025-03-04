@@ -12,7 +12,7 @@ import random
 
 # 1 --------- INITIALIZE GRAPH PARAMETERS ---------
 
-def initialize_nodes(G, voltage_input, voltage_desired):
+def initialize_nodes(G, voltage_input=None, voltage_desired=None):
 
     # Initialize every node with the same values of pressure = initial_pressure and rho = initial_rho
     initial_rho = 0.2
