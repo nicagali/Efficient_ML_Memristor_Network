@@ -14,30 +14,30 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.three_inout(save_data=True) 
-G = networks.random_graph(save_data=True) 
+# G = networks.random_graph(save_data=True) 
 # G = networks.voltage_divider(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 
 # a = networks.compute_regression_coefficients(G)
 # print('Coefficient a:', a)
 
-# G.nodes['3']['type']  = 'source'
-# G.nodes['3']['color'] = par.color_dots[0]
-# G.nodes['3']['constant_source']  = True
-# G.nodes['3']['voltage']  = 1
+G.nodes['3']['type']  = 'source'
+G.nodes['3']['color'] = par.color_dots[0]
+G.nodes['3']['constant_source']  = True
+G.nodes['3']['voltage']  = 3
 
-# G.add_edge('6','2')
-# G.add_edge('6','4')
-# G.add_edge('4','5')
-# G.add_edge('6','7')
+G.add_edge('6','2')
+G.add_edge('6','4')
+G.add_edge('4','5')
+G.add_edge('6','7')
 
 # G.remove_node('7')
 # G.remove_node('9')
 
-mapping = {old_label: new_label for new_label, old_label in enumerate(sorted(G.nodes()))}
+# mapping = {old_label: new_label for new_label, old_label in enumerate(sorted(G.nodes()))}
 
 # Apply the relabeling
-G = nx.relabel_nodes(G, mapping)
+# G = nx.relabel_nodes(G, mapping)
 
 networks.initialize_edges(G)
 
@@ -70,8 +70,8 @@ training_type = 'regression'
 # G_ml = G.copy(as_view=False)  
 
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=100)
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
  
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=5e-3)
 

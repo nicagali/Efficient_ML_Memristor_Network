@@ -145,7 +145,7 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep=None):
 
 def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type):
 
-    if error_type == 'training_error':
+    if error_type == 'training':
         update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage)
         error = cost_function(G, weight_type)
 
