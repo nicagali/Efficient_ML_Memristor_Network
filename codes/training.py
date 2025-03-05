@@ -105,7 +105,7 @@ def cost_function(G, weight_type, write_potential_target_to_file=None, update_in
                 error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
 
             target_index+=1
-            # print(node, G.nodes[node]['desired'], result['tran'][f'VN{node}'][-1], (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2)
+            # print(node, G.nodes[node]['desired'], result['tran'][f'VN{node}'][-1], G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])
             
     # WRITE last element potential drop each edge (useful in the voltage divider case, otherwise too many)
     if G.name == 'voltage_divider' and write_potential_target_to_file is not None:
@@ -164,6 +164,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
     if weight_type=='pressure' or weight_type == 'rho':
 
         for node in G.nodes():
+            # print('Udating', node)
 
             G_increment = G.copy(as_view=False)
             
@@ -173,7 +174,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 error = cost_function(G_increment)  
             else:
                 # if node=='7' or node=='9':
-                    # print(node, G_increment.nodes[node][f'{weight_type}'], dataset_input_voltage, dataset_output_voltage)
+                # print('incremented node', G_increment.nodes[node][f'{weight_type}'], 'voltage input,', dataset_input_voltage, 'voltage output', dataset_output_voltage)
                 # print(node)
                 error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
 
@@ -183,7 +184,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 denominator = delta_weight
                 
             gradients.append((error - base_error)/denominator)
-            print(node, G.nodes[node][f'{weight_type}'], error, base_error, (error - base_error), (error - base_error)/delta_weight)
+            # print('base error', base_error, 'error with increment', error, 'difference', (error - base_error), 'gradient', (error - base_error)/delta_weight)
 
         for node in G.nodes():
 
@@ -204,7 +205,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             else:
                 error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
-            print(index, base_error, error, (error - base_error), (error - base_error)/delta_weight)
+            # print(index, base_error, error, (error - base_error), (error - base_error)/delta_weight)
 
             gradients.append((error - base_error)/delta_weight)
             
@@ -480,7 +481,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     if training_type == 'regression':
         dataset_input_voltage, dataset_output_voltage = generate_dataset(0)
         testset_input_voltage, testset_output_voltage = generate_dataset(20, random = False)
-        print(dataset_input_voltage, testset_input_voltage)
+        # print(dataset_input_voltage, testset_input_voltage)
 
     # COMPUTE initial error
     if training_type == 'allostery':

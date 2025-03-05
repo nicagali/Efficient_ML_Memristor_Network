@@ -41,6 +41,7 @@ G.add_edge('6','7')
 
 networks.initialize_edges(G)
 
+
 # for edge in G.edges():
 #     print(edge)
 
@@ -54,7 +55,7 @@ pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
-training_steps = 1
+training_steps = 474
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/rho/rho266.txt", unpack=True)
@@ -73,7 +74,7 @@ training_type = 'regression'
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
  
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=5e-3)
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
 
 
 
@@ -111,6 +112,8 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 # pos = plotting.plot_graph(G, weight_type = 'length')
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+
+nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

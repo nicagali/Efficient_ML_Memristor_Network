@@ -42,13 +42,19 @@ def initialize_edges(G):
     initial_value_resistance = 50 #do I still need this??
     initial_value_conductance = 1/initial_value_resistance
 
+
     for edge in G.edges():
+        base_node = random.choice([0, 1])
+        tip_node = 1 - base_node
         G.edges[edge]['resistance'] = initial_value_resistance
         G.edges[edge]['conductance'] = initial_value_conductance
         G.edges[edge]['length'] = initial_length
         G.edges[edge]['radius_base'] = initial_radius_base
         G.edges[edge]['pressure'] = 0
         G.edges[edge]['delta_rho'] = 0
+
+        G.edges[edge]['base_node'] = base_node
+        G.edges[edge]['tip_node'] = tip_node
 
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
@@ -201,7 +207,13 @@ def circuit_from_graph(G, type):
 
         if type == 'memristors':
 
-            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
+            # print(edge[0], G.nodes[edge[0]]['rho'])
+            # print(G.nodes['9']['rho'])
+
+            base_node = G.edges[edge]['base_node']
+            tip_node = G.edges[edge]['tip_node']
+
+            circuit.add_mysistor(f'R{index+1}', f'n{edge[base_node]}', f'n{edge[tip_node]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
 
         else:
 

@@ -29,6 +29,12 @@ tstop = 0.1
 
 networks.initialize_edges(G)
 
+# G.nodes['1']['voltage'] = 0
+# G.nodes['3']['voltage'] = 3
+# G.nodes['6']['voltage'] = 0.04749591
+
+# G.nodes['5']['desired'] = 0.30949918
+
 
 # Feedforward -> reach steady state and get ouputs
 circuit = networks.circuit_from_graph(G, type='memristors') 
@@ -48,10 +54,11 @@ print(result['tran']['VN6'][-1])
 print(result['tran']['VN7'][-1])
 print(result['tran']['VN8'][-1])
 
-print(G.nodes['9']['rho '])
+# print(G.nodes['9']['rho'])
 G.nodes['9']['rho'] += 100
-print(G.nodes['9']['rho '])
+# print(G.nodes['9']['rho'])
 
+output_voltage = result['tran']['VN5'][-1]
 
 # Feedforward -> reach steady state and get ouputs
 circuit = networks.circuit_from_graph(G, type='memristors') 
@@ -70,3 +77,6 @@ print(result['tran']['VN5'][-1])
 print(result['tran']['VN6'][-1])
 print(result['tran']['VN7'][-1])
 print(result['tran']['VN8'][-1])
+
+
+print(output_voltage - result['tran']['VN5'][-1])
