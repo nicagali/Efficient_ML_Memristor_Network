@@ -17,14 +17,15 @@ start = time.time()
 # G = networks.random_graph(save_data=True) 
 # G = networks.voltage_divider(save_data=True) 
 G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
 # a = networks.compute_regression_coefficients(G)
 # print('Coefficient a:', a)
 
-G.nodes['3']['type']  = 'source'
-G.nodes['3']['color'] = par.color_dots[0]
-G.nodes['3']['constant_source']  = True
-G.nodes['3']['voltage']  = 3
+# G.nodes['3']['type']  = 'source'
+# G.nodes['3']['color'] = par.color_dots[0]
+# G.nodes['3']['constant_source']  = True
+# G.nodes['3']['voltage']  = 1
 
 G.add_edge('6','2')
 G.add_edge('6','4')
@@ -40,7 +41,7 @@ G.add_edge('6','7')
 # G = nx.relabel_nodes(G, mapping)
 
 networks.initialize_edges(G)
-
+# nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
 
 # for edge in G.edges():
 #     print(edge)
@@ -55,7 +56,7 @@ pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
-training_steps = 474
+training_steps = 100
 training_type = 'regression'
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/rho/rho266.txt", unpack=True)
@@ -74,7 +75,7 @@ training_type = 'regression'
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
  
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=1e-3)
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=2e-3)
 
 
 
@@ -113,7 +114,6 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
-nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
