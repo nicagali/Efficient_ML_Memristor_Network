@@ -16,8 +16,8 @@ start = time.time()
 # G = networks.three_inout(save_data=True) 
 # G = networks.random_graph(save_data=True) 
 # G = networks.voltage_divider(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
 # a = networks.compute_regression_coefficients(G)
 # print('Coefficient a:', a)
@@ -27,10 +27,10 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G.nodes['3']['constant_source']  = True
 # G.nodes['3']['voltage']  = 1
 
-G.add_edge('6','2')
-G.add_edge('6','4')
-G.add_edge('4','5')
-G.add_edge('6','7')
+# G.add_edge('6','2')
+# G.add_edge('6','4')
+# G.add_edge('4','5')
+# G.add_edge('6','7')
 
 # G.remove_node('7')
 # G.remove_node('9')
@@ -40,9 +40,9 @@ G.add_edge('6','7')
 # Apply the relabeling
 # G = nx.relabel_nodes(G, mapping)
 
-networks.initialize_edges(G)
-for node in G.nodes():
-    G.nodes[node]['rho'] = 0.5
+# networks.initialize_edges(G)
+# for node in G.nodes():
+#     G.nodes[node]['rho'] = 0.5
 
 # nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
 
