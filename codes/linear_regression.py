@@ -41,6 +41,9 @@ G.add_edge('6','7')
 # G = nx.relabel_nodes(G, mapping)
 
 networks.initialize_edges(G)
+for node in G.nodes():
+    G.nodes[node]['rho'] = 0.5
+
 # nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
 
 # for edge in G.edges():
@@ -75,7 +78,7 @@ training_type = 'regression'
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
 # training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
  
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=2e-3)
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=5e-3)
 
 
 
