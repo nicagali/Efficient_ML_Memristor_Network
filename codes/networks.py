@@ -1,7 +1,5 @@
 import networkx as nx
 import parameters as par
-import sys
-sys.path.append(par.PACKAGE_PATH)
 import ahkab    
 import random
 
@@ -74,8 +72,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     G.add_edge(1,2)
     
     # INITIALIZE nodes and edges
-    voltage_input = [2, 0] # node initialized here because different for differnent nw
-    # voltage_desired = [4]
+    voltage_input = [5, 0] # node initialized here because different for differnent nw
+    voltage_desired = [4]
 
     initialize_nodes(G, voltage_input, voltage_desired)
     initialize_edges(G)

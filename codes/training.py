@@ -2,8 +2,6 @@ import parameters as par
 import networks
 import multiprocessing as mp
 import numpy as np
-import sys
-sys.path.append(par.PACKAGE_PATH)
 import ahkab 
 
 # --------- WRITE RESULTS TO FILES ---------
@@ -121,7 +119,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
 
             if training_type == 'allostery':
-                error = cost_function(G_increment)  
+                error = cost_function(G_increment,weight_type)  
             else:
                 error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
 
@@ -145,7 +143,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             G_increment.edges[edge][f'{weight_type}'] += delta_weight
             
             if training_type == 'allostery':
-                error = cost_function(G_increment)  
+                error = cost_function(G_increment, weight_type)  
             else:
                 error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
 
@@ -170,7 +168,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             G_increment.edges[edge][f'{weight_type}'] += delta_weight
             
             if training_type == 'allostery':
-                error = cost_function(G_increment)  
+                error = cost_function(G_increment, weight_type)  
             else:
                 error = cost_function_regression(G_increment, dataset_input_voltage, dataset_output_voltage)
 
@@ -367,15 +365,15 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
 
-        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
             
         write_weights_to_file(G, step+1, weight_type, training_type)
 
         # COMPUTE error
         if training_type == 'allostery':
-            error = cost_function(G, weight_type, weight_type, potential_target_file, update_initial_res=False)  
+            error = cost_function(G, weight_type, potential_target_file, update_initial_res=False)  
         else:
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage)
 

@@ -23,7 +23,7 @@ fig.savefig(f"../plots/voltage_divider/graph.pdf")
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 50
+training_steps = 10
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
@@ -37,10 +37,10 @@ for weight_type_index in range(1):
 
 # --------- PLOT EVOLUTION OF TRAINED NW ---------
 
-# fig, ax = plt.subplots(figsize = par.figsize_1)
-# plotting.plot_potential_each_node(ax, G_ml)
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/voltage_divider/evolution_finalnw.pdf")
+fig, ax = plt.subplots(figsize = par.figsize_1)
+plotting.plot_potential_each_node(ax, G_ml)
+fig.tight_layout()
+fig.savefig(f"../paper/plots/voltage_divider/evolution_finalnw.pdf")
 
 # --------- PLOT ERROR AND WEIGHTS WITH OTHER WEIGHTS ---------
 
