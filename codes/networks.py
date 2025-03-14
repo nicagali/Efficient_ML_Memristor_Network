@@ -222,7 +222,6 @@ def circuit_from_graph(G, type):
     return circuit
 
 
-def compute_regression_coefficients(G):
 
     input_index = 0
     output_index = 0
