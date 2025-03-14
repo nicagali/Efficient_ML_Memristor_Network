@@ -59,7 +59,7 @@ def initialize_edges(G):
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
 # VOLTAGE DIVIDER: 0 --- 1 --- 2
-def voltage_divider(save_data=False, voltage_desired = [4]):
+def voltage_divider(save_data=False, voltage_desired = [3]):
 
     G = nx.DiGraph()    # I am using directed graphs to keep trak of sign when def circuit
     G.name = 'voltage_divider'
@@ -81,7 +81,6 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
-    voltage_desired = [3]
 
 
     initialize_nodes(G, voltage_input, voltage_desired)
