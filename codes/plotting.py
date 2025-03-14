@@ -2,8 +2,6 @@ import parameters as par
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
-sys.path.append(par.PACKAGE_PATH)
 import ahkab  
 import networks
 import training
@@ -99,7 +97,6 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     weight_type = text[1]
     if weight_type == 'radius':
         weight_type = 'radius_base'
-
     if weight_type == 'pressure' or weight_type == 'rho':
         number_weights = G.number_of_nodes()
     else:
@@ -107,7 +104,6 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
         
     # CREATE color palettes with lighter shades of base color (the color of the mse)
     if number_weights == 2:
-        # print(weight_type)
         color_factor = 0.6
     elif number_weights == 3:
         color_factor = 0.4
@@ -126,7 +122,6 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
         for step in range(training_steps+1):
             data = np.loadtxt(f"{par.DATA_PATH}weights/{training_job}/{weight_type}/{weight_type}{step}.txt", unpack=True)
             y = data[1]
-            # print(y)
             weight.append(y[weight_indx])
 
         label_without_weightindex = style['label'][1:-1]
@@ -143,6 +138,8 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     # elif starting_step ==0 :
     #     ax.legend(fontsize = par.legend_size)
         # ax.legend(bbox_to_anchor=(1, 1))
+
+
 
 def plot_potential_each_node(ax, G, factor_time=1):
 

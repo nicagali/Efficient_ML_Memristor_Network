@@ -81,7 +81,7 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
-    # voltage_desired = [4]
+    voltage_desired = [3]
 
 
     initialize_nodes(G, voltage_input, voltage_desired)

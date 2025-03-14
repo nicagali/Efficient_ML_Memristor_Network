@@ -13,93 +13,43 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.three_inout(save_data=True) 
 # G = networks.random_graph(save_data=True) 
-# G = networks.voltage_divider(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
-
-# a = networks.compute_regression_coefficients(G)
-# print('Coefficient a:', a)
-
-# G.nodes['3']['type']  = 'source'
-# G.nodes['3']['color'] = par.color_dots[0]
-# G.nodes['3']['constant_source']  = True
-# G.nodes['3']['voltage']  = 1
-
-# G.add_edge('6','2')
-# G.add_edge('6','4')
-# G.add_edge('4','5')
-# G.add_edge('6','7')
-
-# G.remove_node('7')
-# G.remove_node('9')
-
-# mapping = {old_label: new_label for new_label, old_label in enumerate(sorted(G.nodes()))}
-
-# Apply the relabeling
-# G = nx.relabel_nodes(G, mapping)
-
-# networks.initialize_edges(G)
-# for node in G.nodes():
-#     G.nodes[node]['rho'] = 0.5
-
-# nx.write_graphml(G, f"{par.DATA_PATH}random_rigthbases.graphml")
-
-# for edge in G.edges():
-#     print(edge)
-
-# G.remove_edge(1,2)
-# G.remove_node('1')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
-# pos = plotting.plot_graph('three_inout')
 pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
-training_steps = 108
-training_type = 'regression'
+# --------- TRAIN NETWORK ---------
 
-# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/rho/rho266.txt", unpack=True)
-# weight_vec = data[1]
-# print(weight_vec)
+training_steps = 500    # choose
+training_type = 'regression'    # choose
 
-# for index, edge in enumerate(G.edges):
-#     G.edges[edge][f'rho'] = weight_vec[index]
+weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
+delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
+learning_rate_vec = [2e-5, 1e-5, 8e-3, 100, 100]
 
-# for index, node in enumerate(G.nodes):
-#     G.nodes[node][f'rho'] = weight_vec[index]
+weight_type_index = 0   # choose
 
-# G_ml = G.copy(as_view=False)  
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='resistance', delta_weight = 1e-3, learning_rate=100)
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=2e-5)
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=1e2)
- 
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=8e-3)
-
-
+# --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
 fig, ax = plt.subplots()
-# plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'regression_length', show_xlabel=False)
-# plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_resistance', show_xlabel=False)
-# plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_pressure', show_xlabel=False)
-plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_rho', show_xlabel=False)
+plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_{weight_type_vec[weight_type_index]}', show_xlabel=False)
 ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 
 fig, ax = plt.subplots()
-# plotting.plot_mse(ax, fig, f'resistance')
-# plotting.plot_mse(ax, fig, f'pressure')
-plotting.plot_mse(ax, fig, f'rho')
-# plotting.plot_mse(ax, fig, f'allostery_length')
+plotting.plot_mse(ax, fig, f'{weight_type_vec[weight_type_index]}')
 ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
+# --------- TEST REGRESSION AND PLOT RESULT ---------
 
 # training.test_regression(G, step=0, weight_type='length')
 # training.test_regression(G, step=int(training_steps/2), weight_type='length')
@@ -111,6 +61,9 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 # plotting.plot_regression(ax[2], step=training_steps)
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
+
+# --------- PLOT TRAINED GRAPH  ---------
+# The width of the edges are indicative of their resistance
 
 # fig, ax = plt.subplots()
 # pos = plotting.plot_graph(G, weight_type = 'length')
