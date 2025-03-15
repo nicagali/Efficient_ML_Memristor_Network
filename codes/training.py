@@ -103,7 +103,7 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
     # WRITE final value of resistance after tran analysis
     if write_memr_resistances is not None:
         for edge_index in range(len(G.edges())):
-            write_memr_resistances.write(f"{resistance_vec[edge_index]} \t")
+            write_memr_resistances.write(f"{resistance_vec[-1][edge_index]} \t")
         write_memr_resistances.write("\n")
 
 
@@ -458,7 +458,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     else:
         potential_target_file = None     
     if weight_type != 'resistance':
-        memr_resistances_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write resistances of memristors during training 
+        memr_resistances_file = open(f"{par.DATA_PATH}memristor_resistances.txt", "w") #write resistances of memristors during training 
 
     # WRITE initial condition: intialized wieghts and intial error
     write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
@@ -472,11 +472,10 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
     # COMPUTE initial error
     if training_type == 'allostery':
-        error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file) 
+        error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file, write_memr_resistances=memr_resistances_file) 
         print('Step:', 0, error)
         error_normalization = error #define it as normalization error
         mse_file.write(f"{error/error_normalization}\n")
-
     else:
         error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
         test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, error_type='test')
@@ -484,10 +483,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         error_normalization = test_error #define it as normalization error
         mse_file.write(f"{test_error/error_normalization}\n")
 
-
-    # mse_file.write(f"{error}\n")
-
-    
     # LOOP over training steps
     for step in range(training_steps): 
 
@@ -501,7 +496,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         # COMPUTE error
         if training_type == 'allostery':
-            error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file) 
+            error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file, write_memr_resistances=memr_resistances_file) 
             print('Step:', step+1, error)
             mse_file.write(f"{error/error_normalization}\n")
         else:
@@ -511,59 +506,10 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             print('Step:', step+1, test_error)
             mse_file.write(f"{test_error/error_normalization}\n")
 
-                         
-        # mse_file.write(f"{error}\n")
-
-
     mse_file.close()
+    memr_resistances_file.close()
     if G.name == 'voltage_divider':
         potential_target_file.close()
-
-
-def train_reproduce(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
-
-    # OPEN files to write results
-    mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
-
-    # WRITE initial condition: intialized wieghts and intial error
-    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
-
-    dataset_input_voltage, dataset_output_voltage = generate_dataset()
-
-    # print(dataset_input_voltage, dataset_output_voltage)
-
-    # COMPUTE initial error
-
-    error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage)
-
-    error_normalization = error #define it as normalization error
-
-    mse_file.write(f"{error/error_normalization}\n")
-
-    print('Step:', 0, error)
-    
-    # LOOP over training steps
-    for step in range(training_steps): 
-
-        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
-
-        update_resistances(G, G_clamped)
-
-        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
-            
-        write_weights_to_file(G, step+1, weight_type, training_type)
-
-        # COMPUTE error
-
-        dataset_input_voltage, dataset_output_voltage = generate_dataset()
-
-        error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage)
-
-        print('Step:', step+1, error)
-        mse_file.write(f"{error/error_normalization}\n")
-
-    mse_file.close()
-
 
 def test_regression(G, step, weight_type):
         

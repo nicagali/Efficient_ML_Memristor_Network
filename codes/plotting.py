@@ -113,7 +113,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     style = par.weight_styles[f'{weight_type}']
     base_color = style['c']
     palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
-    palette = plt.get_cmap('tab20')
+    # palette = plt.get_cmap('tab20')
       
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
     for weight_indx in range(number_weights):
@@ -139,7 +139,14 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     #     ax.legend(fontsize = par.legend_size)
         # ax.legend(bbox_to_anchor=(1, 1))
 
+def plot_memristor_resistances(ax, G):
 
+    ydata = np.loadtxt(f"{par.DATA_PATH}memristor_resistances.txt", unpack=True)
+    x = np.array(range(len(ydata[0])))
+
+    for edge_index in range(len(G.edges())):
+        y = ydata[edge_index]
+        ax.plot(x, y, **par.memr_resistances_style) 
 
 def plot_potential_each_node(ax, G, factor_time=1):
 
