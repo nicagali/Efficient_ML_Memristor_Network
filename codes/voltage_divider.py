@@ -72,7 +72,7 @@ fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
 # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
 
 fig, ax = plt.subplots(figsize = par.figsize_1)
-plotting.plot_memristor_resistances(ax)
+plotting.plot_memristor_resistances(ax, G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/voltage_divider/memristors_resisatnces.pdf")
 
