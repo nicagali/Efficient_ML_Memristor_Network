@@ -114,7 +114,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     style = par.weight_styles[f'{weight_type}']
     base_color = style['c']
     palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
-    palette = plt.get_cmap('tab20')
+    # palette = plt.get_cmap('tab20')
       
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
     for weight_indx in range(number_weights):
@@ -127,7 +127,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
             weight.append(y[weight_indx])
 
         label_without_weightindex = style['label'][1:-1]
-        ax.plot(x, weight, color=palette(weight_indx / number_weights), marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
+        ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
         # ax.plot(x, weight, marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
         
     label = style['ylabel_weights']
