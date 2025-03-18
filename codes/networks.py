@@ -35,7 +35,7 @@ def initialize_nodes(G, voltage_input=None, voltage_desired=None):
             index_desired+=1
 
 
-def initialize_edges(G):
+def initialize_edges(G, mix_base_tip = False):
 
     initial_length = 10 # [mu m]
     initial_radius_base = 200 # [nm]
@@ -51,10 +51,14 @@ def initialize_edges(G):
         G.edges[edge]['pressure'] = 0
         G.edges[edge]['delta_rho'] = 0
 
-        # base_node = random.choice([0, 1])
-        # tip_node = 1 - base_node
-        # G.edges[edge]['base_node'] = base_node
-        # G.edges[edge]['tip_node'] = tip_node
+        if mix_base_tip:
+            dice = random.choice([0, 1])
+            # tip_node = 1 - base_node
+
+            if dice>0.5:
+
+                G.edges[edge][0] = G.edges[edge][1]
+                G.edges[edge][1] = G.edges[edge][0]
 
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
@@ -212,7 +216,7 @@ def circuit_from_graph(G, type):
             # tip_node = G.edges[edge]['tip_node']
 
             # circuit.add_mysistor(f'R{index+1}', f'n{edge[base_node]}', f'n{edge[tip_node]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
-            circuit.add_mysistor(f'R{index+1}', f'n{edge[base_node]}', f'n{edge[tip_node]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
+            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[0]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
 
         else:
 
