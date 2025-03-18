@@ -125,7 +125,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
             weight.append(y[weight_indx])
 
         label_without_weightindex = style['label'][1:-1]
-        ax.plot(x, weight, color=palette(weight_indx / number_weights), marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
+        ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
         # ax.plot(x, weight, marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
         
     label = style['ylabel_weights']

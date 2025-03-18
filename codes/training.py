@@ -149,7 +149,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
     if weight_type=='pressure' or weight_type == 'rho':
 
         for node in G.nodes():
-            # print('Udating', node)
+            # print('Updating', node)
 
             G_increment = G.copy(as_view=False)
             
