@@ -24,7 +24,7 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
 
-training_steps = 500    # choose
+training_steps = 10    # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
@@ -33,13 +33,13 @@ learning_rate_vec = [2e-5, 1e-5, 8e-3, 100, 100]
 
 weight_type_index = 0   # choose
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
 # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
 fig, ax = plt.subplots()
-plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_{weight_type_vec[weight_type_index]}', show_xlabel=False)
-ax.legend()
+plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_{weight_type_vec[weight_type_index]}', show_xlabel=False, starting_step=0)
+# ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 
@@ -63,13 +63,19 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 # fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 
 # --------- PLOT TRAINED GRAPH  ---------
-# The width of the edges are indicative of their resistance
+# The width of the edges are indicative of their resistance for edge-training, size of dots for node-training
 
 # fig, ax = plt.subplots()
 # pos = plotting.plot_graph(G, weight_type = 'length')
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
+# --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
+
+# fig, ax = plt.subplots(figsize = par.figsize_1)
+# plotting.plot_memristor_resistances(ax, G)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/voltage_divider/memristors_resisatnces.pdf")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
