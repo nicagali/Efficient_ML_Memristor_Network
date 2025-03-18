@@ -42,6 +42,20 @@ def initialize_edges(G, mix_base_tip = False):
     initial_value_resistance = 50 #do I still need this??
     initial_value_conductance = 1/initial_value_resistance
 
+    edge_list = list(G.edges())
+
+    # Reverse base and tip diection if asked
+    for edge in edge_list:
+
+        if mix_base_tip:
+            dice = random.random()  
+
+            if dice > 0.5:
+
+                G.remove_edge(edge[0], edge[1])  # Remove the old edge
+                G.add_edge(edge[1], edge[0])  # Add the reversed edge
+
+    # Initialize network edges
     for edge in G.edges():
 
         G.edges[edge]['resistance'] = initial_value_resistance
@@ -50,15 +64,6 @@ def initialize_edges(G, mix_base_tip = False):
         G.edges[edge]['radius_base'] = initial_radius_base
         G.edges[edge]['pressure'] = 0
         G.edges[edge]['delta_rho'] = 0
-
-        if mix_base_tip:
-            dice = random.choice([0, 1])
-            # tip_node = 1 - base_node
-
-            if dice>0.5:
-
-                G.edges[edge][0] = G.edges[edge][1]
-                G.edges[edge][1] = G.edges[edge][0]
 
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
@@ -86,11 +91,8 @@ def voltage_divider(save_data=False, voltage_desired = [3]):
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
 
+    initialize_edges(G, mix_base_tip=True)
     initialize_nodes(G, voltage_input, voltage_desired)
-    initialize_edges(G)
-
-    G.edges[(0,1)]['base_node'] = 0
-    G.edges[(1,2)]['tip_node'] = 1
 
     # SAVE to data folder
     if save_data:
@@ -212,11 +214,7 @@ def circuit_from_graph(G, type):
 
         if type == 'memristors':
 
-            # base_node = G.edges[edge]['base_node']
-            # tip_node = G.edges[edge]['tip_node']
-
-            # circuit.add_mysistor(f'R{index+1}', f'n{edge[base_node]}', f'n{edge[tip_node]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
-            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[0]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[base_node]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[base_node]]['pressure']-G.nodes[edge[tip_node]]['pressure'])*1e5, delta_rho = (G.nodes[edge[base_node]]['rho']-G.nodes[edge[tip_node]]['rho']))
+            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 
         else:
 
