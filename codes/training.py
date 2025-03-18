@@ -3,6 +3,7 @@ import networks
 import multiprocessing as mp
 import numpy as np
 import ahkab 
+import sys
 
 # --------- WRITE RESULTS TO FILES ---------
 
@@ -184,7 +185,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
             G.edges[edge][f'{weight_type}'] -= learning_rate*gradients[index]
-            print(G.edges[edge][f'{weight_type}'])
+            # print(G.edges[edge][f'{weight_type}'])
 
             if G.edges[edge][f'{weight_type}'] < 0:
                 sys.exit(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
