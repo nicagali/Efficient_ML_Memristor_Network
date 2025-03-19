@@ -133,11 +133,11 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
     if show_xlabel:
         ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
-    if weight_type == 'pressure' and starting_step==0:
-        ax.legend(fontsize = par.legend_size, loc='lower left')
-    elif starting_step ==0 :
-        ax.legend(fontsize = par.legend_size)
-        ax.legend(bbox_to_anchor=(1, 1))
+    # if weight_type == 'pressure' and starting_step==0:
+    #     ax.legend(fontsize = par.legend_size, loc='lower left')
+    # elif starting_step ==0 :
+    ax.legend(fontsize = par.legend_size)
+        # ax.legend(bbox_to_anchor=(1, 1))
 
 def plot_memristor_resistances(ax, G):
 

@@ -68,7 +68,7 @@ def initialize_edges(G, mix_base_tip = False):
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
 # VOLTAGE DIVIDER: 0 --- 1 --- 2
-def voltage_divider(save_data=False, voltage_desired = [3]):
+def voltage_divider(save_data=False, voltage_desired = [4]):
 
     G = nx.DiGraph()    # I am using directed graphs to keep trak of sign when def circuit
     G.name = 'voltage_divider'
@@ -87,12 +87,18 @@ def voltage_divider(save_data=False, voltage_desired = [3]):
     # ADD edges
     G.add_edge(0,1)
     G.add_edge(1,2)
+    # G.add_edge(1,0)
+    # G.add_edge(2,1)
+
     
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
 
-    initialize_edges(G, mix_base_tip=True)
+    initialize_edges(G, mix_base_tip=False)
     initialize_nodes(G, voltage_input, voltage_desired)
+
+    # G.nodes[0]['pressure'] = 1.1
+
 
     # SAVE to data folder
     if save_data:
@@ -213,6 +219,8 @@ def circuit_from_graph(G, type):
         # An edge = (u,v), the nodes are then called 'n u' and 'n v', u = edge[0], ...
 
         if type == 'memristors':
+            # print(f'pressure node {edge[0]}', G.nodes[edge[0]]['pressure'],)
+            # print(f'pressure node {edge[1]}',G.nodes[edge[1]]['pressure'])
 
             circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 

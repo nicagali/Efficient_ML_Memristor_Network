@@ -75,6 +75,11 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
     resistance_vec = result[1]
     result = result[0]
 
+    # print(result['tran'].keys())
+    # print(result['tran']['VN0'][-1])
+    # print(result['tran']['VN1'][-1])
+    # print(result['tran']['VN2'][-1])
+
     # UPDATE the value of the initial conductance to the last in the tran simulation to speed up (in a voltage divider 5 steps speeds of 0.01s giving same results)
     if update_initial_res:
         for index, edge in enumerate(G.edges()):
@@ -153,7 +158,10 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 
             G_increment = G.copy(as_view=False)
             
+            # print('Pressure before', G_increment.nodes[node][f'{weight_type}'])
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
+            # print('Pressure after', G_increment.nodes[node][f'{weight_type}'])
+
 
             if training_type == 'allostery':
                 error = cost_function(G_increment, weight_type)  

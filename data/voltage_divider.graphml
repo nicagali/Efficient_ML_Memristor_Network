@@ -17,7 +17,7 @@
   <graph edgedefault="directed">
     <node id="0">
       <data key="d1">source</data>
-      <data key="d2">red</data>
+      <data key="d2">forestgreen</data>
       <data key="d3">False</data>
       <data key="d4">0.2</data>
       <data key="d5">1</data>
@@ -28,17 +28,17 @@
       <data key="d2">darkslateblue</data>
       <data key="d4">0.2</data>
       <data key="d5">1</data>
-      <data key="d7">3</data>
+      <data key="d7">4</data>
     </node>
     <node id="2">
       <data key="d1">source</data>
-      <data key="d2">red</data>
+      <data key="d2">forestgreen</data>
       <data key="d3">True</data>
       <data key="d4">0.2</data>
       <data key="d5">1</data>
       <data key="d6">0</data>
     </node>
-    <edge source="1" target="0">
+    <edge source="0" target="1">
       <data key="d8">50</data>
       <data key="d9">0.02</data>
       <data key="d10">10</data>
@@ -46,7 +46,7 @@
       <data key="d12">0</data>
       <data key="d13">0</data>
     </edge>
-    <edge source="2" target="1">
+    <edge source="1" target="2">
       <data key="d8">50</data>
       <data key="d9">0.02</data>
       <data key="d10">10</data>

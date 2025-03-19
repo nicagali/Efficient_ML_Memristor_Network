@@ -7,7 +7,7 @@ PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Netwo
 
 # --------- NETWORKS PLOTS STYLES ---------
 
-color_dots = ['red','darkslateblue','silver'] # color of the three types of nodes: input, output, hidden
+color_dots = ['forestgreen','darkslateblue','silver'] # color of the three types of nodes: input, output, hidden
 font_size_nw = 12 #size font on nodes
 nodes_size = 1000 #size nodes
 width = 5 #width connecting edges

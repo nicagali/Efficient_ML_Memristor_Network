@@ -14,7 +14,9 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -24,7 +26,7 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
 
-training_steps = 10    # choose
+training_steps = 50    # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
