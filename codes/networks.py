@@ -114,6 +114,8 @@ def random_graph(save_data=False, res_change=False):
     number_nodes = 10
     number_edges = 16
     G = nx.gnm_random_graph(number_nodes, number_edges)
+    G = nx.connected_watts_strogatz_graph(8, 4, 0.3)
+
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)
     # G = nx.convert_node_labels_to_integers(G)
@@ -152,7 +154,7 @@ def random_graph(save_data=False, res_change=False):
     # G.nodes[3]['constant_source'] = True
 
     # INITIALIZE nodes and edges
-    voltage_input = [0, 2, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     initialize_nodes(G, voltage_input, voltage_desired)

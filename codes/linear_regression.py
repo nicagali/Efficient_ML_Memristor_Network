@@ -13,8 +13,8 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.random_graph(save_data=True) 
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
@@ -35,7 +35,7 @@ learning_rate_vec = [2e-5, 1e-5, 8e-3, 100, 100]
 
 weight_type_index = 0   # choose
 
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
 # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
