@@ -105,6 +105,7 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 for step in range(100):
     fig, ax = plt.subplots()
     plotting.plot_regression(ax, step=step)
+    fig.tight_layout()
     fig.savefig(f"../paper/plots/regression/snapshots/snapshot{step}.pdf", transparent=True)
 
 

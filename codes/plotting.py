@@ -230,8 +230,8 @@ def plot_regression(ax, step):
     ax.set_xlabel(r'$V_{in}$', fontsize = par.axis_fontsize)
     # ax.set_title(f"Step {step}")
     
-    # ax.set_xlim([-0.2, 5.2])
-    # ax.set_ylim([-0.2, 2])
+    ax.set_xlim([-3, 3])
+    ax.set_ylim([-2, 2])
     ax.grid(ls=":")
     ax.tick_params(axis='both', labelsize=par.size_ticks)
     
