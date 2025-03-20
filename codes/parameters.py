@@ -40,8 +40,8 @@ weight_styles = {
     'resistance': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$R$', ylabel_weights = r'$R$[$\Omega$]'),
 }
 
-reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')
-reg_output = dict(c = 'mediumblue', marker='o', label = rf'$V_1$')
+reg_desired = dict(c = 'black', lw=3, label = rf'$V_1^D$')
+reg_output = dict(c = 'white', marker='o', label = rf'$V_1$')
 
 
 

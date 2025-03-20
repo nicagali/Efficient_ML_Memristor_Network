@@ -16,7 +16,7 @@ start = time.time()
 # G = networks.three_inout(save_data=True) 
 # G = networks.random_graph(save_data=True) 
 # G = networks.voltage_divider(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 
 # a = networks.compute_regression_coefficients(G)
 # print('Coefficient a:', a)
@@ -52,14 +52,14 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 for edge in G.edges():
     G.edges[edge]['resistance'] = 100
 
-training_steps = 100
+training_steps = 200
 training_type = 'regression'
 
-data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length100.txt", unpack=True)
-weight_vec = data[1]
+# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/length/length100.txt", unpack=True)
+# weight_vec = data[1]
 
-for index, edge in enumerate(G.edges):
-        G.edges[edge][f'length'] = weight_vec[index]
+# for index, edge in enumerate(G.edges):
+#         G.edges[edge][f'length'] = weight_vec[index]
 
 # G_ml = G.copy(as_view=False)  
 
@@ -95,10 +95,19 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 
-fig, ax = plt.subplots()
-pos = plotting.plot_graph(G, weight_type = 'length')
-fig.tight_layout()
-fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+# fig, ax = plt.subplots()
+# pos = plotting.plot_graph(G, weight_type = 'length')
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+
+# for step in range(100):
+#     training.test_regression(G, step=step, weight_type='length')
+for step in range(100):
+    fig, ax = plt.subplots()
+    plotting.plot_regression(ax, step=step)
+    fig.savefig(f"../paper/plots/regression/snapshots/snapshot{step}.pdf", transparent=True)
+
+
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
