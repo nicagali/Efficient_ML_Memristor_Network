@@ -4,6 +4,7 @@ import sys
 sys.path.append(par.PACKAGE_PATH)
 import ahkab    
 import random
+# from numpy import random
 
 # This module contains functions to:
 # 1 - Initialize graph parameters
@@ -115,7 +116,19 @@ def random_graph(save_data=False, res_change=False):
     number_nodes = 7
     number_edges = 12
     # G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
-    G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
+    G_structure = nx.connected_watts_strogatz_graph(8, 5, 0.3)
+    print(G_structure.edges())
+
+    G = nx.DiGraph()
+    for edge in G_structure.edges():
+        direction = random.random()
+        if direction>0.5:
+            G.add_edge(edge[0], edge[1])
+        else:
+            G.add_edge(edge[1], edge[0])
+    for node in G_structure.nodes():
+        G.add_node(node)
+            
 
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)

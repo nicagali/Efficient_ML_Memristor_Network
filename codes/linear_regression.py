@@ -18,7 +18,21 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
-# G.add_
+# G.nodes['3']['type']  = 'source'
+# G.nodes['3']['color'] = par.color_dots[0]
+# G.nodes['3']['constant_source']  = True
+# G.nodes['3']['voltage']  = 3
+
+# G = nx.DiGraph(Gdata)
+
+G.add_edge('1','5')
+G.add_edge('1','6')
+G.add_edge('0','4')
+# # G.add_edge('6','7')
+G.remove_edge('4', '2')
+G.remove_edge('5', '7')
+G.remove_edge('7', '6')
+networks.initialize_edges(G)
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -26,18 +40,17 @@ pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
-
 # --------- TRAIN NETWORK ---------
 training_steps = 100    # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-5, 1e-5, 8e-3, 100, 100]
+learning_rate_vec = [5e-5, 1e-5, 8e-3, 100, 100]
 
 weight_type_index = 0   # choose
 
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
 # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
