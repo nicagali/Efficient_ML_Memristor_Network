@@ -114,8 +114,8 @@ def random_graph(save_data=False, res_change=False):
     # CREATE random graph with number_nodes conected by number_edges
     number_nodes = 7
     number_edges = 12
-    G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
-    # G = nx.connected_watts_strogatz_graph(8, 4, 0.3)
+    # G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
+    G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)
@@ -222,10 +222,6 @@ def circuit_from_graph(G, type):
         # An edge = (u,v), the nodes are then called 'n u' and 'n v', u = edge[0], ...
 
         if type == 'memristors':
-            # print(f'pressure node {edge[0]}', G.nodes[edge[0]]['pressure'])
-            # print(f'pressure node {edge[1]}',G.nodes[edge[1]]['pressure'])
-            # print(f'pressure differece', G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])
-            # print(index, edge[0], edge[1])
 
             circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 

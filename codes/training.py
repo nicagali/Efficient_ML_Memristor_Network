@@ -75,11 +75,6 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
     resistance_vec = result[1]
     result = result[0]
 
-    # print(result['tran'].keys())
-    # print(result['tran']['VN0'][-1])
-    # print(result['tran']['VN1'][-1])
-    # print(result['tran']['VN2'][-1])
-
     # UPDATE the value of the initial conductance to the last in the tran simulation to speed up (in a voltage divider 5 steps speeds of 0.01s giving same results)
     if update_initial_res:
         for index, edge in enumerate(G.edges()):
@@ -97,6 +92,8 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
                 error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
 
             target_index+=1
+
+    # error = error/target_index
             
     # WRITE last element potential drop each edge (useful in the voltage divider case, otherwise too many)
     if G.name == 'voltage_divider' and write_potential_target_to_file is not None:
@@ -110,8 +107,6 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
         for edge_index in range(len(G.edges())):
             write_memr_resistances.write(f"{resistance_vec[-1][edge_index]} \t")
         write_memr_resistances.write("\n")
-
-
 
     return error    
 
@@ -476,7 +471,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     if training_type == 'regression':
         dataset_input_voltage, dataset_output_voltage = generate_dataset(0)
         testset_input_voltage, testset_output_voltage = generate_dataset(20, random = False)
-        # print(dataset_input_voltage, testset_input_voltage)
 
     # COMPUTE initial error
     if training_type == 'allostery':
@@ -536,28 +530,21 @@ def test_regression(G, step, weight_type):
             
     reg_file = open(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", "w") 
 
-
     testset_input_voltage, testset_output_voltage = generate_dataset(20, random = False)
 
     error = 0
-    for datastep in range(len(testset_input_voltage[0])):
+    for datastep in range(len(testset_input_voltage)):
 
         update_input_output_volt(G, testset_input_voltage, testset_output_voltage, datastep)
 
-        if weight_type == 'resistance':
-            circuit = networks.circuit_from_graph(G, type='resistors') 
-            analysis = ahkab.new_op()
-            # analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
-        else:
-            circuit = networks.circuit_from_graph(G, type='memristors') 
-            analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
+        circuit = networks.circuit_from_graph(G, type='memristors') 
+        analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
 
         # DEFINE a transient analysis (analysis of the circuit over time)
         result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
 
         resistance_vec = result[1]
         result = result[0]
-
         
         output_voltage_target = []
         for node in G.nodes():
@@ -568,12 +555,18 @@ def test_regression(G, step, weight_type):
                 else: 
                     output_voltage_target.append(result['tran'][f'VN{node}'][-1])
 
-        reg_file.write(f"{testset_input_voltage[0][datastep]}\t{output_voltage_target[0]}")
+        for node in G.nodes():
+            target_index=0
+            if G.nodes[node]['type']=='target':  
+                error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
+
+
+        reg_file.write(f"{testset_input_voltage[datastep]}\t{output_voltage_target[0]}")
         reg_file.write("\n")
 
+    error /= len(testset_input_voltage)
+    print(f"Error step {step}", error)
 
-    test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, error_type='test')
-    print(f"Error step {step}", test_error)
     reg_file.close()
     
     return

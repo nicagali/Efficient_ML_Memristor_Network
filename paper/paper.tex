@@ -215,8 +215,8 @@ A voltage divider is an electrical circuit made of three nodes connected in seri
     \caption{}\label{fig:vd_scheme}
 \end{figure} 
 
-We initialize the system with pressures $P_1 =  P_2 = 1 bar$ and ion concetration $\rho_1 = \rho_2 = 0.2 mM$ on each node, length $L_1 = L_2 = 10\mu m$ and base to tip radius ratio $R_1 = R_2 = 4$ on each edge. After choosing one of these four physical quantities as training parameter $\boldsymbol{w} = \brac{w_1, w_2}$, we implement the training as descibe in \cref{sec:training} that modifies them, while the other parameters are kept constant. 
-In \cref{fig:mse_weights_vd} we show that the cost function decreases of many order
+We initialize the system with pressures $P_1 =  P_2 = 1 bar$ and ion concetration $\rho_1 = \rho_2 = 0.2 mM$ on each node, length $L_1 = L_2 = 10\mu m$ and base radius  $R_{b1} = R_{b2} = 200 nm$ on each edge. After choosing one of these four physical quantities as training parameter $\boldsymbol{w} = \brac{w_1, w_2}$, we implement the training as descibed in \cref{sec:training} that modifies them, while the other parameters are kept constant. 
+In \cref{fig:mse_weights_vd} we show that the cost function normalized to its initial value decreases of many order of magnitude during the training for each of the choosen weight. The values of the choosen set of weights simultaneouly changes from the initial condition, as shown in Figures [], adjusting the behaviour of the network to the desired one. In fact, if the values of a choosen type of weights at the end of the training are imposed to the netowork together with the voltage imputs, the network will autonomously realx to a staedy state that coincides with the desired state. To clarify this point, the inset in Figure shows the relaxation of the voltage ivier
 
 
 \begin{figure}[h]
