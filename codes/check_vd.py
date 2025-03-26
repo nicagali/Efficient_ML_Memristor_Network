@@ -27,12 +27,18 @@ print(result['tran']['VN0'][-1])
 print(result['tran']['VN1'][-1])
 print(result['tran']['VN2'][-1])
 
-# pressure_vec = np.linspace(-1e6, 1e6)
-pressure_vec = np.linspace(-10, 10)
+pressure_vec = np.linspace(-1e6, 1e6)
+# pressure_vec = np.linspace(-10, 10)
 mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id='R1')
 g_infinity = []
 for pressure in pressure_vec:
-    g_infinity.append(ahkab.transient.g_infinity_func(pressure, 0, 0, mysistor))
+    g_infinity.append(ahkab.transient.g_infinity_func(2.5, pressure, 0, mysistor)*mysistor.g_0)
+
+plt.plot(pressure_vec, g_infinity)
+
+g_infinity = []
+for pressure in pressure_vec:
+    g_infinity.append(ahkab.transient.g_infinity_func(-2.5, pressure, 0, mysistor)*mysistor.g_0)
 
 plt.plot(pressure_vec, g_infinity)
 plt.savefig('g_infty_pressure.pdf')

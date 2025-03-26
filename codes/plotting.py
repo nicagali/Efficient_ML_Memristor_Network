@@ -155,6 +155,9 @@ def plot_potential_each_node(ax, G, factor_time=1):
 
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
     result = ahkab.run(circuit, an_list=tran_analysis)  
+    resistances = result[1][-1]
+    print(1/resistances[0], 1/resistances[1])
+
     result = result[0]
     # print(result['tran'].keys())
 

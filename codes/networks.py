@@ -83,6 +83,7 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     G.add_node(2, **attributes)
     G.nodes[2]['constant_source'] = True
 
+# learning_rate_vec = [1e-5, 2e-6, 5e-3, 5e2]
 
     # ADD edges
     G.add_edge(0,1)
@@ -97,7 +98,7 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     initialize_edges(G, mix_base_tip=False)
     initialize_nodes(G, voltage_input, voltage_desired)
 
-    # G.nodes[0]['pressure'] = 1.1
+    # G.nodes[0]['pressure'] = 1.001
 
 
     # SAVE to data folder
@@ -111,10 +112,10 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 10
-    number_edges = 16
-    G = nx.gnm_random_graph(number_nodes, number_edges)
-    G = nx.connected_watts_strogatz_graph(8, 4, 0.3)
+    number_nodes = 7
+    number_edges = 12
+    G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
+    # G = nx.connected_watts_strogatz_graph(8, 4, 0.3)
 
     # G = nx.house_graph()
     # G = nx.grid_2d_graph(3, 3)
@@ -221,8 +222,10 @@ def circuit_from_graph(G, type):
         # An edge = (u,v), the nodes are then called 'n u' and 'n v', u = edge[0], ...
 
         if type == 'memristors':
-            # print(f'pressure node {edge[0]}', G.nodes[edge[0]]['pressure'],)
+            # print(f'pressure node {edge[0]}', G.nodes[edge[0]]['pressure'])
             # print(f'pressure node {edge[1]}',G.nodes[edge[1]]['pressure'])
+            # print(f'pressure differece', G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])
+            # print(index, edge[0], edge[1])
 
             circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 
@@ -233,3 +236,25 @@ def circuit_from_graph(G, type):
     return circuit
 
 
+
+
+def reverse(self, copy=True):
+    """Returns the reverse of the graph.
+
+    The reverse is a graph with the same nodes and edges
+    but with the directions of the edges reversed.
+
+    Parameters
+    ----------
+    copy : bool optional (default=True)
+        If True, return a new DiGraph holding the reversed edges.
+        If False, the reverse graph is created using a view of
+        the original graph.
+    """
+    if copy:
+        H = self.__class__()
+        H.graph.update(deepcopy(self.graph))
+        H.add_nodes_from((n, deepcopy(d)) for n, d in self.nodes.items())
+        H.add_edges_from((v, u, deepcopy(d)) for u, v, d in self.edges(data=True))
+        return H
+    return nx.reverse_view(self)
