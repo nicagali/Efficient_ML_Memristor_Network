@@ -515,6 +515,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
 
+    print(testset_input_voltage, testset_output_voltage)
+
     # COMPUTE initial error
     if training_type == 'allostery':
         error = cost_function(G, weight_type, potential_target_file, update_initial_res=False) 
