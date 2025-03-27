@@ -59,12 +59,13 @@ def regression_function(input):
 
 # --------- ALGORITHM FUNCTIONS ---------
 
-def cost_function(G, weight_type, update_initial_res = False, write_potential_target_to_file=None, write_memr_resistances = None):
+def cost_function(G, weight_type, write_potential_target_to_file=None, update_initial_res = False):
     
     # TRANSFORM graph into circuit
     if weight_type == 'resistance':
         circuit = networks.circuit_from_graph(G, type='resistors') 
         analysis = ahkab.new_op()
+        # analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
     else:
         circuit = networks.circuit_from_graph(G, type='memristors') 
         analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
@@ -92,8 +93,7 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
                 error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
 
             target_index+=1
-
-    # error = error/target_index
+            print(node, G.nodes[node]['desired'], result['tran'][f'VN{node}'][-1])
             
     # WRITE last element potential drop each edge (useful in the voltage divider case, otherwise too many)
     if G.name == 'voltage_divider' and write_potential_target_to_file is not None:
@@ -102,43 +102,60 @@ def cost_function(G, weight_type, update_initial_res = False, write_potential_ta
             write_potential_target_to_file.write(f"{result['op'][f'VN{1}'][0][0]}\n")
         else:
             write_potential_target_to_file.write(f"{result['tran'][f'VN{1}'][-1]}\n")
-    # WRITE final value of resistance after tran analysis
-    if write_memr_resistances is not None:
-        for edge_index in range(len(G.edges())):
-            write_memr_resistances.write(f"{resistance_vec[-1][edge_index]} \t")
-        write_memr_resistances.write("\n")
+
 
     return error    
 
-def update_input_output_volt(G, input_voltage, desired_voltage, datastep=None): 
+def update_input_output_volt(G, input_voltage, desired_voltage, datastep=None):
+
+    input_index = 0
+    output_index = 0
     
     for node in G.nodes():
         
         if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
 
             if datastep == None:
-                G.nodes[node]['voltage'] = input_voltage[0]
+                G.nodes[node]['voltage'] = input_voltage[input_index]
+                # print(input_voltage[input_index])
             else:
-                G.nodes[node]['voltage'] = input_voltage[datastep]
+                G.nodes[node]['voltage'] = input_voltage[input_index][datastep]
+
+
+            # if datastep == 0:
+                # print(input_voltage)
+                # print(input_index)
+                # print('input voltage', node, input_voltage[input_index][datastep])
+
+            input_index += 1
+
 
         if G.nodes[node]['type'] == 'target':
 
             if datastep == None:
-                G.nodes[node]['desired'] = desired_voltage[0]
+                G.nodes[node]['desired'] = desired_voltage[output_index]
             else:
-                G.nodes[node]['desired'] = desired_voltage[datastep]
+                G.nodes[node]['desired'] = desired_voltage[output_index][datastep]
 
-def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, error_type):
 
-    if error_type == 'training':
+            # if datastep == 0:
+                # print('output voltage', node, desired_voltage[output_index][datastep])
+
+            output_index += 1
+
+def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type):
+
+    if error_type == 'training_error':
         update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage)
         error = cost_function(G, weight_type)
+
     else:
+
         error = 0
-        for datastep in range(len(dataset_input_voltage)):
+        for datastep in range(len(dataset_input_voltage[0])):
             update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage, datastep)
             error += cost_function(G, weight_type) 
-        error = error/len(dataset_input_voltage)
+        error = error/len(dataset_input_voltage[0])
 
     return error
 
@@ -149,22 +166,15 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
     if weight_type=='pressure' or weight_type == 'rho':
 
         for node in G.nodes():
-            # print('Updating', node)
 
             G_increment = G.copy(as_view=False)
             
-            # print('Pressure before', G_increment.nodes[node][f'{weight_type}'])
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
-            # print('Pressure after', G_increment.nodes[node][f'{weight_type}'])
-
 
             if training_type == 'allostery':
-                error = cost_function(G_increment, weight_type)  
+                error = cost_function(G_increment)  
             else:
-                # if node=='7' or node=='9':
-                # print('incremented node', G_increment.nodes[node][f'{weight_type}'], 'voltage input,', dataset_input_voltage, 'voltage output', dataset_output_voltage)
-                # print(node)
-                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
 
             if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -172,7 +182,6 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 denominator = delta_weight
                 
             gradients.append((error - base_error)/denominator)
-            # print('base error', base_error, 'error with increment', error, 'difference', (error - base_error), 'gradient', (error - base_error)/delta_weight)
 
         for node in G.nodes():
 
@@ -191,7 +200,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if training_type == 'allostery':
                 error = cost_function(G_increment, weight_type)  
             else:
-                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
             # print(index, base_error, error, (error - base_error), (error - base_error)/delta_weight)
 
@@ -218,7 +227,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if training_type == 'allostery':
                 error = cost_function(G_increment, weight_type)  
             else:
-                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
             if weight_type == 'length':
                 denominator = delta_weight*1e-6
@@ -318,7 +327,7 @@ def update_resistances(G_free, training_type, dataset_input_voltage, dataset_out
 
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 
-def generate_dataset(training_steps, random = True):
+def generate_dataset_single(training_steps, random = True):
 
     training_steps += 1
 
@@ -329,7 +338,34 @@ def generate_dataset(training_steps, random = True):
 
     desired_output = regression_function(input_voltage)
 
+    input_voltage = [input_voltage]
+    desired_output = [desired_output]
+
+    # print(input_voltage)
+
     return input_voltage, desired_output
+
+
+def generate_dataset(training_steps):
+
+    training_steps +=1
+
+    # input_voltage1 = np.random.uniform(1,5,19)
+    # input_voltage2 = np.random.uniform(1,5,19)
+    # input_voltage1 = np.linspace(1,5,19)
+    # input_voltage2 = np.linspace(1,5,19)
+
+    input_voltage1 = np.random.uniform(1,5, training_steps)
+    input_voltage2 = np.random.uniform(1,5, training_steps)
+
+    desired_output1 = regression_function1(input_voltage1, input_voltage2)
+    desired_output2 = regression_function2(input_voltage1, input_voltage2)
+
+    input_voltage = [input_voltage1, input_voltage2]
+    desired_output = [desired_output1, desired_output2]
+
+    return input_voltage, desired_output
+
 
 # FUNC----------- PARALLEL
 
@@ -369,7 +405,7 @@ def compute_single_gradient_parallel_helper(G, weight_index, training_type, base
         if training_type == 'allostery':
             error = cost_function(G_increment, weight_type)  
         else:
-            error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage,  error_type='training')
+            error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
 
         gradient = (error - base_error) / denominator
@@ -397,13 +433,13 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
         # batch_size = 1
         number_of_weights = G.number_of_nodes()
     else:
-        batch_size = int(G.number_of_edges()/2)
+        batch_size = int(G.number_of_edges()/4)
         # batch_size = G.number_of_edges()
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
-    # if number_of_weights % batch_size != 0:
-    #     raise ValueError(f"number_of_weights ({number_of_weights}) must be a multiple of batch_size ({batch_size}).")
+    if number_of_weights % batch_size != 0:
+        raise ValueError(f"number_of_weights ({number_of_weights}) must be a multiple of batch_size ({batch_size}).")
 
     # Initialize gradient vector
     init_gradient = np.zeros((number_of_weights), dtype = np.float64)  
@@ -415,23 +451,12 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
     # Create bridge to a nupy vector 
     stored_gradient = to_numpy_array(shared_gradient, init_gradient.shape)
 
-    core_multiple = int(number_of_weights/12)
-    if core_multiple<0:
-        batch_size = number_of_weights
-    else:
-        batch_size = 12
-
     lock = mp.Lock()
     # execute in batches
     for i in range(0, number_of_weights, batch_size):
-
-        endpoint_batch = i + batch_size
-        if endpoint_batch>number_of_weights:
-            endpoint_batch = number_of_weights
-
         # execute all tasks in a batch
         processes = [mp.Process(target = compute_single_gradient_parallel_helper, 
-                                args=(G, p, training_type, base_error, weight_type, delta_weight, dataset_input_voltage, dataset_output_voltage, step,  stored_gradient, lock)) for p in range(i, endpoint_batch)]
+                                args=(G, p, training_type, base_error, weight_type, delta_weight, dataset_input_voltage, dataset_output_voltage, step,  stored_gradient, lock)) for p in range(i, i + batch_size)]
 
         # start all processes
         for process in processes:
@@ -471,8 +496,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
     else:
         potential_target_file = None     
-    if weight_type != 'resistance':
-        memr_resistances_file = open(f"{par.DATA_PATH}memristor_resistances.txt", "w") #write resistances of memristors during training 
 
     # WRITE initial condition: intialized wieghts and intial error
     write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
@@ -480,22 +503,36 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     dataset_input_voltage=[]
     dataset_output_voltage=[]
     if training_type == 'regression':
-        dataset_input_voltage, dataset_output_voltage = generate_dataset(0)
-        testset_input_voltage, testset_output_voltage = generate_dataset(20, random = False)
+        counter_inputs = 0
+        for node in G.nodes():
+            if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
+                counter_inputs+=1
+            # print(node, G.nodes[node]['constant_source'])
+        if counter_inputs == 1:
+            dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
+            testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
+            # print(dataset_input_voltage)
+        else:
+            dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
 
     # COMPUTE initial error
     if training_type == 'allostery':
-        error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file, write_memr_resistances=memr_resistances_file) 
+        error = cost_function(G, weight_type, potential_target_file, update_initial_res=False) 
         print('Step:', 0, error)
         error_normalization = error #define it as normalization error
         mse_file.write(f"{error/error_normalization}\n")
+
     else:
-        error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
-        test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, error_type='test')
+        error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, 0, error_type='training')
+        test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
         print('Step:', 0, test_error)
         error_normalization = test_error #define it as normalization error
         mse_file.write(f"{test_error/error_normalization}\n")
 
+
+    # mse_file.write(f"{error}\n")
+
+    
     # LOOP over training steps
     for step in range(training_steps): 
 
@@ -509,20 +546,69 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         # COMPUTE error
         if training_type == 'allostery':
-            error = cost_function(G, weight_type, update_initial_res=False, write_potential_target_to_file=potential_target_file, write_memr_resistances=memr_resistances_file) 
+            error = cost_function(G, weight_type, potential_target_file, update_initial_res=False)  
             print('Step:', step+1, error)
             mse_file.write(f"{error/error_normalization}\n")
         else:
-            dataset_input_voltage, dataset_output_voltage = generate_dataset(0)
-            error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, error_type='training')
-            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, error_type='test')
+            dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
+            error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
+            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
             print('Step:', step+1, test_error)
             mse_file.write(f"{test_error/error_normalization}\n")
 
+                         
+        # mse_file.write(f"{error}\n")
+
+
     mse_file.close()
-    memr_resistances_file.close()
     if G.name == 'voltage_divider':
         potential_target_file.close()
+
+
+def train_reproduce(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
+
+    # OPEN files to write results
+    mse_file = open(f"{par.DATA_PATH}mse/mse_allostery_{weight_type}.txt", "w") #write error 
+
+    # WRITE initial condition: intialized wieghts and intial error
+    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
+
+    dataset_input_voltage, dataset_output_voltage = generate_dataset()
+
+    # print(dataset_input_voltage, dataset_output_voltage)
+
+    # COMPUTE initial error
+
+    error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage)
+
+    error_normalization = error #define it as normalization error
+
+    mse_file.write(f"{error/error_normalization}\n")
+
+    print('Step:', 0, error)
+    
+    # LOOP over training steps
+    for step in range(training_steps): 
+
+        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+
+        # update_resistances(G, G_clamped)
+
+        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage)
+            
+        write_weights_to_file(G, step+1, weight_type, training_type)
+
+        # COMPUTE error
+
+        dataset_input_voltage, dataset_output_voltage = generate_dataset()
+
+        error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage)
+
+        print('Step:', step+1, error)
+        mse_file.write(f"{error/error_normalization}\n")
+
+    mse_file.close()
+
 
 def test_regression(G, step, weight_type):
         
@@ -541,21 +627,35 @@ def test_regression(G, step, weight_type):
             
     reg_file = open(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", "w") 
 
-    testset_input_voltage, testset_output_voltage = generate_dataset(20, random = False)
+    counter_inputs = 0
+    for node in G.nodes():
+        if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
+            counter_inputs+=1
+    if counter_inputs == 1:
+        testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
+    else:
+        testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
+
 
     error = 0
-    for datastep in range(len(testset_input_voltage)):
+    for datastep in range(len(testset_input_voltage[0])):
 
         update_input_output_volt(G, testset_input_voltage, testset_output_voltage, datastep)
 
-        circuit = networks.circuit_from_graph(G, type='memristors') 
-        analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
+        if weight_type == 'resistance':
+            circuit = networks.circuit_from_graph(G, type='resistors') 
+            analysis = ahkab.new_op()
+            # analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
+        else:
+            circuit = networks.circuit_from_graph(G, type='memristors') 
+            analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
 
         # DEFINE a transient analysis (analysis of the circuit over time)
         result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
 
         resistance_vec = result[1]
         result = result[0]
+
         
         output_voltage_target = []
         for node in G.nodes():
@@ -566,18 +666,12 @@ def test_regression(G, step, weight_type):
                 else: 
                     output_voltage_target.append(result['tran'][f'VN{node}'][-1])
 
-        for node in G.nodes():
-            target_index=0
-            if G.nodes[node]['type']=='target':  
-                error += (G.nodes[node]['desired'] - result['tran'][f'VN{node}'][-1])**2
-
-
-        reg_file.write(f"{testset_input_voltage[datastep]}\t{output_voltage_target[0]}")
+        reg_file.write(f"{testset_input_voltage[0][datastep]}\t{output_voltage_target[0]}")
         reg_file.write("\n")
 
-    error /= len(testset_input_voltage)
-    print(f"Error step {step}", error)
 
+    test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+    print(f"Error step {step}", test_error)
     reg_file.close()
     
     return
