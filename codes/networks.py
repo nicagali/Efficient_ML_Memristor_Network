@@ -13,7 +13,27 @@ import random
 
 # 1 --------- INITIALIZE GRAPH PARAMETERS ---------
 
-def initialize_nodes(G, voltage_input=None, voltage_desired=None):
+def initialize_nodes(G, sources, targets, voltage_input=None, voltage_desired=None):
+
+    # Assign attributes nodes
+    constantsource_index=0
+    for node in list(G.nodes()):
+        # print(node)
+        if node in sources:
+            G.nodes[node]['type'] = 'source'
+            G.nodes[node]['color'] = par.color_dots[0]
+            if constantsource_index < (len(sources)-1):
+                G.nodes[node]['constant_source'] = True
+                constantsource_index += 1
+            else:
+                G.nodes[node]['constant_source'] = False
+
+        elif node in targets:
+            G.nodes[node]['type'] = 'target'
+            G.nodes[node]['color'] = par.color_dots[1]
+        else:
+            G.nodes[node]['type'] = 'hidden'
+            G.nodes[node]['color'] = par.color_dots[2]
 
     # Initialize every node with the same values of pressure = initial_pressure and rho = initial_rho
     initial_rho = 0.2
@@ -113,65 +133,23 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 7
+    number_nodes = 8
     number_edges = 12
-    # G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
-    G_structure = nx.connected_watts_strogatz_graph(8, 5, 0.3)
-    print(G_structure.edges())
-
-    G = nx.DiGraph()
-    for edge in G_structure.edges():
-        direction = random.random()
-        if direction>0.5:
-            G.add_edge(edge[0], edge[1])
-        else:
-            G.add_edge(edge[1], edge[0])
-    for node in G_structure.nodes():
-        G.add_node(node)
-            
-
-    # G = nx.house_graph()
-    # G = nx.grid_2d_graph(3, 3)
-    # G = nx.convert_node_labels_to_integers(G)
-    # G = nx.complete_graph(5)
+    G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
+    # G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 2
     number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
-    # sources = [2,3,4]
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
-    # targets = [0]
 
-    volt_input = []
-    # Assign attributes nodes
-    constantsource_index=0
-    for node in range(len(G.nodes)):
-        if node in sources:
-            G.nodes[node]['type'] = 'source'
-            G.nodes[node]['color'] = par.color_dots[0]
-            if constantsource_index < (number_sources-1):
-                G.nodes[node]['constant_source'] = True
-                constantsource_index += 1
-            else:
-                G.nodes[node]['constant_source'] = False
-            print(node, G.nodes[node]['constant_source'])
-
-        elif node in targets:
-            G.nodes[node]['type'] = 'target'
-            G.nodes[node]['color'] = par.color_dots[1]
-        else:
-            G.nodes[node]['type'] = 'hidden'
-            G.nodes[node]['color'] = par.color_dots[2]
-
-    # G.nodes[3]['constant_source'] = True
-
-    # INITIALIZE nodes and edges
     voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
-    initialize_nodes(G, voltage_input, voltage_desired)
+    # INITIALIZE nodes and edges
+    initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
     initialize_edges(G)
 
     if save_data:
@@ -245,6 +223,30 @@ def circuit_from_graph(G, type):
     return circuit
 
 
+def to_directed_graph(G_structure):
+
+    G = nx.DiGraph()
+    voltage_input = []
+    voltage_desired = []
+    for edge in G_structure.edges():
+        direction = random.random()
+        if direction>0.5:
+            G.add_edge(edge[0], edge[1])
+        else:
+            G.add_edge(edge[1], edge[0])
+    
+    nodes = [node for node in G_structure.nodes()]
+    targets = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='target']
+    sources = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='source']
+ 
+    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_desired = [3, 4]
+
+    G.add_nodes_from(nodes)
+    initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
+    initialize_edges(G)
+    
+    return G
 
 
 def reverse(self, copy=True):

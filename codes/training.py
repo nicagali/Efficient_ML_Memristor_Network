@@ -402,8 +402,8 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
-    if number_of_weights % batch_size != 0:
-        raise ValueError(f"number_of_weights ({number_of_weights}) must be a multiple of batch_size ({batch_size}).")
+    # if number_of_weights % batch_size != 0:
+    #     raise ValueError(f"number_of_weights ({number_of_weights}) must be a multiple of batch_size ({batch_size}).")
 
     # Initialize gradient vector
     init_gradient = np.zeros((number_of_weights), dtype = np.float64)  
@@ -415,12 +415,23 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
     # Create bridge to a nupy vector 
     stored_gradient = to_numpy_array(shared_gradient, init_gradient.shape)
 
+    core_multiple = int(number_of_weights/12)
+    if core_multiple<0:
+        batch_size = number_of_weights
+    else:
+        batch_size = 12
+
     lock = mp.Lock()
     # execute in batches
     for i in range(0, number_of_weights, batch_size):
+
+        endpoint_batch = i + batch_size
+        if endpoint_batch>number_of_weights:
+            endpoint_batch = number_of_weights
+
         # execute all tasks in a batch
         processes = [mp.Process(target = compute_single_gradient_parallel_helper, 
-                                args=(G, p, training_type, base_error, weight_type, delta_weight, dataset_input_voltage, dataset_output_voltage, step,  stored_gradient, lock)) for p in range(i, i + batch_size)]
+                                args=(G, p, training_type, base_error, weight_type, delta_weight, dataset_input_voltage, dataset_output_voltage, step,  stored_gradient, lock)) for p in range(i, endpoint_batch)]
 
         # start all processes
         for process in processes:
