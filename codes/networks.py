@@ -133,8 +133,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 8
-    number_edges = 12
+    number_nodes = 14
+    number_edges = 22
     G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
     # G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 
@@ -230,7 +230,7 @@ def to_directed_graph(G_structure):
     voltage_desired = []
     for edge in G_structure.edges():
         direction = random.random()
-        if direction>0.5:
+        if direction>0.2:
             G.add_edge(edge[0], edge[1])
         else:
             G.add_edge(edge[1], edge[0])
