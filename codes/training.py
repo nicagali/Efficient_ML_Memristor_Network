@@ -510,7 +510,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             # print(node, G.nodes[node]['constant_source'])
         if counter_inputs == 1:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
-            testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
+            testset_input_voltage, testset_output_voltage = generate_dataset_single(5, random = False)
             # print(dataset_input_voltage)
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)

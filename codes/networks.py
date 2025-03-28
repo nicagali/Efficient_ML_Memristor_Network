@@ -133,8 +133,8 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 14
-    number_edges = 22
+    number_nodes = 10
+    number_edges = 21
     G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
     # G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 

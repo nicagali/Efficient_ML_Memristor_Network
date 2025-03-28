@@ -13,9 +13,9 @@ start = time.time()
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
+G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
@@ -26,14 +26,16 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
 # G.nodes['3']['voltage']  = 3
 
 # G.add_edge('6','2')
-
 # G.add_edge('6','4')
 # G.add_edge('4','5')
-# G.add_edge('6','7')
+# G.add_edge('1','4')
 
-networks.initialize_edges(G)
+
+G = nx.reverse(G, copy=True)
 # G = networks.to_directed_graph(G)
-# nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
+
+# networks.initialize_edges(G)
+nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 
 
@@ -44,15 +46,15 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 100    # choose
+training_steps = 80    # choose
 training_type = 'regression'    # choose
 
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [3e-5, 1e-5, 1e-2, 1e2, 100]
+learning_rate_vec = [1e-5, 1e-5, 1e-2, 3e2, 100]
 
-weight_type_index = 3   # choose
+weight_type_index = 0   # choose
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
