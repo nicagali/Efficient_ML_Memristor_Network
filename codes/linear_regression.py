@@ -28,13 +28,15 @@ G.nodes['3']['voltage']  = 3
 G.add_edge('6','2')
 G.add_edge('6','4')
 G.add_edge('4','5')
-G.add_edge('1','4')
-
+G.add_edge('6','7')
+# G.remove_edge('3', '4')
+# G.remove_edge('2', '9')
+networks.initialize_edges(G)
 
 # G = nx.reverse(G, copy=True)
 # G = networks.to_directed_graph(G)
 
-networks.initialize_edges(G)
+# networks.initialize_edges(G)
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 
@@ -52,7 +54,7 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-5, 1e-5, 1e-2, 3e2, 1e3]
+learning_rate_vec = [3e-5, 1e-5, 1e-2, 3e2, 1e3]
 
 weight_type_index = 1   # choose
 
