@@ -29,8 +29,7 @@ G.add_edge('6','2')
 G.add_edge('6','4')
 G.add_edge('4','5')
 G.add_edge('6','7')
-# G.remove_edge('3', '4')
-# G.remove_edge('2', '9')
+
 networks.initialize_edges(G)
 
 # G = nx.reverse(G, copy=True)
@@ -56,7 +55,7 @@ weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 learning_rate_vec = [3e-5, 1e-5, 1e-2, 3e2, 1e3]
 
-weight_type_index = 1   # choose
+weight_type_index = 0   # choose
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
