@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 MAR 2025 13:59
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  31 MAR 2025 15:37
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -786,30 +786,29 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [5]
 
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 236.
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 238.
 
-
-Class revtex4-2 Warning: Deferred float stuck during \clearpage processing.
-
-[6]
 File: plots/general_network/mse_general.pdf Graphic file (type pdf)
 <use plots/general_network/mse_general.pdf>
 
-Overfull \hbox (264.0pt too wide) in paragraph at lines 242--243
+Overfull \hbox (264.0pt too wide) in paragraph at lines 241--242
  [][] 
  []
 
-[7] (./paper.bbl [8]) [9] (./paper.aux)
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6] (./paper.bbl [7]) [8] (./paper.aux)
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 4881DC22D86E9BB4772272F850A45DCF;1702.
+(rerunfilecheck)             Checksum: DE9B14B81D3FCC911ADD9B351EB652CD;1737.
  ) 
 Here is how much of TeX's memory you used:
- 28088 strings out of 476191
- 528235 string characters out of 5812071
- 930338 words of memory out of 5000000
- 48330 multiletter control sequences out of 15000+600000
+ 28089 strings out of 476191
+ 528246 string characters out of 5812071
+ 930796 words of memory out of 5000000
+ 48331 multiletter control sequences out of 15000+600000
  479536 words of font info for 80 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,12n,94p,1275b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (9 pages, 202296 bytes).
+Output written on paper.xdv (8 pages, 214616 bytes).

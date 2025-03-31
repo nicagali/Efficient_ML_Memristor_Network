@@ -134,18 +134,18 @@ def random_graph(save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
     number_nodes = 10
-    number_edges = 21
+    number_edges = 20
     G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
     # G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
-    number_sources = 2
+    number_sources = 3
     number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
 
-    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 3, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     # INITIALIZE nodes and edges

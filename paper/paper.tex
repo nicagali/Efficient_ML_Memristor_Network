@@ -205,7 +205,7 @@ In the training algortihm, we first initialize the system with the memristor par
 
 Althought performed numerically in this work, we highlight that the feedforward pass is a physical process in which the system natually relaxes to its steady state. Moreover, also the backward pass we use can be translated to a physical event since involves performing the forward pass a number of time as the number of the weights. Once the cost functions are determined, only the simple algebric calculations of \cref{eq:weight_update} are left to be computed. We peopse this method as a hybrid physical and in-silico training algorithm also as a future experimental approach to the probelm.
 
-\subsection{Training a Voltage Divider}
+\subsection{Training a Memristor Voltage Divider}
 
 A voltage divider is an electrical circuit made of three nodes connected in series by two resistances, that returns a fraction of the input voltage. Given the simplicity of its structure, we use it as an initial playground for the training algorithm described above. Specifically, we replace the resistances with memristor channels, to be trained such that giving $V_1 = 5V$ and $V_3 = 0V$ as inputs, we get $V_2 = 4V$ as output. In \cref{fig:vd_scheme} a schematic of the memristor voltage divider is shown.
 
@@ -224,18 +224,17 @@ In \cref{fig:mse_weights_vd} we show that the cost function normalized to its in
     \caption{(a) Behaviour of the cost function during the training of the voltage divider. Different colors indicate that the training is done with a specific choise of training weights, as indiacted in the legend. (b) Pressures imposed on the three nodes of the voltage divider during training. The inset shows the relaxation to the steady state of the output voltage $V_2$ to the desired value $V_D$ when the pressures imposed are the values obtained in the last training step, and the input nodes are stimulated with fixed voltage. (c) Ion concentration desnities imposed on the three nodes of the voltage divider during training. (d) Length of the memristors during training. (e) Base radius of the memristors during training.}\label{fig:mse_weights_vd}
 \end{figure} 
 
-Twos
+In order to investigate the adaptability of the system, we tested it with a set of three consequent desired voltages $V_D=\{1V, 3V, 4V\}$. In \cref{fig:evolution_targets} we show how the output voltgage $V_2$ subsequently adapts to the desired voltages during the training of the pressures in the nodes, the evolution of which can be seen in \cref{fig:evolution_targets}. It is evident that the system can be retrained at any stage to a new desired objective making it reusable. Any other weight type can be chosen, depending on the necessity.  
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\columnwidth]{plots/voltage_divider/evolution_targets.pdf}
-    \caption{}\label{fig:evolution_targets}
-\end{figure} 
+    \caption{(a) The trainiang of a memristor voltage divider to a set of desired voltage outputs $V_D = {1V, 3V, 4V}$, indicated by dashed light purple lines. The output voltage $V_2$, indicated by dark purple dots, adapts to the desired output during the training. The input voltages $V_1$ and $V_3$ are constant at $5V$ and $0V$ respectively. (b) The dots with different shades of gray show the values of pressures, chosen as weights, imposed on the three nodes during training.}\label{fig:evolution_targets}
+\end{figure}
 
-\cleardoublepage
+\subsection{Training a memristor network}
 
-
-\subsection{Training a more general network}
+To generalize the training objective to a more general objective, we consider memrisotr networks with bigger networks with different topologies. Physically, reaching a desired input-output voltage mapping in a general electric circuit can be useful to adress desired voltage outputs in specific points of the circuit for variuous electronic purpuses. 
 
 \begin{figure}[h]
     \centering
