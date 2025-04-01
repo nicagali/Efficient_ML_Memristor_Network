@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  31 MAR 2025 15:37
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  31 MAR 2025 17:33
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -742,9 +742,12 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 44.
 LaTeX Info: Redefining \pageref on input line 44.
 LaTeX Info: Redefining \nameref on input line 44.
- (./paper.out) (./paper.out)
 \@outlinefile=\write5
 \openout5 = `paper.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 Class revtex4-2 Info: Taking \maketitle back from hyperref on input line 44.
 Class revtex4-2 Info: Overriding lineo.sty, restoring output routine, on input line 44.
@@ -753,7 +756,7 @@ Class revtex4-2 Info: Line numbering not turned on yet on input line 44.
 
 Class revtex4-2 Info: Overriding \@LN@LLerror on input line 44.
 LaTeX Font Info:    Trying to load font information for U+esvect on input line 56.
- (/usr/share/texlive/texmf-dist/tex/latex/esvect/uesvect.fd
+(/usr/share/texlive/texmf-dist/tex/latex/esvect/uesvect.fd
 File: uesvect.fd 
 )
 LaTeX Font Info:    Trying to load font information for U+msa on input line 56.
@@ -763,24 +766,91 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1]
+)
+
+Package natbib Warning: Citation `energy_cost' on page 1 undefined on input line 67.
+
+[1]
+
+LaTeX Warning: Reference `fig:memristor_scheme' on page 1 undefined on input line 95.
+
 File: plots/memristor/memristor_scheme.pdf Graphic file (type pdf)
 <use plots/memristor/memristor_scheme.pdf>
- [2]
+
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 110.
+
+
+Package natbib Warning: Citation `Rene_PressureSensitive' on page 2 undefined on input line 128.
+
+
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 142.
+
+
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 148.
+
+[2]
+
+LaTeX Warning: Reference `fig:memristor_network' on page 1 undefined on input line 150.
+
 File: plots/memristor/memristor_network.pdf Graphic file (type pdf)
 <use plots/memristor/memristor_network.pdf>
+
+LaTeX Warning: Reference `eq:eqofmotconductance' on page 1 undefined on input line 162.
+
 File: plots/training/two_types_weights.pdf Graphic file (type pdf)
 <use plots/training/two_types_weights.pdf>
 File: plots/training/training_scheme.pdf Graphic file (type pdf)
 <use plots/training/training_scheme.pdf>
- [3] [4]
+
+LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 184.
+
+
+LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 184.
+
+
+LaTeX Warning: Reference `fig:training_scheme' on page 1 undefined on input line 184.
+
+[3]
+
+Package natbib Warning: Citation `steepest_descent_book' on page 4 undefined on input line 197.
+
+
+LaTeX Warning: Reference `sec:memristor_network' on page 1 undefined on input line 204.
+
+
+LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 204.
+
+
+LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 204.
+
+
+LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 204.
+
+[4]
+
+LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 206.
+
+
+LaTeX Warning: Reference `fig:vd_scheme' on page 1 undefined on input line 210.
+
 File: plots/voltage_divider/vd_scheme.pdf Graphic file (type pdf)
 <use plots/voltage_divider/vd_scheme.pdf>
+
+LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 218.
+
+
+LaTeX Warning: Reference `fig:mse_weights_vd' on page 1 undefined on input line 219.
+
 File: plots/voltage_divider/mse_weights_vd.pdf Graphic file (type pdf)
 <use plots/voltage_divider/mse_weights_vd.pdf>
+
+LaTeX Warning: Reference `fig:evolution_targets' on page 1 undefined on input line 227.
+
+
+LaTeX Warning: Reference `fig:evolution_targets' on page 1 undefined on input line 227.
+
 File: plots/voltage_divider/evolution_targets.pdf Graphic file (type pdf)
 <use plots/voltage_divider/evolution_targets.pdf>
-
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -798,17 +868,57 @@ Overfull \hbox (264.0pt too wide) in paragraph at lines 241--242
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[6] (./paper.bbl [7]) [8] (./paper.aux)
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: DE9B14B81D3FCC911ADD9B351EB652CD;1737.
+[6]
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:255: Extra }, or forgotten $.
+l.255 ... test $\{ V_{\text{in}}, V_{\text{out}} }
+                                                  _{i=1}^{}$
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:255: Double subscript.
+l.255 ...test $\{ V_{\text{in}}, V_{\text{out}} }_
+                                                  {i=1}^{}$
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+(./paper.bbl [7]
+
+LaTeX Warning: Reference `LastBibItem' on page 8 undefined on input line 1.
+
+)
+
+Package natbib Warning: There were undefined citations.
+
+[8] (./paper.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `paper.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  DE9B14B81D3FCC911ADD9B351EB652CD;1737.
  ) 
 Here is how much of TeX's memory you used:
- 28089 strings out of 476191
- 528246 string characters out of 5812071
- 930796 words of memory out of 5000000
- 48331 multiletter control sequences out of 15000+600000
- 479536 words of font info for 80 fonts, out of 8000000 for 9000
+ 28084 strings out of 476191
+ 528252 string characters out of 5812071
+ 929840 words of memory out of 5000000
+ 48328 multiletter control sequences out of 15000+600000
+ 479544 words of font info for 81 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,12n,94p,1275b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (8 pages, 214616 bytes).
+Output written on paper.xdv (8 pages, 212260 bytes).

@@ -14,25 +14,25 @@ start = time.time()
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
-# G.nodes['3']['type']  = 'source'
-# G.nodes['3']['color'] = par.color_dots[0]
-# G.nodes['3']['constant_source']  = True
-# G.nodes['3']['voltage']  = 3
+G.nodes['3']['type']  = 'source'
+G.nodes['3']['color'] = par.color_dots[0]
+G.nodes['3']['constant_source']  = True
+G.nodes['3']['voltage']  = 3
 
-# G.add_edge('6','2')
-# G.add_edge('6','4')
-# G.add_edge('4','5')
-# G.add_edge('6','7')
+G.add_edge('6','2')
+G.add_edge('6','4')
+G.add_edge('4','5')
+G.add_edge('6','7')
 
 # G.remove_edge('1','2')
 
-# networks.initialize_edges(G)
+networks.initialize_edges(G)
 
 # G = nx.reverse(G, copy=True)
 # G = networks.to_directed_graph(G)
@@ -41,7 +41,7 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 
-# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/radius_base/radius_base70.txt", unpack=True)
+# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/radius_base/radius_base100.txt", unpack=True)
 # data = data[1]
 # for edge_index, edge in enumerate(G.edges()):
 #     G.edges[edge]['radius_base'] = data[edge_index]
@@ -53,7 +53,7 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 200    # choose
+training_steps = 35    # choose
 training_type = 'regression'    # choose
 
 
@@ -61,7 +61,7 @@ weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 learning_rate_vec = [3e-5, 1e-5, 1e-2, 3e2, 1e3]
 
-weight_type_index = 1   # choose
+weight_type_index = 0   # choose
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 

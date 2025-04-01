@@ -239,7 +239,7 @@ To generalize the training objective to a more general objective, we consider me
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{plots/general_network/mse_general.pdf}
-    \caption{Network to the right has inputs $[5,0]$ nad desired outputs $[3, 4]$, delta weights a third of their intial value and learning rates $1e^{-5}, 1e^{-4}, 1e^{2}$. The network to the right has $[5,1,0]$ and output $[3,4,2]$}\label{fig:mse_general}
+    \caption{Network to the right has inputs $[5,0]$ and desired outputs $[3, 4]$, delta weights a third of their intial value and learning rates $1e^{-5}, 1e^{-4}, 1e^{2}$. The network to the right has $[5,1,0]$ and output $[3,4,2]$}\label{fig:mse_general}
 \end{figure} 
 
 
@@ -249,10 +249,10 @@ To generalize the training objective to a more general objective, we consider me
 
 We broaden the training capability of the network by including a linear regression task, where, in its simplest form, the network is trained to give potential output $V^{\text{out}}$ related to the input potential $V^{\text{in}}$ via a linear relationship
 \begin{equation}
-    V_{\text{out}} = \text{c} V_{\text{in}} + \text{b}.
+    V_{\text{out}} = \text{a} V_{\text{in}} + \text{b}.
 \label{eq:linear_relationship}
 \end{equation}
-% Firstly, we generate a data set of $$ input and output potential values, $\{ V^{in}_{i} \}_{i=1}^{}$ and $\{ V^{out}_{i} \}_{i}$ , that verify \cref{eq:linear_relationship}
+We generate two sets of data, a training test $\{ V_{\text{in}}, V_{\text{out}} }_{i=1}^{}$
 
 \section{Conclusion}
 
