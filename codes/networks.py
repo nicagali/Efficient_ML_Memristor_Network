@@ -1,6 +1,7 @@
 import networkx as nx
 import parameters as par
 import sys
+import numpy as np
 sys.path.append(par.PACKAGE_PATH)
 import ahkab    
 import random
@@ -214,6 +215,8 @@ def circuit_from_graph(G, type):
 
         if type == 'memristors':
 
+            # print(edge, G.nodes[edge[0]]['rho'], G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho'])
+
             circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 
         else:
@@ -223,27 +226,26 @@ def circuit_from_graph(G, type):
     return circuit
 
 
-def to_directed_graph(G_structure):
+def to_directed_graph(G_structure, shuffle = False):
 
     G = nx.DiGraph()
     voltage_input = []
     voltage_desired = []
-    for edge in G_structure.edges():
-        direction = random.random()
-        if direction>0.2:
-            G.add_edge(edge[0], edge[1])
-        else:
-            G.add_edge(edge[1], edge[0])
     
     nodes = [node for node in G_structure.nodes()]
     targets = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='target']
     sources = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='source']
- 
-    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 6, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
-
     G.add_nodes_from(nodes)
+
     initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
+
+    edges = [edge for edge in G_structure.edges()]
+    if shuffle:
+        np.random.shuffle(edges)
+    G.add_edges_from(edges)
+
     initialize_edges(G)
     
     return G

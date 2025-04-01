@@ -23,19 +23,26 @@ G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 G.nodes['3']['type']  = 'source'
 G.nodes['3']['color'] = par.color_dots[0]
 G.nodes['3']['constant_source']  = True
-G.nodes['3']['voltage']  = 3
+G.nodes['3']['voltage']  = 6
 
 G.add_edge('6','2')
 G.add_edge('6','4')
 G.add_edge('4','5')
 G.add_edge('6','7')
 
-# G.remove_edge('1','2')
+G = networks.to_directed_graph(G, shuffle=True)
+# G.remove_edge('4','7')
+# G.remove_edge('6','7')
+# G.remove_edge('3','9')
+# G.add_edge('7','4')
+# G.add_edge('7','6')
+# G.add_edge('9','3')
+
 
 networks.initialize_edges(G)
 
-# G = nx.reverse(G, copy=True)
 # G = networks.to_directed_graph(G)
+# G = nx.reverse(G, copy=True)
 
 # networks.initialize_edges(G)
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
@@ -53,15 +60,15 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 35    # choose
+training_steps = 100    # choose
 training_type = 'regression'    # choose
 
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [3e-5, 1e-5, 1e-2, 3e2, 1e3]
+learning_rate_vec = [3e-5, 1e-5, 3e-3, 3e2, 1e3]
 
-weight_type_index = 0   # choose
+weight_type_index = 2   # choose
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
@@ -77,6 +84,7 @@ fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 fig, ax = plt.subplots()
 plotting.plot_mse(ax, fig, f'length')
 plotting.plot_mse(ax, fig, f'radius_base')
+plotting.plot_mse(ax, fig, f'rho')
 ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)

@@ -55,7 +55,7 @@ def regression_function1(input1, input2):
 def regression_function2(input1, inpu2):
     return 0.25*input1 + 0.1*inpu2 
 def regression_function(input):
-    return 0.2*input + 0.5
+    return 0.2*input + 0.3
     # return np.sqrt(input) 
 
 # --------- ALGORITHM FUNCTIONS ---------
@@ -173,9 +173,9 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             G_increment.nodes[node][f'{weight_type}'] += delta_weight
 
             if training_type == 'allostery':
-                error = cost_function(G_increment)  
+                error = cost_function(G_increment, weight_type)  
             else:
-                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage)
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
 
             if weight_type == 'pressure':
                 denominator = delta_weight*1e5
@@ -183,6 +183,8 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 denominator = delta_weight
                 
             gradients.append((error - base_error)/denominator)
+            # print(node, base_error, error, (error - base_error), (error - base_error)/delta_weight)
+
 
         for node in G.nodes():
 
@@ -333,9 +335,9 @@ def generate_dataset_single(training_steps, random = True):
     training_steps += 1
 
     if random:
-        input_voltage = np.random.uniform(-3,3, training_steps)
+        input_voltage = np.random.uniform(1,4, training_steps)
     else:
-        input_voltage = np.linspace(-3,3, training_steps)
+        input_voltage = np.linspace(1,4, training_steps)
 
     desired_output = regression_function(input_voltage)
 
@@ -356,8 +358,8 @@ def generate_dataset(training_steps):
     # input_voltage1 = np.linspace(1,5,19)
     # input_voltage2 = np.linspace(1,5,19)
 
-    input_voltage1 = np.random.uniform(1,5, training_steps)
-    input_voltage2 = np.random.uniform(1,5, training_steps)
+    input_voltage1 = np.random.uniform(1,4, training_steps)
+    input_voltage2 = np.random.uniform(1,4, training_steps)
 
     desired_output1 = regression_function1(input_voltage1, input_voltage2)
     desired_output2 = regression_function2(input_voltage1, input_voltage2)
@@ -618,7 +620,7 @@ def test_regression(G, step, weight_type):
     data = np.loadtxt(f"{par.DATA_PATH}weights/regression/{weight_type}/{weight_type}{step}.txt", unpack=True)
     weight_vec = data[1]
 
-    if weight_type == 'pressure':
+    if weight_type == 'pressure' or weight_type == 'rho':
 
         for node in G.nodes():
 

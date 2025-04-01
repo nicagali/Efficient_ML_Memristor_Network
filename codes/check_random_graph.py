@@ -29,6 +29,7 @@ tstop = 0.1
 
 networks.initialize_edges(G)
 
+
 # G.nodes['1']['voltage'] = 0
 # G.nodes['3']['voltage'] = 3
 # G.nodes['6']['voltage'] = 0.04749591
@@ -54,8 +55,22 @@ print(result['tran']['VN6'][-1])
 print(result['tran']['VN7'][-1])
 print(result['tran']['VN8'][-1])
 
+G = networks.to_directed_graph(G)
+# G = nx.DiGraph(G)
+
+fig, ax = plt.subplots()
+pos = plotting.plot_graph(G)
+fig.tight_layout()
+fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
+# G.remove_edge('4','7')
+# G.remove_edge('6','7')
+# G.add_edge('7','4')
+# G.add_edge('7','6')
+
+# networks.initialize_edges(G)
+
 # print(G.nodes['9']['rho'])
-G.nodes['9']['rho'] += 100
+# G.nodes['7']['rho'] += 1
 # print(G.nodes['9']['rho'])
 
 output_voltage = result['tran']['VN5'][-1]
