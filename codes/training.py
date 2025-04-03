@@ -118,9 +118,9 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep=None):
 
             if datastep == None:
                 G.nodes[node]['voltage'] = input_voltage[input_index]
-                # print(input_voltage[input_index])
             else:
                 G.nodes[node]['voltage'] = input_voltage[input_index][datastep]
+                print("Input", input_voltage[input_index][datastep])
 
 
             # if datastep == 0:
@@ -137,6 +137,7 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep=None):
                 G.nodes[node]['desired'] = desired_voltage[output_index]
             else:
                 G.nodes[node]['desired'] = desired_voltage[output_index][datastep]
+                print("Output", desired_voltage[output_index][datastep])
 
 
             # if datastep == 0:
@@ -156,6 +157,7 @@ def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_outp
         for datastep in range(len(dataset_input_voltage[0])):
             update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage, datastep)
             error += cost_function(G, weight_type) 
+            print(error)
         error = error/len(dataset_input_voltage[0])
 
     return error
@@ -518,7 +520,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
 
-    # print(testset_input_voltage, testset_output_voltage)
+    print(testset_input_voltage, testset_output_voltage)
 
     # COMPUTE initial error
     if training_type == 'allostery':
