@@ -252,7 +252,7 @@ We broaden the training capability of the network by including a linear regressi
     V_{\text{out}} = \text{a} V_{\text{in}} + \text{b}.
 \label{eq:linear_relationship}
 \end{equation}
-We generate two sets of data, a training test $ \{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{T}$ and a test set $\{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{Te}$. To create the test set, a random number in the interval $[1V, 4V]$ is created and fed to equation \cref{eq:linear_relationship}, giving a set of outputs that satifiy the desired relationship. At each step of the training algorithm above presented, a pair of input and output voltages is selected from the training set, and used 
+We generate two sets of data, a training test $ \{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{T}$ and a test set $\{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{Te}$. To create the test set, a set random values belonging to the interval $[1V, 4V]$ is created and fed to equation \cref{eq:linear_relationship}, giving a set of outputs that satifiy the desired relationship. At each step of the training, a pair of input and output voltages is selected from the training set, and used as input voltage and desired output in the algorithm.
 
 \section{Conclusion}
 

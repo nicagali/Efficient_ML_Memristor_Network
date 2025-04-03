@@ -51,9 +51,6 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 training_steps = 300    # choose
 training_type = 'regression'    # choose
 
-print(G.edges())
-print(G.nodes())
-
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 learning_rate_vec = [1e-5, 1e-5, 1e-3, 3e2, 1e3]
