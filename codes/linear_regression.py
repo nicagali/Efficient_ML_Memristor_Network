@@ -20,7 +20,7 @@ start = time.time()
 # G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
@@ -34,7 +34,7 @@ networks.initialize_edges(G)
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}regression_working_rho.graphml')
-G.nodes['3']['voltage']  = 6
+G.nodes['3']['voltage']  = 3
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/radius_base/radius_base100.txt", unpack=True)
 # data = data[1]
@@ -51,10 +51,12 @@ fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 training_steps = 300    # choose
 training_type = 'regression'    # choose
 
+print(G.edges())
+print(G.nodes())
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-6, 1e-5, 1e-3, 3e2, 1e3]
+learning_rate_vec = [1e-5, 1e-5, 1e-3, 3e2, 1e3]
 
 weight_type_index = 0   # choose
 
