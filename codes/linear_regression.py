@@ -20,21 +20,31 @@ start = time.time()
 # G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
 
+G.nodes['3']['type']  = 'source'
+G.nodes['3']['color'] = par.color_dots[0]
+G.nodes['3']['constant_source']  = True
+G.nodes['3']['voltage']  = 3
 
+G.add_edge('6','2')
+G.add_edge('6','4')
+G.add_edge('4','5')
+G.add_edge('6','7')
 
-G = nx.read_graphml(f'{par.DATA_PATH}regression_working.graphml')
 networks.initialize_edges(G)
+
+# G = nx.read_graphml(f'{par.DATA_PATH}regression_working.graphml')
+# networks.initialize_edges(G)
 # G = networks.to_directed_graph(G, shuffle=False)
 
 
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}regression_working_rho.graphml')
-G.nodes['3']['voltage']  = 3
+# G.nodes['3']['voltage']  = 3
 
 # data = np.loadtxt(f"{par.DATA_PATH}weights/regression/radius_base/radius_base100.txt", unpack=True)
 # data = data[1]
