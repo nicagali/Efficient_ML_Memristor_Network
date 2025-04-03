@@ -640,8 +640,7 @@ def test_regression(G, step, weight_type):
         testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
     else:
         testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
-
-
+        
     error = 0
     for datastep in range(len(testset_input_voltage[0])):
 

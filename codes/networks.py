@@ -243,7 +243,14 @@ def to_directed_graph(G_structure, shuffle = False):
 
     edges = [edge for edge in G_structure.edges()]
     if shuffle:
-        np.random.shuffle(edges)
+        for edge_index in range(len(edges)):
+            direction = random.random()
+            if direction>0.2:
+                edges[edge_index] = (edges[edge_index][0], edges[edge_index][1])
+            else:
+                # print('changing')
+                edges[edge_index] = (edges[edge_index][1], edges[edge_index][0])
+
     G.add_edges_from(edges)
 
     initialize_edges(G)
