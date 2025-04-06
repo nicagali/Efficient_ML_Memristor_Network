@@ -12,44 +12,22 @@ start = time.time()
 
 # --------- INITIALIZE NETWORK ---------
 
+# -> DEFINE graph from networks module
+# G = networks.random_graph(save_data=True) 
+# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+
 # Using graphs:
 # regression_working: wokring nw for length not directed with 3V extra source
 # regression_working_rho: wokring nw for length directed with 6V extra source, working for rho training
 
-# -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph_working.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_rigthbases.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}regression_working.graphml')
 
-G.nodes['3']['type']  = 'source'
-G.nodes['3']['color'] = par.color_dots[0]
-G.nodes['3']['constant_source']  = True
-G.nodes['3']['voltage']  = 3
-
-G.add_edge('6','2')
-G.add_edge('6','4')
-G.add_edge('4','5')
-G.add_edge('6','7')
-
-networks.initialize_edges(G)
-
-# G = nx.read_graphml(f'{par.DATA_PATH}regression_working.graphml')
-# networks.initialize_edges(G)
-# G = networks.to_directed_graph(G, shuffle=False)
-
-
+# G = networks.to_directed_graph(G, shuffle=True)
 # nx.write_graphml(G, f"{par.DATA_PATH}random_graph_shuffled.graphml")
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}regression_working_rho.graphml')
-# G.nodes['3']['voltage']  = 3
 
-# data = np.loadtxt(f"{par.DATA_PATH}weights/regression/radius_base/radius_base100.txt", unpack=True)
-# data = data[1]
-# for edge_index, edge in enumerate(G.edges()):
-#     G.edges[edge]['radius_base'] = data[edge_index]
+# G = nx.read_graphml(f'{par.DATA_PATH}regression_working_rho.graphml')
+G.nodes['3']['voltage']  = 11
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -58,30 +36,31 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 0    # choose
+training_steps = 20   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-5, 1e-5, 1e-3, 3e2, 1e3]
+learning_rate_vec = [1e-6, 5e-6, 1e-3, 3e2, 1e3]
 
 weight_type_index = 0   # choose
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
+# results = training.train_buffer(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+# print(results)
+
 # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
 fig, ax = plt.subplots()
-# plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_length', show_xlabel=False, starting_step=0)
 plotting.plot_weights(ax, G, training_steps=training_steps, rule=f'{training_type}_{weight_type_vec[weight_type_index]}', show_xlabel=False, starting_step=0)
-# ax.legend()
 fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/weights.pdf", transparent=True)
 
 fig, ax = plt.subplots()
 plotting.plot_mse(ax, fig, f'length')
 plotting.plot_mse(ax, fig, f'radius_base')
-# plotting.plot_mse(ax, fig, f'rho')
+plotting.plot_mse(ax, fig, f'rho')
 plotting.plot_mse(ax, fig, f'pressure')
 ax.legend()
 fig.tight_layout()
@@ -110,12 +89,14 @@ fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 
 # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
 
+nx.write_graphml(G, f"{par.DATA_PATH}trained_graph_regression_{weight_type_vec[weight_type_index]}.graphml")
+
 fig, ax = plt.subplots(figsize = par.figsize_1)
 plotting.plot_memristor_resistances(ax, G)
 fig.tight_layout()
-fig.savefig(f"../paper/plots/voltage_divider/memristors_resisatnces.pdf")
+fig.savefig(f"../paper/plots/regression/memristors_resisatnces_{weight_type_vec[weight_type_index]}.pdf")
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
-
+ 
 

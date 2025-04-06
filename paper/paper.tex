@@ -64,7 +64,10 @@ Inspired by the brain's energy-efficient processing, we propose a physical imple
 % - Energy cost
 % - Explain the two phases
 
-Artificial neural networks (ANNs) have become central to many technological advancements, achieving remarkable success in tasks ranging from image recognition to natural language processing. These networks typically operate in two phases: inference and backpropagation. The energy requirements of ANNs has grown significantly, negatively impacting the efficiency and scalability of ANNs\cite{energy_cost}.
+Modern computing algortihms are able to efficiently perform complicated nuemrical and symbolic operations, but their sequential structure limits their performance on more perceptual tasks. Inspired by the architecture and the functioning of the human brain that performs tasks via distributed and parallel fashion, artificial neural network (ANN) algorithms outreached traditional computing achieving remarkable success in challenging tasks ranging from image recognition to natural language processing and became central to many technological advancements in the field of artificial intelligence.
+
+Recent advances in AI systems have been powered by the silicon-based computing power of the Graphics Processing Units (GPUs) and by an unprecedented abundance of data. With a clear trend of larger ANN models, their the energy requirements have grown significantly, negatively impacting their efficiency and scalability\cite{energy_cost_ml1, energy_cost_ml2}. 
+These networks typically operate in two phases: inference and backpropagation.
 
 % ## Physical Neural Networks ##
 % - what they are, what is the scope (physical instead of math training)
@@ -252,10 +255,16 @@ We broaden the training capability of the network by including a linear regressi
     V_{\text{out}} = \text{a} V_{\text{in}} + \text{b}.
 \label{eq:linear_relationship}
 \end{equation}
-We generate two sets of data, a training test $ \{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{T}$ and a test set $\{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{Te}$. To create the test set, a set random values belonging to the interval $[1V, 4V]$ is created and fed to equation \cref{eq:linear_relationship}, giving a set of outputs that satifiy the desired relationship. With a similar approach, the test set is constituted by $20$ input and output voltage pairs that satisfy \cref{eq:linear_relationship}, where the inputs are equispaced point in the 
+We generate two sets of data, a training test $ \{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{T}$ and a test set $\{ V_{\text{in}}, V_{\text{out}} \}_{i=1}^{Te}$. To create the test set, a set of a number of training steps of random values is sampled from the interval $[1V, 4V]$ is created and fed to equation \cref{eq:linear_relationship}, giving a set of outputs that satifiy the desired relationship. With a similar approach, the test set is constituted by $20$ input points equally spaced in the sampling interval, and output voltages that satisfy \cref{eq:linear_relationship}. Notice that the two sets contain different elements.
 
-At each step of the training, a pair of input and output voltages is selected from the training set, and used as input voltage and desired output in the algorithm.
+The training algorithm presented in \cref{sec:training} can be slightly adapted to function for this training objective. At each step of the training, a pair of input and output voltages is selected from the training set, and used as input voltage and desired output in the algorithm above. In order to evaluate how well the algorithm is performing, the testset is evaluated at every step of the training by computing the test cost function. If the trained weight set after certain training step is $\boldsymbol{w}$, we define this function as
+\[
+C_{t}\left( \boldsymbol{w} \right) = \sum_{j=1}^{Te}\brac{V_{out}\brac{\boldsymbol{w}} - V_j^D}^2,
+\]
+which considers the difference between the voltage measured in the output node when the impoing the $j-$th input voltage of the test set and the desired output of the same test point, for every point of the set. 
 
+
+\cleardoublepage
 \section{Conclusion}
 
 \appendix

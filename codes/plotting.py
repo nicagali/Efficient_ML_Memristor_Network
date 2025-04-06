@@ -64,16 +64,12 @@ def plot_graph(G, weight_type = None):
 def plot_mse(ax, fig, weight_type, show_xlabel=True, saved_graph=None):
     
     if saved_graph==None:
-        y = np.loadtxt(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", unpack=True)
+        data = np.loadtxt(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", unpack=True)
     else:
         y = np.loadtxt(f"{par.DATA_PATH}mse/{saved_graph}/mse_{weight_type}.txt", unpack=True)
 
-    x = range(0,len(y))
-
-    # text = rule.split('_')
-    # weight_type = text[1]
-    if weight_type == 'radius':
-        weight_type = 'radius_base'
+    x = data[0]
+    y = data[1]
 
     style = par.weight_styles[f'{weight_type}']
     ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
@@ -142,11 +138,17 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
 
 def plot_memristor_resistances(ax, G):
 
-    ydata = np.loadtxt(f"{par.DATA_PATH}memristor_resistances.txt", unpack=True)
-    x = np.array(range(len(ydata[0])))
+    circuit = networks.circuit_from_graph(G, type='memristors') 
+    analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
+
+    # DEFINE a transient analysis (analysis of the circuit over time)
+    result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
+    resistances = result[0]
+    print(resistances)
+    x = np.array(range(len(resistances[0])))
 
     for edge_index in range(len(G.edges())):
-        y = ydata[edge_index]
+        y = [resistances[edge_index][time_index] for time_index in range(len(resistances))]
         ax.plot(x, y, **par.memr_resistances_style, label = rf'$R_{{{edge_index+1}}}$') 
     ax.legend()
 

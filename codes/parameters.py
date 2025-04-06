@@ -1,6 +1,7 @@
 # --------- PATHS ---------
 
 DATA_PATH = '../data/'
+DATA_PATH_RAW = '../data/raw/'
 PLOT_PATH = '../plots/'
 PACKAGE_PATH = '/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/codes/ahkab'
 # PACKAGE_PATH = '/Users/monicaconte/PhD/Projects/Contrastive_Learning_Memristors/Learning_Neural_Networks_true/codes/ahkab'

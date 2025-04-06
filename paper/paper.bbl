@@ -1,8 +1,13 @@
 \begin{thebibliography}{1}
 
-\bibitem{energy_cost}
+\bibitem{energy_cost_ml1}
 Shih-Kai Chou, Jernej Hribar, Mihael Mohorčič, and Carolina Fortuna.
 \newblock The energy cost of artificial intelligence of things lifecycle, 2024.
+
+\bibitem{energy_cost_ml2}
+David Patterson, Joseph Gonzalez, Quoc Le, Chen Liang, Lluis-Miquel Munguia,
+  Daniel Rothchild, David So, Maud Texier, and Jeff Dean.
+\newblock Carbon emissions and large neural network training, 2021.
 
 \bibitem{Rene_IonicNeuromorphic}
 T.~M. Kamsma, W.~Q. Boon, T.~ter Rele, C.~Spitoni, and R.~van Roij.

@@ -131,13 +131,10 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 
 # RANDOM NETWORK
  
-def random_graph(save_data=False, res_change=False):
+def random_graph(number_nodes=8, number_edges=16, save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
-    number_nodes = 8
-    number_edges = 16
     G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
-    # G = nx.connected_watts_strogatz_graph(8, 5, 0.3)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 3
