@@ -143,14 +143,14 @@ def plot_memristor_resistances(ax, G):
 
     # DEFINE a transient analysis (analysis of the circuit over time)
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
-    resistances = result[0]
-    print(resistances)
-    x = np.array(range(len(resistances[0])))
+    resistances = result[1]
+    # print('Resistanes', len(resistances), len(resistances[0]))
+    x = np.array(range(len(resistances)))
 
     for edge_index in range(len(G.edges())):
-        y = [resistances[edge_index][time_index] for time_index in range(len(resistances))]
+        y = [resistances[time_index][edge_index] for time_index in range(len(resistances))]
         ax.plot(x, y, **par.memr_resistances_style, label = rf'$R_{{{edge_index+1}}}$') 
-    ax.legend()
+    # ax.legend()
 
 def plot_potential_each_node(ax, G, factor_time=1):
 

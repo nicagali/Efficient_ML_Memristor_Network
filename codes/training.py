@@ -3,6 +3,7 @@ import networks
 import multiprocessing as mp
 import numpy as np
 import sys
+import networkx as nx
 import statistics
 sys.path.append(par.PACKAGE_PATH)
 import ahkab 
@@ -491,7 +492,7 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
 
 # --------- TRAINING FUNCTIONS ---------
 
-def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
+def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate, save_final_graph=False):
 
     # OPEN files to write results
     mse_file = open(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", "w") #write error 
@@ -555,12 +556,14 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
-            if step % 5 == 0:
-                test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
-                print('Step:', step+1, test_error)
-                mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
+            # if step % 5 == 0:
+            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+            print('Step:', step+1, test_error)
+            mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
 
-                         
+    if save_final_graph==True:
+        nx.write_graphml(G, f"{par.DATA_PATH}trained_graph_{training_type}_{weight_type_vec[weight_type_index]}.graphml")
+                             
     mse_file.close()
     if G.name == 'voltage_divider':
         potential_target_file.close()
@@ -568,78 +571,49 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
 def train_buffer(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
 
-    # OPEN files to write results
-    mse_file = open(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", "w") #write error 
-    if G.name == 'voltage_divider': 
-        potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
-    else:
-        potential_target_file = None     
+    # INITIALIZE error vector
+    
+    error_vec = [] 
 
-    # WRITE initial condition: intialized wieghts and intial error
-    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
-
-    dataset_input_voltage=[]
-    dataset_output_voltage=[]
+    # GENERATE test set for regression training
     if training_type == 'regression':
-        counter_inputs = 0
-        for node in G.nodes():
-            if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
-                counter_inputs+=1
-            # print(node, G.nodes[node]['constant_source'])
-        if counter_inputs == 1:
-            dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
-            testset_input_voltage, testset_output_voltage = generate_dataset_single(5, random = False)
-            # print(dataset_input_voltage)
-        else:
-            dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
+        dataset_input_voltage=[]
+        dataset_output_voltage=[]
+        dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
+        testset_input_voltage, testset_output_voltage = generate_dataset_single(5, random = False)
 
     # COMPUTE initial error
     if training_type == 'allostery':
-        error = cost_function(G, weight_type, potential_target_file, update_initial_res=False) 
-        print('Step:', 0, error)
+        error = cost_function(G, weight_type, update_initial_res=False) 
         error_normalization = error #define it as normalization error
-        mse_file.write(f"{error/error_normalization}\n")
-
+        error_vec.append(error/error_normalization)
     else:
         error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, 0, error_type='training')
         test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
-        print('Step:', 0, test_error)
         error_normalization = test_error #define it as normalization error
-        mse_file.write(f"{test_error/error_normalization}\n")
-
-
-    # mse_file.write(f"{error}\n")
-
+        error_vec.append(test_error/error_normalization)
     
     # LOOP over training steps
     for step in range(training_steps): 
 
-        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
-
         update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
-            
         write_weights_to_file(G, step+1, weight_type, training_type)
 
         # COMPUTE error
         if training_type == 'allostery':
-            error = cost_function(G, weight_type, potential_target_file, update_initial_res=False)  
-            print('Step:', step+1, error)
-            mse_file.write(f"{error/error_normalization}\n")
+            error = cost_function(G, weight_type, update_initial_res=False)  
+            error_vec.append(error/error_normalization)
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
-            if step % 10 == 0:
-                test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
-                print('Step:', step+1, test_error)
-                mse_file.write(f"{test_error/error_normalization}\n")
-
-                         
-    mse_file.close()
-    if G.name == 'voltage_divider':
-        potential_target_file.close()
-
+            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+            error_vec.append(test_error/error_normalization)
+            
+    fraction = int(training_steps/3)
+    error_vec_frac = error_vec[-fraction:]
+            
+    return [error_vec, np.min(error_vec), statistics.mean(error_vec_frac), statistics.stdev(error_vec_frac)]
 
 def test_regression(G, step, weight_type):
         

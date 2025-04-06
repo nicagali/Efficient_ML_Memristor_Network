@@ -27,7 +27,7 @@ G = nx.read_graphml(f'{par.DATA_PATH}regression_working.graphml')
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph_shuffled.graphml')
 
 # G = nx.read_graphml(f'{par.DATA_PATH}regression_working_rho.graphml')
-G.nodes['3']['voltage']  = 11
+G.nodes['3']['voltage']  = 3
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -36,19 +36,19 @@ fig.tight_layout()
 fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 20   # choose
+training_steps = 10     # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 learning_rate_vec = [1e-6, 5e-6, 1e-3, 3e2, 1e3]
 
-weight_type_index = 0   # choose
+weight_type_index = 1   # choose
 
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+# training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
 
-# results = training.train_buffer(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
-# print(results)
+error_vec = training.train_buffer(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+print(error_vec)
 
 # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
@@ -68,16 +68,16 @@ fig.savefig(f"../paper/plots/regression/mse.pdf", transparent=True)
 
 # --------- TEST REGRESSION AND PLOT RESULT ---------
 
-training.test_regression(G, step=0, weight_type=f'{weight_type_vec[weight_type_index]}')
-training.test_regression(G, step=int(training_steps/2), weight_type=f'{weight_type_vec[weight_type_index]}')
-training.test_regression(G, step=training_steps, weight_type=f'{weight_type_vec[weight_type_index]}')
+# training.test_regression(G, step=0, weight_type=f'{weight_type_vec[weight_type_index]}')
+# training.test_regression(G, step=int(training_steps/2), weight_type=f'{weight_type_vec[weight_type_index]}')
+# training.test_regression(G, step=training_steps, weight_type=f'{weight_type_vec[weight_type_index]}')
 
-fig, ax = plt.subplots(1, 3, figsize=(15,5))
-plotting.plot_regression(ax[0], step=0)
-plotting.plot_regression(ax[1], step=int(training_steps/2))
-plotting.plot_regression(ax[2], step=training_steps)
-fig.tight_layout()
-fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
+# fig, ax = plt.subplots(1, 3, figsize=(15,5))
+# plotting.plot_regression(ax[0], step=0)
+# plotting.plot_regression(ax[1], step=int(training_steps/2))
+# plotting.plot_regression(ax[2], step=training_steps)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 
 # --------- PLOT TRAINED GRAPH  ---------
 # The width of the edges are indicative of their resistance for edge-training, size of dots for node-training
@@ -88,8 +88,6 @@ fig.savefig(f"../paper/plots/regression/snapshots.pdf", transparent=True)
 # fig.savefig(f"../paper/plots/regression/graph.pdf", transparent=True)
 
 # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
-
-nx.write_graphml(G, f"{par.DATA_PATH}trained_graph_regression_{weight_type_vec[weight_type_index]}.graphml")
 
 fig, ax = plt.subplots(figsize = par.figsize_1)
 plotting.plot_memristor_resistances(ax, G)
