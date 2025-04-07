@@ -37,10 +37,10 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-6, 2e-6, 1e-3, 1e2, 1e3]
+learning_rate_vec = [1e-6, 5e-6, 2e-3, 1e2, 1e3]
 constant_source = [11, 6, 3, 3]
 
-weight_type_index = 1   # choose
+weight_type_index = 2   # choose
 G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
 training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
