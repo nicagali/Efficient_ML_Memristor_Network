@@ -61,12 +61,9 @@ def plot_graph(G, weight_type = None):
 
     return  
 
-def plot_mse(ax, fig, weight_type, show_xlabel=True, saved_graph=None):
+def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     
-    if saved_graph==None:
-        data = np.loadtxt(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", unpack=True)
-    else:
-        y = np.loadtxt(f"{par.DATA_PATH}mse/{saved_graph}/mse_{weight_type}.txt", unpack=True)
+    data = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/mse/mse_{weight_type}.txt", unpack=True)
 
     x = data[0]
     y = data[1]
@@ -84,15 +81,10 @@ def plot_mse(ax, fig, weight_type, show_xlabel=True, saved_graph=None):
 import colormaps
 from pypalettes import load_cmap
 
-def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 0):
+def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=True, starting_step = 0):
 
     x =list(range(starting_step, starting_step + training_steps+1))
     
-    text = rule.split('_')
-    training_job = text[0]
-    weight_type = text[1]
-    if weight_type == 'radius':
-        weight_type = 'radius_base'
     if weight_type == 'pressure' or weight_type == 'rho':
         number_weights = G.number_of_nodes()
     else:
@@ -116,7 +108,7 @@ def plot_weights(ax, G, training_steps, rule, show_xlabel=True, starting_step = 
 
         weight = []
         for step in range(training_steps+1):
-            data = np.loadtxt(f"{par.DATA_PATH}weights/{training_job}/{weight_type}/{weight_type}{step}.txt", unpack=True)
+            data = np.loadtxt(f"{par.DATA_PATH}{training_type}{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
             y = data[1]
             weight.append(y[weight_indx])
 
@@ -217,32 +209,27 @@ def plot_final_potential_vd(ax, target_values):
     # ax.set_xlabel(r'Time steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
 
-def plot_regression(ax, step):
+def plot_regression(ax, graph_id, weight_type, step):
     
-    data = np.loadtxt(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", unpack=True)
+    data = np.loadtxt(f"{par.DATA_PATH}regression{graph_id}/relations_regression/relations_regression{step}.txt", unpack=True)
     
     x = data[0]
     y1 = data[1]
     
     x_interval = np.linspace(np.min(x),np.max(x))
-
     y1_desired = training.regression_function(x_interval)
 
+    style_des = par.regression_styles[f'{weight_type}_des']
+    style = par.regression_styles[f'{weight_type}']
+
     
-    # if inp.weight_type=='rhob':
-    ax.plot(x_interval, y1_desired, **par.reg_desired, zorder=0)
-    # ax.plot(x_interval, y2_desired, **par.reg_desired2, zorder=0)
+    ax.plot(x_interval, y1_desired, **style_des, zorder=0)
     
-    ax.scatter(x, y1, **par.reg_output)
-    # ax.scatter(x, y2, **par.reg_output2)
+    ax.scatter(x, y1, **style)
     
-    # ax.legend()
     ax.set_ylabel(r'$V_{out}$', fontsize = par.axis_fontsize)
     ax.set_xlabel(r'$V_{in}$', fontsize = par.axis_fontsize)
-    # ax.set_title(f"Step {step}")
     
-    # ax.set_xlim([-0.2, 5.2])
-    # ax.set_ylim([-0.2, 2])
     ax.grid(ls=":")
     ax.tick_params(axis='both', labelsize=par.size_ticks)
     

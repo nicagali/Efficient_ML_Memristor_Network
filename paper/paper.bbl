@@ -9,6 +9,16 @@ David Patterson, Joseph Gonzalez, Quoc Le, Chen Liang, Lluis-Miquel Munguia,
   Daniel Rothchild, David So, Maud Texier, and Jeff Dean.
 \newblock Carbon emissions and large neural network training, 2021.
 
+\bibitem{trainingphysicalneuralnetworks}
+Ali Momeni, Babak Rahmani, Benjamin Scellier, Logan~G. Wright, Peter~L.
+  McMahon, Clara~C. Wanjura, Yuhang Li, Anas Skalli, Natalia~G. Berloff,
+  Tatsuhiro Onodera, Ilker Oguz, Francesco Morichetti, Philipp del Hougne,
+  Manuel~Le Gallo, Abu Sebastian, Azalia Mirhoseini, Cheng Zhang, Danijela
+  Marković, Daniel Brunner, Christophe Moser, Sylvain Gigan, Florian
+  Marquardt, Aydogan Ozcan, Julie Grollier, Andrea~J. Liu, Demetri Psaltis,
+  Andrea Alù, and Romain Fleury.
+\newblock Training of physical neural networks, 2024.
+
 \bibitem{Rene_IonicNeuromorphic}
 T.~M. Kamsma, W.~Q. Boon, T.~ter Rele, C.~Spitoni, and R.~van Roij.
 \newblock Iontronic neuromorphic signaling with conical microfluidic

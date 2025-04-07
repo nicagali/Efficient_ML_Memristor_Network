@@ -10,9 +10,9 @@ import ahkab
 
 # --------- WRITE RESULTS TO FILES ---------
 
-def write_weights_to_file(G, step, weight_type, path_patch):
+def write_weights_to_file(G, DATA_PATH, step, weight_type):
 
-    file = open(f"{par.DATA_PATH}weights/{path_patch}/{weight_type}/{weight_type}{step}.txt", "w")
+    file = open(f"{DATA_PATH}weights/{weight_type}/{weight_type}{step}.txt", "w")
     
     for index, edge in enumerate(G.edges()): 
         if weight_type=='length' or weight_type=='radius_base' or weight_type=='resistance':
@@ -492,17 +492,19 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
 
 # --------- TRAINING FUNCTIONS ---------
 
-def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate, save_final_graph=False):
+def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate, save_final_graph=False, write_weights = False, graph_id=None):
 
     # OPEN files to write results
-    mse_file = open(f"{par.DATA_PATH}mse/mse_{weight_type}.txt", "w") #write error 
+    DATA_PATH = f"{par.DATA_PATH}{training_type}{G.graph['name']}/"
+    mse_file = open(f"{DATA_PATH}mse/mse_{weight_type}.txt", "w") #write error 
     if G.name == 'voltage_divider': 
         potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
     else:
         potential_target_file = None     
 
-    # WRITE initial condition: intialized wieghts and intial error
-    write_weights_to_file(G, step=0, weight_type=weight_type, path_patch=training_type)
+    if write_weights:
+        # WRITE initial condition: intialized wieghts and intial error
+        write_weights_to_file(G, DATA_PATH, step=0, weight_type=weight_type)
 
     dataset_input_voltage=[]
     dataset_output_voltage=[]
@@ -533,10 +535,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         error_normalization = test_error #define it as normalization error
         mse_file.write(f"{0}\t{test_error/error_normalization}\n")
 
-
-    # mse_file.write(f"{error}\n")
-
-    
     # LOOP over training steps
     for step in range(training_steps): 
 
@@ -545,8 +543,10 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
         # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
+        if write_weights:
+        
+            write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type)
             
-        write_weights_to_file(G, step+1, weight_type, training_type)
 
         # COMPUTE error
         if training_type == 'allostery':
@@ -556,18 +556,17 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
-            # if step % 5 == 0:
-            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
-            print('Step:', step+1, test_error)
-            mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
+            if step % 5 == 0:
+                test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+                print('Step:', step+1, test_error)
+                mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
 
     if save_final_graph==True:
-        nx.write_graphml(G, f"{par.DATA_PATH}trained_graph_{training_type}_{weight_type_vec[weight_type_index]}.graphml")
+        nx.write_graphml(G, f"{DATA_PATH}/trained_graph_{weight_type}.graphml")
                              
     mse_file.close()
     if G.name == 'voltage_divider':
         potential_target_file.close()
-
 
 def train_buffer(G, training_type, training_steps, weight_type, delta_weight, learning_rate):
 
@@ -613,11 +612,11 @@ def train_buffer(G, training_type, training_steps, weight_type, delta_weight, le
     fraction = int(training_steps/3)
     error_vec_frac = error_vec[-fraction:]
             
-    return [error_vec, np.min(error_vec), statistics.mean(error_vec_frac), statistics.stdev(error_vec_frac)]
+    return [np.min(error_vec), statistics.mean(error_vec_frac), statistics.stdev(error_vec_frac)]
 
 def test_regression(G, step, weight_type):
         
-    data = np.loadtxt(f"{par.DATA_PATH}weights/regression/{weight_type}/{weight_type}{step}.txt", unpack=True)
+    data = np.loadtxt(f"{par.DATA_PATH}regression{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
     weight_vec = data[1]
 
     if weight_type == 'pressure' or weight_type == 'rho':
@@ -630,7 +629,7 @@ def test_regression(G, step, weight_type):
         for index, edge in enumerate(G.edges):
             G.edges[edge][f'{weight_type}'] = weight_vec[index]
             
-    reg_file = open(f"{par.DATA_PATH}relations_regression/relations_regression{step}.txt", "w") 
+    reg_file = open(f"{par.DATA_PATH}regression{G.graph['name']}/relations_regression/relations_regression{step}.txt", "w") 
 
     counter_inputs = 0
     for node in G.nodes():

@@ -5,45 +5,45 @@ The style file: unsrt.bst
 Database file #1: paperNotes.bib
 Database file #2: biblio.bib
 Warning--I didn't find a database entry for ""
-You've used 5 entries,
+You've used 6 entries,
             1791 wiz_defined-function locations,
-            478 strings with 4474 characters,
-and the built_in function-call counts, 993 in all, are:
-= -- 62
-> -- 78
+            481 strings with 5078 characters,
+and the built_in function-call counts, 1467 in all, are:
+= -- 71
+> -- 164
 < -- 0
-+ -- 28
-- -- 23
-* -- 70
-:= -- 177
-add.period$ -- 13
-call.type$ -- 5
-change.case$ -- 4
++ -- 57
+- -- 51
+* -- 126
+:= -- 275
+add.period$ -- 15
+call.type$ -- 6
+change.case$ -- 5
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 37
-empty$ -- 93
-format.name$ -- 23
-if$ -- 209
+cite$ -- 6
+duplicate$ -- 42
+empty$ -- 111
+format.name$ -- 51
+if$ -- 293
 int.to.chr$ -- 0
-int.to.str$ -- 5
+int.to.str$ -- 6
 missing$ -- 4
-newline$ -- 26
-num.names$ -- 5
-pop$ -- 23
+newline$ -- 30
+num.names$ -- 6
+pop$ -- 30
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 17
+skip$ -- 21
 stack$ -- 0
 substring$ -- 18
-swap$ -- 5
+swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 6
-width$ -- 6
-write$ -- 50
+while$ -- 7
+width$ -- 7
+write$ -- 58
 (There was 1 warning)

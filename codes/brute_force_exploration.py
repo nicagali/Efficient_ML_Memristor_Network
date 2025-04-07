@@ -18,16 +18,9 @@ training_steps = 300   # choose
 training_type = 'regression'
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
+weight_symbol_vec = ['L', 'Rb', 'rho', 'P']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3]
 learning_rate_vec = [1e-6, 5e-6, 1e-3, 3e2]
-
-weight_type_index = 2   # choose
-
-
-#i = 29
-#graph_id = str(i).zfill(4)
-
-
 
 if new == 1:
     print("New graph generated")
