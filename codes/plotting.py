@@ -236,5 +236,121 @@ def plot_regression(ax, graph_id, weight_type, step):
     return
 
 
+# PER MOSTRARE COMPORTAMENTO
+# 
+# 
+voltage_style = [dict(c = 'teal', lw=2, label=r'$V_{1}$'),
+                 dict(c = 'mediumaquamarine', lw=2, label=r'$V_{2}$'),
+                 dict(c = 'limegreen', lw=2, label=r'$V_{3}$'),
+                 dict(c = 'darkolivegreen', lw=2, label=r'$V_{4}$')]
+conductance_style = [dict(c = 'navy', lw=2.3, label=r'$g_1$'),
+                     dict(c = 'slateblue', lw=2.3, label=r'$g_2$')]
+voltage_drop_style = [dict(c = 'darkorange', lw=2, label=r'$\Delta V_{C1}$'),
+                 dict(c = 'mediumorchid', lw=2, label=r'$\Delta V_{M1}$'),
+                 dict(c = 'forestgreen', lw=2, label=r'$\Delta V_{C2}$'),
+                 dict(c = 'blueviolet', lw=2, label=r'$\Delta V_{M2}$')]
+g_infinity_style = [dict(c = 'skyblue', lw=3, label=r'$g_{\infty,1}$'),
+                    dict(c = 'plum', lw=3, label=r'$g_{\infty,2}$')]
+
+def plot(ax, circuit, result, type, voltage_dep=False, 
+         element_vdrop=False, mc_constant=False, g_infty_plot=False):
+    ax.grid(ls=':')
+    ax.tick_params('y')
+    ax.tick_params('x')
+
+
+    # Plot voltage at given node "VN.."
+
+    if type[0]=='V':
+
+        style_index = int(re.findall(r'\d+', type)[0]) - 1
+        ax.plot(result['tran']['T'], result['tran'][f"{type}"], **voltage_style[style_index])
+        ax.legend()
+        ax.set_xlabel(r't[s]')
+        ax.set_ylabel(r'V[V]')
+
+        return
     
+    elem = ahkab.circuit.Circuit.get_elem_by_name(circuit, type)
+    n1 = elem.n1
+    n2 = elem.n2
+
+    current = result['tran']['I(VN1)']
+    voltage_in_node1 = 'VN'+f'{n1}'
+    voltage_in_node2 = 'VN'+f'{n2}'
+    if all(voltage_in_node1 != strings for strings in result['tran'].keys()): #coul just be n!=0
+        voltage_in_node1 = np.array([0]*len(result['tran']['T']))
+    else:
+        voltage_in_node1 = result['tran'][voltage_in_node1]
+    if all(voltage_in_node2 != strings for strings in result['tran'].keys()):
+        voltage_in_node2 = np.array([0]*len(result['tran']['T']))
+    else:
+        voltage_in_node2 = result['tran'][voltage_in_node2]
+
+    voltage_diff = voltage_in_node1-voltage_in_node2
+
+    # Plot voltage drops across element    
+    if element_vdrop:
+        style_index=0
+        if type=="C1":
+            style_index=0
+        if type=="M1" or type=='R1':
+            style_index=1
+        if type=="C2":
+            style_index=2
+        if type=="M2" or type=='R2':
+            style_index=3
+
+        ax.plot(result['tran']['T'], voltage_diff, **voltage_drop_style[style_index])
+
+        ax.legend()
+        ax.set_xlabel(r't[s]')
+        ax.set_ylabel(r'V[V]')
+        return
+
+    #  Plot conductance in memristors
+    
+    conductance = (-1)*current/voltage_diff
+
+    if mc_constant:
+
+        elem = ahkab.circuit.Circuit.get_elem_by_name(circuit, 'C1')
+        capacitance = elem.value
+
+        ax.plot(result['tran']['T'], conductance*capacitance, **conductance_style[0])
+
+        return
+
+    style_index = int(re.findall(r'\d+', type)[0]) - 1
+    if voltage_dep==True:
+
+        ax.plot(voltage_diff, conductance, **conductance_style[style_index])
+
+    else:
+        
+        start = 0
+        stop = -10
+
+        time = result['tran']['T']
+        time = time[start:stop]
+        conductance = conductance[start:stop]
+        print(conductance[-1])
+        ax.set_xlabel(r't[s]')
+        ax.set_ylabel(r'g[pS]')
+        if g_infty_plot:
+            g_infty = elem.g_0*ahkab.transient.sigmoid(voltage_diff)
+            g_infty = []
+            for index in range(len(voltage_diff)):
+                g_infty.append( elem.g_0*ahkab.transient.g_infinity_func(voltage_diff[index], elem))
+            g_infty=g_infty[start:stop]
+            ax.plot(time, g_infty, **g_infinity_style[style_index])
+
+        ax.plot(time, conductance, **conductance_style[style_index])
+
+            # ax.plot(result['tran']['T'], elem.g_0*ahkab.transient.g_infinity_func(voltage_diff, elem), **g_infinity_style)
+
+    ax.legend()
+
+    return 
+   
 

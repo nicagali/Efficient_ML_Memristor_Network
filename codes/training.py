@@ -597,8 +597,6 @@ def train_buffer(G, training_type, training_steps, weight_type, delta_weight, le
 
         update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        write_weights_to_file(G, step+1, weight_type, training_type)
-
         # COMPUTE error
         if training_type == 'allostery':
             error = cost_function(G, weight_type, update_initial_res=False)  
@@ -606,13 +604,11 @@ def train_buffer(G, training_type, training_steps, weight_type, delta_weight, le
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
-            test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
-            error_vec.append(test_error/error_normalization)
+            if step > 250:
+                test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+                error_vec.append(test_error/error_normalization)
             
-    fraction = int(training_steps/3)
-    error_vec_frac = error_vec[-fraction:]
-            
-    return [np.min(error_vec), statistics.mean(error_vec_frac), statistics.stdev(error_vec_frac)]
+    return [np.min(error_vec), statistics.mean(error_vec), statistics.stdev(error_vec)]
 
 def test_regression(G, step, weight_type):
         

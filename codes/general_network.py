@@ -8,58 +8,52 @@ import time
 import matplotlib.gridspec as gridspec
 
 start = time.time()
+graph_id = 'G00040001'
+DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph_verynice.graphml')
-G = nx.read_graphml(f'{par.DATA_PATH}random_graph_small_work.graphml')
 
-G = nx.reverse(G, copy=True)
+G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 
-# voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
-# voltage_desired = [3, 4]
+G.add_edge('2', '')
 
-# networks.initialize_nodes(G, voltage_input, voltage_desired)
-networks.initialize_edges(G)
+nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graph_ml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
 pos = plotting.plot_graph(G)
 fig.tight_layout()
-fig.savefig(f"../plots/general_network/graph.pdf")
+fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 30
+training_steps = 50
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
-learning_rate_vec_random2 = [1e-5, 1e-6, 1e-4, 1e2]
-learning_rate_vec_random3 = [5e-6, 1e-6, 1e-3, 1e2]
+learning_rate_vec = [1e-5, 1e-6, 1e-4, 1e2]
 
-# G_ml = G.copy(as_view=False)  
-# training.train(G, training_type=training_type, training_steps=training_steps, weight_type='length', delta_weight = 1e-3, learning_rate=1e-5)
-# G_ml = G.copy(as_view=False)  
-# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='radius_base', delta_weight = 1e-3, learning_rate=1e-6)
-# G_ml = G.copy(as_vie
-# w=False)  
-# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type='rho', delta_weight = 1e-4, learning_rate=5e-3)
-# G_ml = G.copy(as_view=False)  
-training.train(G, training_type=training_type, training_steps=training_steps, weight_type='pressure', delta_weight = 1e-3, learning_rate=5e2)
+for weight_type_index in [0,1,2,3]:
+    
+    G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+
+    # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 
 fig, ax = plt.subplots()
-plotting.plot_mse(ax, fig, f'pressure')
-plotting.plot_mse(ax, fig, f'length')
-# plotting.plot_mse(ax, fig, f'radius_base')
-# plotting.plot_mse(ax, fig, f'rho')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'length')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'radius_base')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'rho')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'pressure')
 ax.legend()
 fig.tight_layout()
-fig.savefig(f"../paper/plots/general_network/mse_random.pdf", transparent=True)
+fig.savefig(f"{DATA_PATH}mse.pdf", transparent=True)
+
 
 
 end = time.time()

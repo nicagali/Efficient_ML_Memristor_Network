@@ -47,8 +47,12 @@ regression_styles = {
     'length': dict(marker = 'o', c = cmap.colors[0], lw=1, label = rf'$L$'),
     'length_des': dict(c = 'lightpink', lw=4, label = rf'$V^D$'),
     'rho': dict(marker = 'o', c = cmap.colors[1], lw=1, label = rf'$\rho$'),
+    'rho_des': dict(c = 'moccasin', lw=4, label = rf'$V^D$'),
     'radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$'),
-    'pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$')
+    'radius_base_des': dict(c = 'yellow', lw=4, label = rf'$V^D$'),
+    'pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$'),
+    'pressure_des': dict(c = 'green', lw=4, label = rf'$V^D$')
+    
 }
 
 reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')

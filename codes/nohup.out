@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/codes/brute_force_exploration.py", line 1, in <module>
+    import networks
+  File "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/codes/networks.py", line 2, in <module>
+    import parameters as par
+  File "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/codes/parameters.py", line 33, in <module>
+    from pypalettes import load_cmap
+ModuleNotFoundError: No module named 'pypalettes'
