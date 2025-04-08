@@ -138,6 +138,8 @@ def plot_memristor_resistances(ax, G):
     # DEFINE a transient analysis (analysis of the circuit over time)
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
     resistances = result[1]
+    print(1/resistances[-1][0],1/resistances[-1][1] )
+    
     # print('Resistanes', len(resistances), len(resistances[0]))
     x = np.array(range(len(resistances)))
 

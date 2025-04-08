@@ -17,9 +17,11 @@ def plot_ginfty(ax, circuit, double=False):
     mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id='R1')
     g_infinity = []
     for potential in potential_vec:
-        if potential<3 and double==True:
+        if potential>1.5 and double==True:
             # print(potential)
-            g_infinity.append(ahkab.transient.g_infinity_func(potential, 0, 0, mysistor)*mysistor.g_0)
+            g_infinity.append(ahkab.transient.g_infinity_func(potential, 0, 0, mysistor)*mysistor.g_0/2)
+            # print(np.exp(3.12*potential))
+            # g_infinity.append(-20 / (1 + np.exp(-(potential))) + 20)
         else:
             g_infinity.append(ahkab.transient.g_infinity_func(potential, 0, 0, mysistor)*mysistor.g_0)
 
@@ -60,10 +62,10 @@ plt.savefig("../plots/show/g_infity.pdf")
 # ax.legend()
 # plt.savefig("../plots/show/potential_drops.pdf")
 
-fig, ax = plt.subplots()
-plotting.plot_memristor_resistances(ax, G)
-ax.legend()
-plt.savefig("../plots/show/conductances.pdf")
+# fig, ax = plt.subplots()
+# plotting.plot_memristor_resistances(ax, G)
+# ax.legend()
+# plt.savefig("../plots/show/conductances.pdf")
 
 
 # G_trained = networks.voltage_divider(save_data=True) 
@@ -89,12 +91,14 @@ plt.savefig("../plots/show/g_infity_trained.pdf")
 tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
 result = ahkab.run(circuit2, an_list=tran_analysis) 
 resistances_vec = result[1]
+print(1/resistances_vec[-1][0],1/resistances_vec[-1][1] )
 
 result = result[0]
 print(result['tran'].keys())
 
 potential_drop1 = result['tran']['VN0'] - result['tran']['VN1']
 potential_drop2 = result['tran']['VN1'] - result['tran']['VN2']
+print(result['tran']['VN1'][-1])
 fig, ax = plt.subplots()
 ax.plot(result['tran']['T'], result['tran']['VN0'], label= r'$V_1$')
 ax.plot(result['tran']['T'], potential_drop1, label= r'$\Delta V_1$')
