@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex paper"] 1744016384 "paper.aux" "paper.bbl" "paper" 1744016423
+["bibtex paper"] 1744029784 "paper.aux" "paper.bbl" "paper" 1744029785
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "biblio.bib" 1744015784 2964 5422e94a831a62e1320ce334052e2598 ""
-  "paper.aux" 1744016423 11315 77d4abfdaea2df740a76a80e506db548 "pdflatex"
-  "paperNotes.bib" 1744016423 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "biblio.bib" 1744029667 2964 5422e94a831a62e1320ce334052e2598 ""
+  "paper.aux" 1744029785 11351 836d0b67c7000fda3d62ac0e832a31a5 "pdflatex"
+  "paperNotes.bib" 1744029785 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
-["pdflatex"] 1744016422 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.pdf" "paper" 1744016423
+["pdflatex"] 1744029784 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.pdf" "paper" 1744029785
   "/etc/texmf/web2c/texmf.cnf" 1697810815 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1744016422 28744 1787c90257035deee935d9cd43be2012 ""
+  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1744029782 28901 619d1686080ce55a2505ffc1ae1212ae ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -225,10 +225,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1698051347 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1729165424 2801133 94a386807bf912cef894f8dc4a788c9b ""
-  "paper.aux" 1744016423 11315 77d4abfdaea2df740a76a80e506db548 "pdflatex"
-  "paper.bbl" 1744016384 1656 93a9500a1b5b7a3ebcf46fe96e583871 "bibtex paper"
-  "paper.out" 1744016423 1737 de9b14b81d3fcc911add9b351eb652cd "pdflatex"
-  "paper.tex" 1744016422 28744 1787c90257035deee935d9cd43be2012 ""
+  "paper.aux" 1744029785 11351 836d0b67c7000fda3d62ac0e832a31a5 "pdflatex"
+  "paper.bbl" 1744029784 1656 93a9500a1b5b7a3ebcf46fe96e583871 "bibtex paper"
+  "paper.out" 1744029785 1737 de9b14b81d3fcc911add9b351eb652cd "pdflatex"
+  "paper.tex" 1744029782 28901 619d1686080ce55a2505ffc1ae1212ae ""
   "plots/general_network/mse_general.pdf" 1738143804 146385 e7e34758f4e0557bb7fa25bfccfefa2f ""
   "plots/memristor/memristor_network.pdf" 1737037276 55427 88e76c41eca0a3201ee3488c32d62e7c ""
   "plots/memristor/memristor_scheme.pdf" 1737037276 133755 ed59a9f1372df888253042382644dbf4 ""
