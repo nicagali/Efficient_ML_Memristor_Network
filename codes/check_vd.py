@@ -38,10 +38,10 @@ G = networks.voltage_divider(save_data=True)
 
 circuit = networks.circuit_from_graph(G, type='memristors') 
 
-# fig, ax = plt.subplots()
-# plot_ginfty(ax, circuit)
-# # plot_ginfty(ax, g_0=2*4.20155902)
-# plt.savefig("../plots/show/g_infity.pdf")
+fig, ax = plt.subplots()
+plot_ginfty(ax, circuit)
+# plot_ginfty(ax, g_0=2*4.20155902)
+plt.savefig("../plots/show/g_infity.pdf")
 
 # tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
 # result = ahkab.run(circuit, an_list=tran_analysis) 
@@ -60,10 +60,10 @@ circuit = networks.circuit_from_graph(G, type='memristors')
 # ax.legend()
 # plt.savefig("../plots/show/potential_drops.pdf")
 
-# fig, ax = plt.subplots()
-# plotting.plot_memristor_resistances(ax, G)
-# ax.legend()
-# plt.savefig("../plots/show/conductances.pdf")
+fig, ax = plt.subplots()
+plotting.plot_memristor_resistances(ax, G)
+ax.legend()
+plt.savefig("../plots/show/conductances.pdf")
 
 
 # G_trained = networks.voltage_divider(save_data=True) 
