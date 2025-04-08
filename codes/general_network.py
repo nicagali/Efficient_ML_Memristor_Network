@@ -8,7 +8,7 @@ import time
 import matplotlib.gridspec as gridspec
 
 start = time.time()
-graph_id = 'G00040001'
+graph_id = 'G00030001'
 DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -17,11 +17,26 @@ DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
 # G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
+G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
+
+# attributes = {"type" : "target", 'color' : par.color_dots[1]}
+# G.add_node(7, **attributes)
+# targets = [x for x in G.nodes() if G.nodes[x]['type']=='target']
+# sources = [x for x in G.nodes() if G.nodes[x]['type']=='source']
+# voltage_input = [0, 5] # node initialized here because different for differnent nw
+# voltage_desired = [3, 4]
+# networks.initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
+
+# G.add_edge('2', '7')
+# G.add_edge('6', '7')
+# networks.initialize_edges(G)
+
+# graph_id = 'G00030002'
+
+# G = networks.to_directed_graph(G, shuffle=True)
+# G.graph['name'] = f'{graph_id}'
+# nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-
-G.add_edge('2', '')
-
-nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graph_ml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -31,17 +46,17 @@ fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 50
+training_steps = 200
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
-learning_rate_vec = [1e-5, 1e-6, 1e-4, 1e2]
+learning_rate_vec = [5e-6, 5e-6, 1e-3, 3e2]
 
 for weight_type_index in [0,1,2,3]:
     
-    G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+    G_train = G.copy(as_view=False)
 
-    # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 

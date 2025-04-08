@@ -61,7 +61,7 @@ def initialize_edges(G, mix_base_tip = False):
 
     initial_length = 10 # [mu m]
     initial_radius_base = 200 # [nm]
-    initial_value_resistance = 4 #do I still need this??
+    initial_value_resistance = 100 #do I still need this??
     initial_value_conductance = 1/initial_value_resistance
 
     edge_list = list(G.edges())
@@ -132,19 +132,19 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 
 # RANDOM NETWORK
  
-def random_graph(number_nodes=8, number_edges=16, save_data=False, res_change=False):
+def random_graph(number_nodes=9, number_edges=16, save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
     G = nx.gnm_random_graph(number_nodes, number_edges, directed=True)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
     number_sources = 3
-    number_targets = 1
+    number_targets = 2
     sources = random.sample(G.nodes(), number_sources)
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
 
-    voltage_input = [0, 2, 2] # node initialized here because different for differnent nw
+    voltage_input = [0,  5, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
 
     # INITIALIZE nodes and edges
@@ -233,7 +233,7 @@ def to_directed_graph(G_structure, shuffle = False):
     nodes = [node for node in G_structure.nodes()]
     targets = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='target']
     sources = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='source']
-    voltage_input = [0, 6, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
     voltage_desired = [3, 4]
     G.add_nodes_from(nodes)
 
@@ -243,17 +243,16 @@ def to_directed_graph(G_structure, shuffle = False):
     if shuffle:
         for edge_index in range(len(edges)):
             direction = random.random()
-            if direction>0.2:
+            if direction>0.3:
                 edges[edge_index] = (edges[edge_index][0], edges[edge_index][1])
             else:
-                # print('changing')
                 edges[edge_index] = (edges[edge_index][1], edges[edge_index][0])
 
     G.add_edges_from(edges)
 
     initialize_edges(G)
     
-    return G
+    return G    
 
 
 def reverse(self, copy=True):
