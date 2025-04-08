@@ -61,7 +61,7 @@ def initialize_edges(G, mix_base_tip = False):
 
     initial_length = 10 # [mu m]
     initial_radius_base = 200 # [nm]
-    initial_value_resistance = 50 #do I still need this??
+    initial_value_resistance = 4 #do I still need this??
     initial_value_conductance = 1/initial_value_resistance
 
     edge_list = list(G.edges())
@@ -116,9 +116,10 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
     
     # INITIALIZE nodes and edges
     voltage_input = [5, 0] # node initialized here because different for differnent nw
+    voltage_desired = [4]
 
+    initialize_nodes(G, sources=[0,2], targets=[1], voltage_input=voltage_input, voltage_desired=voltage_desired)
     initialize_edges(G, mix_base_tip=False)
-    initialize_nodes(G, voltage_input, voltage_desired)
 
     # G.nodes[0]['pressure'] = 1.001
 
@@ -214,7 +215,7 @@ def circuit_from_graph(G, type):
 
             # print(edge, G.nodes[edge[0]]['rho'], G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho'])
 
-            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["conductance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
+            circuit.add_mysistor(f'R{index+1}', f'n{edge[0]}', f'n{edge[1]}', value = G.edges[edge]["resistance"], rho_b=G.nodes[edge[0]]['rho'], length_channel = G.edges[edge]['length']*1e-6, radius_base = G.edges[edge]['radius_base']*1e-9, pressure=(G.nodes[edge[0]]['pressure']-G.nodes[edge[1]]['pressure'])*1e5, delta_rho = (G.nodes[edge[0]]['rho']-G.nodes[edge[1]]['rho']))
 
         else:
 

@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import ahkab  
 import networks
 import training
+import re
+
 
 from matplotlib.colors import to_rgb, to_hex
 def lighten_color(base_color, factor=0.5):
@@ -140,8 +142,8 @@ def plot_memristor_resistances(ax, G):
     x = np.array(range(len(resistances)))
 
     for edge_index in range(len(G.edges())):
-        y = [resistances[time_index][edge_index] for time_index in range(len(resistances))]
-        ax.plot(x, y, **par.memr_resistances_style, label = rf'$R_{{{edge_index+1}}}$') 
+        y = [1/(resistances[time_index][edge_index]) for time_index in range(len(resistances))]
+        ax.plot(x, y, **par.memr_resistances_style, label = rf'$M_{{{edge_index+1}}}$') 
     # ax.legend()
 
 def plot_potential_each_node(ax, G, factor_time=1):
@@ -151,7 +153,7 @@ def plot_potential_each_node(ax, G, factor_time=1):
     tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
     result = ahkab.run(circuit, an_list=tran_analysis)  
     resistances = result[1][-1]
-    print(1/resistances[0], 1/resistances[1])
+    # print(1/resistances[0], 1/resistances[1])
 
     result = result[0]
     # print(result['tran'].keys())
@@ -252,7 +254,7 @@ voltage_drop_style = [dict(c = 'darkorange', lw=2, label=r'$\Delta V_{C1}$'),
 g_infinity_style = [dict(c = 'skyblue', lw=3, label=r'$g_{\infty,1}$'),
                     dict(c = 'plum', lw=3, label=r'$g_{\infty,2}$')]
 
-def plot(ax, circuit, result, type, voltage_dep=False, 
+def plot_vd(ax, circuit, result, type, voltage_dep=False, 
          element_vdrop=False, mc_constant=False, g_infty_plot=False):
     ax.grid(ls=':')
     ax.tick_params('y')
@@ -275,7 +277,7 @@ def plot(ax, circuit, result, type, voltage_dep=False,
     n1 = elem.n1
     n2 = elem.n2
 
-    current = result['tran']['I(VN1)']
+    current = result['tran']['I(VN0)']
     voltage_in_node1 = 'VN'+f'{n1}'
     voltage_in_node2 = 'VN'+f'{n2}'
     if all(voltage_in_node1 != strings for strings in result['tran'].keys()): #coul just be n!=0
@@ -333,7 +335,7 @@ def plot(ax, circuit, result, type, voltage_dep=False,
 
         time = result['tran']['T']
         time = time[start:stop]
-        conductance = conductance[start:stop]
+        conductance = 1/conductance[start:stop]
         print(conductance[-1])
         ax.set_xlabel(r't[s]')
         ax.set_ylabel(r'g[pS]')
@@ -341,7 +343,7 @@ def plot(ax, circuit, result, type, voltage_dep=False,
             g_infty = elem.g_0*ahkab.transient.sigmoid(voltage_diff)
             g_infty = []
             for index in range(len(voltage_diff)):
-                g_infty.append( elem.g_0*ahkab.transient.g_infinity_func(voltage_diff[index], elem))
+                g_infty.append( 1/(elem.g_0*ahkab.transient.g_infinity_func(voltage_diff[index], 0, 0, elem)))
             g_infty=g_infty[start:stop]
             ax.plot(time, g_infty, **g_infinity_style[style_index])
 
