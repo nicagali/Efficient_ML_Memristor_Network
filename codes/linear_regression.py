@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00040001'
 
 # --------- INITIALIZE NETWORK ---------
 
@@ -26,10 +26,21 @@ graph_id = 'G00010002'
 
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+G.nodes['4']['type'] = 'hidden'
+G.nodes['4']['color'] = 'silver'
+G.graph['name'] = graph_id
+nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
 # print(G.nodes['3']['voltage'])
 
 # G.nodes['3']['voltage'] = 3
+# --------- PLOT GRAPH ---------
+
+# -> PLOT graph in /plots 
+fig, ax = plt.subplots()
+pos = plotting.plot_graph(G)
+fig.tight_layout()
+fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
 training_steps = 400   # choose
@@ -37,25 +48,19 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [1e-6, 1e-6, 5e-4, 4e2, 1e3]
+learning_rate_vec = [1e-6, 1e-6, 5e-5, 10, 1e3]
 constant_source = [3, 3, 4, 3]
 
-weight_type_index = 3   # choose
+weight_type_index = 0   # choose
 
-for weight_type_index in [2]:
+for weight_type_index in [1,2,3]:
+    # print(f'{DATA_PATH}')
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-    G.nodes['3']['voltage'] = constant_source[weight_type_index]
+    G.nodes['5']['voltage'] = constant_source[weight_type_index]
 
     training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
-    # --------- PLOT GRAPH ---------
-
-    # -> PLOT graph in /plots 
-    fig, ax = plt.subplots()
-    pos = plotting.plot_graph(G)
-    fig.tight_layout()
-    fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 
     # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
@@ -78,13 +83,13 @@ for weight_type_index in [2]:
 
     training.test_regression(G, step=0, weight_type=f'{weight_type_vec[weight_type_index]}')
     training.test_regression(G, step=int(training_steps/2), weight_type=f'{weight_type_vec[weight_type_index]}')
-    training.test_regression(G, step=50, weight_type=f'{weight_type_vec[weight_type_index]}')
+    # training.test_regression(G, step=50, weight_type=f'{weight_type_vec[weight_type_index]}')
     training.test_regression(G, step=training_steps, weight_type=f'{weight_type_vec[weight_type_index]}')
 
     fig, ax = plt.subplots(1, 3, figsize=(15,5))
     plotting.plot_regression(ax[0], graph_id, weight_type_vec[weight_type_index], step=0)
     plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=int(training_steps/2))
-    plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=50)
+    # plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=50)
     plotting.plot_regression(ax[2], graph_id, weight_type_vec[weight_type_index], step=training_steps)
     fig.tight_layout()
     fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}.pdf", transparent=True)

@@ -37,7 +37,7 @@ G = nx.read_graphml(f'{DATA_PATH}G00030001.graphml')
 G.remove_edge('2', '3')
 G.remove_edge('2', '6')
 G.add_edge('7', '2')
-G.add_edge('7', '6')
+G.add_edge('7', '0')
 networks.initialize_edges(G)
 nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
@@ -57,7 +57,7 @@ weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
 learning_rate_vec = [5e-6, 5e-6, 1e-3, 1e2]
 
-for weight_type_index in [0,1,2]:
+for weight_type_index in [3]:
     
     G_train = G.copy(as_view=False)
 
