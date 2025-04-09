@@ -10,6 +10,7 @@ import matplotlib.gridspec as gridspec
 start = time.time()
 graph_id = 'G00030001'
 DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
+PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
 
@@ -42,7 +43,7 @@ G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 fig, ax = plt.subplots()
 pos = plotting.plot_graph(G)
 fig.tight_layout()
-fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
+fig.savefig(f"{PLOT_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
@@ -50,9 +51,9 @@ training_steps = 200
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
-learning_rate_vec = [5e-6, 5e-6, 1e-3, 3e2]
+learning_rate_vec = [5e-6, 5e-6, 1e-3, 1e2]
 
-for weight_type_index in [0,1,2,3]:
+for weight_type_index in [3]:
     
     G_train = G.copy(as_view=False)
 
@@ -67,7 +68,7 @@ plotting.plot_mse(ax, fig, graph_id, training_type, f'rho')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'pressure')
 ax.legend()
 fig.tight_layout()
-fig.savefig(f"{DATA_PATH}mse.pdf", transparent=True)
+fig.savefig(f"{PLOT_PATH}mse.pdf", transparent=True)
 
 
 
