@@ -8,7 +8,7 @@ import time
 import matplotlib.gridspec as gridspec
 
 start = time.time()
-graph_id = 'G00030001'
+graph_id = 'G00040001'
 DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
 PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 
@@ -18,7 +18,7 @@ PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 # G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
-G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
+# G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
 
 # attributes = {"type" : "target", 'color' : par.color_dots[1]}
 # G.add_node(7, **attributes)
@@ -28,16 +28,20 @@ G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
 # voltage_desired = [3, 4]
 # networks.initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
 
-# G.add_edge('2', '7')
-# G.add_edge('6', '7')
-# networks.initialize_edges(G)
 
 # graph_id = 'G00030002'
 
 # G = networks.to_directed_graph(G, shuffle=True)
 # G.graph['name'] = f'{graph_id}'
-# nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
-G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+G = nx.read_graphml(f'{DATA_PATH}G00030001.graphml')
+G.remove_edge('2', '3')
+G.remove_edge('2', '6')
+G.add_edge('7', '2')
+G.add_edge('7', '6')
+networks.initialize_edges(G)
+nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
+
+print(G.edges())
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -53,7 +57,7 @@ weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
 learning_rate_vec = [5e-6, 5e-6, 1e-3, 1e2]
 
-for weight_type_index in [3]:
+for weight_type_index in [0,1,2]:
     
     G_train = G.copy(as_view=False)
 
