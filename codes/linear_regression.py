@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010001'
+graph_id = 'G00010002'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -24,6 +24,7 @@ DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 # regression_working_rho: wokring nw for length directed with 6V extra source, working for rho training
 
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+print(G.edges())
 # G.add_edge('1','7')
 # networks.initialize_edges(G)
 # G = networks.to_directed_graph(G, shuffle=True)
@@ -56,12 +57,12 @@ for weight_type_index in [0]:
     # print(f'{DATA_PATH}')
     
     # G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-    # G = nx.read_graphml(f'{DATA_PATH}G00010002.graphml')
-    G = nx.read_graphml(f'{DATA_PATH}G00010001.graphml')
+    G = nx.read_graphml(f'{DATA_PATH}G00010002.graphml')
+    # G = nx.read_graphml(f'{DATA_PATH}G00010001.graphml')
     # G = nx.read_graphml(f'{DATA_PATH}G00010003.graphml')
     G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
-    # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 
 

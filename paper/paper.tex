@@ -250,6 +250,32 @@ C_{t}\left( \boldsymbol{w} \right) = \sum_{j=1}^{Te}\brac{V_{out}\brac{\boldsymb
 \]
 which considers the difference between the voltage measured in the output node when the impoing the $j-$th input voltage of the test set and the desired output of the same test point, for every point of the set. 
 
+Since the task is more demanding than a single input-output mapping, we generate a bigger network, with more degrees of freedom. \cref{fig:lin_regr1}(a) shows the selected graph for the regression task, it has $20$ edges and $10$ nodes, three of which are inputs and one is an output. Of three input nodes, tone is set to ground $V_0 = 0$, and one to a constant value to enable the training of a linear function with an off-set. For the training objective, we decide to train the network to fit the line $V_{out} = 0.2 V_{in} + 0.3$ in the votage range [1V,5V]. 
+
+The performance of the algorithm for this task is shown in \cref{fig:lin_regr2}(b), where the learning rates for the different weights has been fine tuned in such a way that the algorithm does not overshoot, spoling the training, but it is not too slow either. From the behaviour of the cost function, we can see that the choice of the weight type has a decisive impact on the training of the network for a complex task. In fact, training the length results in a successful training, while training pressure in the nodes is extrimely inefficient. For a visual interpretation of the regression cost funtion, \cref{fig:lin_regr1}(c) shows the status of the training at three different training steps.
+
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{plots/regression/G00010001.pdf}
+    \caption{}\label{fig:lin_regr1}
+\end{figure} 
+
+Keeping the same geometry, we inverted the direction of some of the memristors, indicated in \cref{fig:lin_regr2}(a). The resulting performance, \cref{fig:lin_regr2}(b), shows how the topology of the network directly infulences the trainability of a specific kind of weight. In fact, the concentration at the node seems to be preferrable to be trained in this configuration. As for the length, \cref{fig:lin_regr2}, shows how te network responds to the test set in three different moments of the training.
+
+\begin{itemize}
+    \item Explain why the direction of memristors is important.
+    \item Note that the edges which were changed are connected to inputs or outputs — this indicates their importance.
+    \item Pressure is always trained very little; comment on why it is more difficult to train. (Consider including a graph of $g_{\infty}$ for positive and negative potentials.)
+    \item Due to the many possible combinations and degrees of freedom, small networks require a more efficient search strategy. (Propose using genetic algorithms.)
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{plots/regression/G00010002.pdf}
+    \caption{}\label{fig:lin_regr2}
+\end{figure} 
 
 \cleardoublepage
 \section{Conclusion}

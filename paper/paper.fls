@@ -1105,6 +1105,12 @@ INPUT plots/voltage_divider/evolution_targets.pdf
 INPUT ./plots/general_network/mse_general.pdf
 INPUT ./plots/general_network/mse_general.pdf
 INPUT plots/general_network/mse_general.pdf
+INPUT ./plots/regression/G00010001.pdf
+INPUT ./plots/regression/G00010001.pdf
+INPUT plots/regression/G00010001.pdf
+INPUT ./plots/regression/G00010002.pdf
+INPUT ./plots/regression/G00010002.pdf
+INPUT plots/regression/G00010002.pdf
 INPUT ./paper.bbl
 INPUT paper.bbl
 INPUT ./paper.bbl
