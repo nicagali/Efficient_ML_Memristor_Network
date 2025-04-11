@@ -8,7 +8,7 @@ import time
 import matplotlib.gridspec as gridspec
 
 start = time.time()
-graph_id = 'G00040001'
+graph_id = 'G00050001'
 DATA_PATH = f'{par.DATA_PATH}allostery{graph_id}/'
 PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 
@@ -16,32 +16,15 @@ PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 
 # -> DEFINE graph from networks module
 # G = networks.random_graph(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+G = networks.to_directed_graph(G)
+nx.write_graphml(G, f'{DATA_PATH}random_graph.graphml')
 
-# G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
+# G = nx.DiGraph(G)
 
-# attributes = {"type" : "target", 'color' : par.color_dots[1]}
-# G.add_node(7, **attributes)
-# targets = [x for x in G.nodes() if G.nodes[x]['type']=='target']
-# sources = [x for x in G.nodes() if G.nodes[x]['type']=='source']
-# voltage_input = [0, 5] # node initialized here because different for differnent nw
-# voltage_desired = [3, 4]
-# networks.initialize_nodes(G, sources, targets, voltage_input, voltage_desired)
-
-
-# graph_id = 'G00030002'
-
-# G = networks.to_directed_graph(G, shuffle=True)
-# G.graph['name'] = f'{graph_id}'
-G = nx.read_graphml(f'{DATA_PATH}G00030001.graphml')
-G.remove_edge('2', '3')
-G.remove_edge('2', '6')
-G.add_edge('7', '2')
-G.add_edge('7', '0')
-networks.initialize_edges(G)
-nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
-
-print(G.edges())
+# G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+G.graph['name'] = f'{graph_id}'
+# nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -51,15 +34,16 @@ fig.savefig(f"{PLOT_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 200
+training_steps = 50
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
-learning_rate_vec = [5e-6, 5e-6, 1e-3, 1e2]
+learning_rate_vec = [5e-6, 5e-6, 3e-3, 1e2]
 
 for weight_type_index in [3]:
     
     G_train = G.copy(as_view=False)
+    # print(G_train.nodes)
 
     training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
