@@ -19,6 +19,20 @@ Ali Momeni, Babak Rahmani, Benjamin Scellier, Logan~G. Wright, Peter~L.
   Andrea Alù, and Romain Fleury.
 \newblock Training of physical neural networks, 2024.
 
+\bibitem{optics1}
+Xing Lin, Yair Rivenson, Nezih~T. Yardimci, Muhammed Veli, Yi~Luo, Mona
+  Jarrahi, and Aydogan Ozcan.
+\newblock All-optical machine learning using diffractive deep neural networks.
+\newblock {\em Science}, 361(6406):1004–1008, September 2018.
+
+\bibitem{electronics1}
+{Hans Christian} {Ruiz Euler}, {Marcus N.} Boon, {Jochem T.} Wildeboer, Bram
+  {van de Ven}, Tao Chen, Hajo Broersma, {Peter A.} Bobbert, and {Wilfred G.}
+  {van der Wiel}.
+\newblock A deep-learning approach to realizing functionality in nanoelectronic
+  devices.
+\newblock {\em Nature Nanotechnology}, 15(12):992--998, December 2020.
+
 \bibitem{Rene_IonicNeuromorphic}
 T.~M. Kamsma, W.~Q. Boon, T.~ter Rele, C.~Spitoni, and R.~van Roij.
 \newblock Iontronic neuromorphic signaling with conical microfluidic

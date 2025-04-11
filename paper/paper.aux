@@ -19,9 +19,11 @@
 \@nameuse{bbl@beforestart}
 \citation{energy_cost_ml1,energy_cost_ml2}
 \citation{trainingphysicalneuralnetworks}
+\citation{optics1}
+\citation{electronics1}
 \citation{}
 \citation{}
-\citation{}
+\citation{Rene_IonicNeuromorphic}
 \HyPL@Entry{0<</P(\376\377\0001)>>}
 \newlabel{FirstPage}{{}{1}{}{section*.1}{}}
 \newlabel{FirstPage@cref}{{}{[1][1][]1}}
@@ -73,33 +75,34 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces (a) Behaviour of the cost function during the training of the voltage divider. Different colors indicate that the training is done with a specific choise of training weights, as indiacted in the legend. (b) Pressures imposed on the three nodes of the voltage divider during training. The inset shows the relaxation to the steady state of the output voltage $V_2$ to the desired value $V_D$ when the pressures imposed are the values obtained in the last training step, and the input nodes are stimulated with fixed voltage. (c) Ion concentration desnities imposed on the three nodes of the voltage divider during training. (d) Length of the memristors during training. (e) Base radius of the memristors during training.}}{5}{figure.6}\protected@file@percent }
 \newlabel{fig:mse_weights_vd}{{6}{5}{(a) Behaviour of the cost function during the training of the voltage divider. Different colors indicate that the training is done with a specific choise of training weights, as indiacted in the legend. (b) Pressures imposed on the three nodes of the voltage divider during training. The inset shows the relaxation to the steady state of the output voltage $V_2$ to the desired value $V_D$ when the pressures imposed are the values obtained in the last training step, and the input nodes are stimulated with fixed voltage. (c) Ion concentration desnities imposed on the three nodes of the voltage divider during training. (d) Length of the memristors during training. (e) Base radius of the memristors during training}{figure.6}{}}
 \newlabel{fig:mse_weights_vd@cref}{{[figure][6][]6}{[1][5][]5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B}Training a memristor network}{5}{section*.7}\protected@file@percent }
 \HyPL@Entry{5<</P(\376\377\0006)>>}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces (a) The trainiang of a memristor voltage divider to a set of desired voltage outputs $V_D = {1V, 3V, 4V}$, indicated by dashed light purple lines. The output voltage $V_2$, indicated by dark purple dots, adapts to the desired output during the training. The input voltages $V_1$ and $V_3$ are constant at $5V$ and $0V$ respectively. (b) The dots with different shades of gray show the values of pressures, chosen as weights, imposed on the three nodes during training.}}{6}{figure.7}\protected@file@percent }
 \newlabel{fig:evolution_targets}{{7}{6}{(a) The trainiang of a memristor voltage divider to a set of desired voltage outputs $V_D = {1V, 3V, 4V}$, indicated by dashed light purple lines. The output voltage $V_2$, indicated by dark purple dots, adapts to the desired output during the training. The input voltages $V_1$ and $V_3$ are constant at $5V$ and $0V$ respectively. (b) The dots with different shades of gray show the values of pressures, chosen as weights, imposed on the three nodes during training}{figure.7}{}}
 \newlabel{fig:evolution_targets@cref}{{[figure][7][]7}{[1][5][]6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B}Training a memristor network}{6}{section*.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Network to the right has inputs $[5,0]$ and desired outputs $[3, 4]$, delta weights a third of their intial value and learning rates $1e^{-5}, 1e^{-4}, 1e^{2}$. The network to the right has $[5,1,0]$ and output $[3,4,2]$}}{6}{figure.8}\protected@file@percent }
-\newlabel{fig:mse_general}{{8}{6}{Network to the right has inputs $[5,0]$ and desired outputs $[3, 4]$, delta weights a third of their intial value and learning rates $1e^{-5}, 1e^{-4}, 1e^{2}$. The network to the right has $[5,1,0]$ and output $[3,4,2]$}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces (a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choise.}}{6}{figure.8}\protected@file@percent }
+\newlabel{fig:mse_general}{{8}{6}{(a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choise}{figure.8}{}}
 \newlabel{fig:mse_general@cref}{{[figure][8][]8}{[1][6][]6}}
-\HyPL@Entry{6<</P(\376\377\0007)>>}
-\@writefile{toc}{\contentsline {subsection}{\numberline {C}Linear Regression}{7}{section*.8}\protected@file@percent }
-\newlabel{eq:linear_relationship}{{6}{7}{}{equation.3.6}{}}
-\newlabel{eq:linear_relationship@cref}{{[equation][6][]6}{[1][7][]7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C}Linear Regression}{6}{section*.8}\protected@file@percent }
+\newlabel{eq:linear_relationship}{{6}{6}{}{equation.3.6}{}}
+\newlabel{eq:linear_relationship@cref}{{[equation][6][]6}{[1][6][]6}}
 \bibdata{paperNotes,biblio}
-\HyPL@Entry{7<</P(\376\377\0008)>>}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Conclusion}{8}{section*.9}\protected@file@percent }
+\HyPL@Entry{6<</P(\376\377\0007)>>}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Conclusion}{7}{section*.9}\protected@file@percent }
 \@writefile{toc}{\appendix }
 \bibcite{energy_cost_ml1}{{1}{}{{}}{{}}}
 \bibcite{energy_cost_ml2}{{2}{}{{}}{{}}}
 \bibcite{trainingphysicalneuralnetworks}{{3}{}{{}}{{}}}
-\bibcite{Rene_IonicNeuromorphic}{{4}{}{{}}{{}}}
-\bibcite{Rene_PressureSensitive}{{5}{}{{}}{{}}}
-\bibcite{steepest_descent_book}{{6}{}{{}}{{}}}
+\bibcite{optics1}{{4}{}{{}}{{}}}
+\bibcite{electronics1}{{5}{}{{}}{{}}}
+\bibcite{Rene_IonicNeuromorphic}{{6}{}{{}}{{}}}
+\bibcite{Rene_PressureSensitive}{{7}{}{{}}{{}}}
+\bibcite{steepest_descent_book}{{8}{}{{}}{{}}}
 \bibstyle{unsrt}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\HyPL@Entry{8<</P(\376\377\0009)>>}
-\@writefile{toc}{\contentsline {section}{\numberline {}References}{9}{section*.10}\protected@file@percent }
-\newlabel{LastBibItem}{{6}{9}{}{section*.10}{}}
-\newlabel{LastBibItem@cref}{{[section][4][]IV}{[1][9][]9}}
-\newlabel{LastPage}{{}{9}{}{}{}}
-\gdef \@abspage@last{9}
+\HyPL@Entry{7<</P(\376\377\0008)>>}
+\@writefile{toc}{\contentsline {section}{\numberline {}References}{8}{section*.10}\protected@file@percent }
+\newlabel{LastBibItem}{{8}{8}{}{section*.10}{}}
+\newlabel{LastBibItem@cref}{{[section][4][]IV}{[1][8][]8}}
+\newlabel{LastPage}{{}{8}{}{}{}}
+\gdef \@abspage@last{8}

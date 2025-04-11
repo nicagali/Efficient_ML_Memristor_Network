@@ -219,6 +219,7 @@ def plot_regression(ax, graph_id, weight_type, step):
     
     x = data[0]
     y1 = data[1]
+    print(y1)
     
     x_interval = np.linspace(np.min(x),np.max(x))
     y1_desired = training.regression_function(x_interval)

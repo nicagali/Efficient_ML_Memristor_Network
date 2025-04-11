@@ -556,7 +556,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
             error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
-            if step % 15 == 0:
+            if step % 10 == 0:
                 test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
                 print('Step:', step+1, test_error)
                 mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")

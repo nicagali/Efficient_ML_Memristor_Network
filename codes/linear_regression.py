@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00010001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -42,24 +42,26 @@ fig.tight_layout()
 fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 300   # choose
+training_steps = 400   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-learning_rate_vec = [6e-7, 2e-6, 1e-4, 60, 1e3]
-constant_source = [11, 8, 8, 8]
+learning_rate_vec = [5e-7, 1e-6, 7e-4, 1e2, 1e3]
+constant_source = [11, 3, 3, 3]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [0,1,2,3]:
+for weight_type_index in [0]:
     # print(f'{DATA_PATH}')
     
     # G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-    G = nx.read_graphml(f'{DATA_PATH}G00010002.graphml')
-    G.nodes['5']['voltage'] = constant_source[weight_type_index]
+    # G = nx.read_graphml(f'{DATA_PATH}G00010002.graphml')
+    G = nx.read_graphml(f'{DATA_PATH}G00010001.graphml')
+    # G = nx.read_graphml(f'{DATA_PATH}G00010003.graphml')
+    G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
-    training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 
 

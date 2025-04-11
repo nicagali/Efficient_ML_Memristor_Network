@@ -9,7 +9,7 @@ import plotting
 import matplotlib.gridspec as gridspec
 
 
-graph_id = 'G00010002'
+graph_id = 'G00010001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 training_steps = 400
@@ -32,15 +32,15 @@ ax2.legend(fontsize = par.legend_size)
 
 bottom = gridspec.GridSpecFromSubplotSpec(1, 3, subplot_spec=outer[1])
 ax3 = fig.add_subplot(bottom[0, 0])
-plotting.plot_regression(ax3, graph_id, 'rho', step=0)
+plotting.plot_regression(ax3, graph_id, 'length', step=0)
 ax3.legend(fontsize = par.legend_size)
 
 ax4 = fig.add_subplot(bottom[0, 1])
-plotting.plot_regression(ax4, graph_id, 'rho', int(training_steps/2))
+plotting.plot_regression(ax4, graph_id, 'length', int(50))
 ax4.legend(fontsize = par.legend_size)
 
 ax5 = fig.add_subplot(bottom[0, 2])
-plotting.plot_regression(ax5, graph_id, 'rho', step=training_steps)
+plotting.plot_regression(ax5, graph_id, 'length', step=400)
 ax5.legend(fontsize = par.legend_size)
 
 
