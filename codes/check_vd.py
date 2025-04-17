@@ -45,66 +45,66 @@ plot_ginfty(ax, circuit)
 # plot_ginfty(ax, g_0=2*4.20155902)
 plt.savefig("../plots/show/g_infity.pdf")
 
-# tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
-# result = ahkab.run(circuit, an_list=tran_analysis) 
-# resistances_vec = result[1]
-
-# result = result[0]
-# print(result['tran'].keys())
-
-# potential_drop1 = result['tran']['VN0'] - result['tran']['VN1']
-# potential_drop2 = result['tran']['VN1'] - result['tran']['VN2']
-# fig, ax = plt.subplots()
-# ax.plot(result['tran']['T'], result['tran']['VN0'], label= r'$V_1$')
-# ax.plot(result['tran']['T'], potential_drop1, label= r'$\Delta V_1$')
-# ax.plot(result['tran']['T'], potential_drop2, label= r'$\Delta V_2$')
-# ax.plot(result['tran']['T'], result['tran']['VN2'], label= r'$V_2$')
-# ax.legend()
-# plt.savefig("../plots/show/potential_drops.pdf")
-
-# fig, ax = plt.subplots()
-# plotting.plot_memristor_resistances(ax, G)
-# ax.legend()
-# plt.savefig("../plots/show/conductances.pdf")
-
-
-# G_trained = networks.voltage_divider(save_data=True) 
-# training.train(G_trained, training_type='allostery', training_steps=20, weight_type='length', delta_weight = 1e-3, learning_rate=3e-6)
-# nx.write_graphml(G_trained, '../plots/show/Gtrained.graphml')
-G_trained = nx.read_graphml('../plots/show/Gtrained.graphml')
-
-
-fig, ax = plt.subplots()
-plotting.plot_memristor_resistances(ax, G_trained)
-ax.legend()
-plt.savefig("../plots/show/conductances_trained.pdf")
-
-circuit2 = networks.circuit_from_graph(G_trained, type='memristors') 
-
-fig, ax = plt.subplots()
-plot_ginfty(ax, circuit)
-plot_ginfty(ax, circuit2, double=True)
-# plot_ginfty(ax, g_0=2*4.20155902)
-ax.legend()
-plt.savefig("../plots/show/g_infity_trained.pdf")
-
 tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
-result = ahkab.run(circuit2, an_list=tran_analysis) 
+result = ahkab.run(circuit, an_list=tran_analysis) 
 resistances_vec = result[1]
-print(1/resistances_vec[-1][0],1/resistances_vec[-1][1] )
 
 result = result[0]
 print(result['tran'].keys())
 
 potential_drop1 = result['tran']['VN0'] - result['tran']['VN1']
 potential_drop2 = result['tran']['VN1'] - result['tran']['VN2']
-print(result['tran']['VN1'][-1])
 fig, ax = plt.subplots()
 ax.plot(result['tran']['T'], result['tran']['VN0'], label= r'$V_1$')
 ax.plot(result['tran']['T'], potential_drop1, label= r'$\Delta V_1$')
 ax.plot(result['tran']['T'], potential_drop2, label= r'$\Delta V_2$')
 ax.plot(result['tran']['T'], result['tran']['VN2'], label= r'$V_2$')
 ax.legend()
-plt.savefig("../plots/show/potential_drops_trained.pdf")
+plt.savefig("../plots/show/potential_drops.pdf")
+
+fig, ax = plt.subplots()
+plotting.plot_memristor_resistances(ax, G)
+ax.legend()
+plt.savefig("../plots/show/conductances.pdf")
+
+
+# G_trained = networks.voltage_divider(save_data=True) 
+# training.train(G_trained, training_type='allostery', training_steps=20, weight_type='length', delta_weight = 1e-3, learning_rate=3e-6)
+# nx.write_graphml(G_trained, '../plots/show/Gtrained.graphml')
+# G_trained = nx.read_graphml('../plots/show/Gtrained.graphml')
+
+
+# fig, ax = plt.subplots()
+# plotting.plot_memristor_resistances(ax, G_trained)
+# ax.legend()
+# plt.savefig("../plots/show/conductances_trained.pdf")
+
+# circuit2 = networks.circuit_from_graph(G_trained, type='memristors') 
+
+# fig, ax = plt.subplots()
+# plot_ginfty(ax, circuit)
+# plot_ginfty(ax, circuit2, double=True)
+# # plot_ginfty(ax, g_0=2*4.20155902)
+# ax.legend()
+# plt.savefig("../plots/show/g_infity_trained.pdf")
+
+# tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None)
+# result = ahkab.run(circuit2, an_list=tran_analysis) 
+# resistances_vec = result[1]
+# print(1/resistances_vec[-1][0],1/resistances_vec[-1][1] )
+
+# result = result[0]
+# print(result['tran'].keys())
+
+# potential_drop1 = result['tran']['VN0'] - result['tran']['VN1']
+# potential_drop2 = result['tran']['VN1'] - result['tran']['VN2']
+# print(result['tran']['VN1'][-1])
+# fig, ax = plt.subplots()
+# ax.plot(result['tran']['T'], result['tran']['VN0'], label= r'$V_1$')
+# ax.plot(result['tran']['T'], potential_drop1, label= r'$\Delta V_1$')
+# ax.plot(result['tran']['T'], potential_drop2, label= r'$\Delta V_2$')
+# ax.plot(result['tran']['T'], result['tran']['VN2'], label= r'$V_2$')
+# ax.legend()
+# plt.savefig("../plots/show/potential_drops_trained.pdf")
 
 
