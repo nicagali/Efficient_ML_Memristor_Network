@@ -10,26 +10,26 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00050001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
+G = networks.random_graph(save_data=True) 
 # G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
 
 # Using graphs:
 # regression_working: wokring nw for length not directed with 3V extra source
 # regression_working_rho: wokring nw for length directed with 6V extra source, working for rho training
 
-G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-print(G.edges())
+# G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+# print(G.edges())
 # G.add_edge('1','7')
 # networks.initialize_edges(G)
 # G = networks.to_directed_graph(G, shuffle=True)
-# G.graph['name'] = graph_id
-# nx.write_graphml(G, f'{DATA_PATH}G00010003.graphml')
+G.graph['name'] = graph_id
+nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
 # print(G.nodes['3']['voltage'])
 
@@ -43,24 +43,24 @@ fig.tight_layout()
 fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 400   # choose
+training_steps = 100   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 learning_rate_vec = [5e-7, 1e-6, 7e-4, 1e2, 1e3]
-constant_source = [11, 3, 3, 3]
+constant_source = [3, 3, 3, 3]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [0]:
+for weight_type_index in [0,1,2,3]:
     # print(f'{DATA_PATH}')
     
     # G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-    G = nx.read_graphml(f'{DATA_PATH}G00010002.graphml')
+    G = nx.read_graphml(f'{DATA_PATH}G00050001.graphml')
     # G = nx.read_graphml(f'{DATA_PATH}G00010001.graphml')
     # G = nx.read_graphml(f'{DATA_PATH}G00010003.graphml')
-    G.nodes['3']['voltage'] = constant_source[weight_type_index]
+    # G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
     training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 

@@ -132,19 +132,19 @@ def voltage_divider(save_data=False, voltage_desired = [4]):
 
 # RANDOM NETWORK
  
-def random_graph(number_nodes=10, number_edges=17, save_data=False, res_change=False):
+def random_graph(number_nodes=15, number_edges=40, save_data=False, res_change=False):
 
     # CREATE random graph with number_nodes conected by number_edges
     G = nx.dense_gnm_random_graph(number_nodes, number_edges)
 
     # DEFINE number sources and targets, then randomly select sources and targets nodes between number_nodes : sources containg source index and targets contains target indeces
-    number_sources = 2
-    number_targets = 3
+    number_sources = 3
+    number_targets = 1
     sources = random.sample(G.nodes(), number_sources)
     target_sampling_list = [x for x in G.nodes() if x not in sources]
     targets = random.sample(target_sampling_list, number_targets)
 
-    voltage_input = [0, 5, 2] # node initialized here because different for differnent nw
+    voltage_input = [0, 5, 3] # node initialized here because different for differnent nw
     voltage_desired = [1, 2, 3]
 
     # INITIALIZE nodes and edges
