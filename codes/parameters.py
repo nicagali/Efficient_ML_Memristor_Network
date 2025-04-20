@@ -43,6 +43,8 @@ weight_styles = {
 
 memr_resistances_style = dict(marker = 'o', markersize=3, lw=1)
 
+# REGRESSION TRAINING
+
 regression_styles = {
     'length': dict(marker = 'o', c = cmap.colors[0], lw=1, label = rf'$L$'),
     'length_des': dict(c = 'lightpink', lw=4, label = rf'$V^D$'),
@@ -58,5 +60,23 @@ regression_styles = {
 reg_desired = dict(c = 'lightblue', lw=3, label = rf'$V_1^D$')
 reg_output = dict(c = 'mediumblue', marker='o', label = rf'$V_1$')
 
+# CHECKING DYNAMICS VD
+
+potential_drops_style = {
+    'v1': dict(c = color_dots[0], lw=3,  label = rf'$V_1$'),
+    'v3': dict(c = color_dots[0], lw=3, label = rf'$V_3$'),
+    'deltav1': dict(c = 'plum', lw=5, label = rf'$\Delta V_1$'),
+    'deltav2': dict(c = 'darkorchid', lw=2, label = rf'$\Delta V_2$')}
+
+conductances_style = {
+    'M1': dict(c = 'darkcyan', lw=5, label=r'$M_1$'),
+    'M2': dict(c = 'lightblue', lw=2, label=r'$M_2$')
+    
+}
+
+g_infinity_style = {
+    'M1': dict(c = 'mediumaquamarine', lw=5, label=r'$g_{\infty}^{M_1}$'),
+    'M2': dict(c = 'dodgerblue', lw=2, label=r'$g_{\infty}^{M_2}$')
+}
 
 
