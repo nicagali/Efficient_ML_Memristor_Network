@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{energy_cost_ml1}
 Shih-Kai Chou, Jernej Hribar, Mihael Mohorčič, and Carolina Fortuna.
@@ -49,5 +49,30 @@ Willem~Q. Boon, Tim~E. Veenstra, Marjolein Dijkstra, and René van Roij.
 D.P. Bertsekas.
 \newblock {\em Nonlinear Programming}.
 \newblock Athena Scientific, 1999.
+
+\bibitem{voltage_controlled_oscillator}
+Jaewook Kim, Tae-Kwang Jang, Young-Gyu Yoon, and SeongHwan Cho.
+\newblock Analysis and design of voltage-controlled oscillator based
+  analog-to-digital converter.
+\newblock {\em IEEE Transactions on Circuits and Systems I: Regular Papers},
+  57(1):18--30, 2010.
+
+\bibitem{onchip_powerdistributed}
+Selçuk Kose and Eby~G. Friedman.
+\newblock Distributed on-chip power delivery.
+\newblock {\em IEEE Journal on Emerging and Selected Topics in Circuits and
+  Systems}, 2(4):704--713, 2012.
+
+\bibitem{big_neuralnet1}
+Ben Poole, Subhaneil Lahiri, Maithra Raghu, Jascha Sohl-Dickstein, and Surya
+  Ganguli.
+\newblock Exponential expressivity in deep neural networks through transient
+  chaos, 2016.
+
+\bibitem{big_neuralnet2}
+Devansh Arpit, Stanisław Jastrzębski, Nicolas Ballas, David Krueger, Emmanuel
+  Bengio, Maxinder~S. Kanwal, Tegan Maharaj, Asja Fischer, Aaron Courville,
+  Yoshua Bengio, and Simon Lacoste-Julien.
+\newblock A closer look at memorization in deep networks, 2017.
 
 \end{thebibliography}

@@ -63,10 +63,13 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces }}{4}{figure.4}\protected@file@percent }
 \newlabel{fig:training_scheme}{{4}{4}{}{figure.4}{}}
 \newlabel{fig:training_scheme@cref}{{[figure][4][]4}{[1][3][]4}}
+\newlabel{eq:cost_func}{{III}{4}{}{figure.4}{}}
+\newlabel{eq:cost_func@cref}{{[section][3][]III}{[1][4][]4}}
 \newlabel{eq:weight_update}{{4}{4}{}{equation.3.4}{}}
 \newlabel{eq:weight_update@cref}{{[equation][4][]4}{[1][4][]4}}
 \newlabel{eq:gradient_cost_func}{{5}{4}{}{equation.3.5}{}}
 \newlabel{eq:gradient_cost_func@cref}{{[equation][5][]5}{[1][4][]4}}
+\citation{voltage_controlled_oscillator,onchip_powerdistributed}
 \HyPL@Entry{4<</P(\376\377\0005)>>}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A}Training a Memristor Voltage Divider}{5}{section*.6}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces }}{5}{figure.5}\protected@file@percent }
@@ -75,13 +78,13 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces (a) Behaviour of the cost function during the training of the voltage divider. Different colors indicate that the training is done with a specific choise of training weights, as indiacted in the legend. (b) Pressures imposed on the three nodes of the voltage divider during training. The inset shows the relaxation to the steady state of the output voltage $V_2$ to the desired value $V_D$ when the pressures imposed are the values obtained in the last training step, and the input nodes are stimulated with fixed voltage. (c) Ion concentration desnities imposed on the three nodes of the voltage divider during training. (d) Length of the memristors during training. (e) Base radius of the memristors during training.}}{5}{figure.6}\protected@file@percent }
 \newlabel{fig:mse_weights_vd}{{6}{5}{(a) Behaviour of the cost function during the training of the voltage divider. Different colors indicate that the training is done with a specific choise of training weights, as indiacted in the legend. (b) Pressures imposed on the three nodes of the voltage divider during training. The inset shows the relaxation to the steady state of the output voltage $V_2$ to the desired value $V_D$ when the pressures imposed are the values obtained in the last training step, and the input nodes are stimulated with fixed voltage. (c) Ion concentration desnities imposed on the three nodes of the voltage divider during training. (d) Length of the memristors during training. (e) Base radius of the memristors during training}{figure.6}{}}
 \newlabel{fig:mse_weights_vd@cref}{{[figure][6][]6}{[1][5][]5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B}Training a memristor network}{5}{section*.7}\protected@file@percent }
 \HyPL@Entry{5<</P(\376\377\0006)>>}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces (a) The trainiang of a memristor voltage divider to a set of desired voltage outputs $V_D = {1V, 3V, 4V}$, indicated by dashed light purple lines. The output voltage $V_2$, indicated by dark purple dots, adapts to the desired output during the training. The input voltages $V_1$ and $V_3$ are constant at $5V$ and $0V$ respectively. (b) The dots with different shades of gray show the values of pressures, chosen as weights, imposed on the three nodes during training.}}{6}{figure.7}\protected@file@percent }
 \newlabel{fig:evolution_targets}{{7}{6}{(a) The trainiang of a memristor voltage divider to a set of desired voltage outputs $V_D = {1V, 3V, 4V}$, indicated by dashed light purple lines. The output voltage $V_2$, indicated by dark purple dots, adapts to the desired output during the training. The input voltages $V_1$ and $V_3$ are constant at $5V$ and $0V$ respectively. (b) The dots with different shades of gray show the values of pressures, chosen as weights, imposed on the three nodes during training}{figure.7}{}}
 \newlabel{fig:evolution_targets@cref}{{[figure][7][]7}{[1][5][]6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces (a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choise.}}{6}{figure.8}\protected@file@percent }
-\newlabel{fig:mse_general}{{8}{6}{(a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choise}{figure.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B}Training a memristor network}{6}{section*.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces (a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choice.}}{6}{figure.8}\protected@file@percent }
+\newlabel{fig:mse_general}{{8}{6}{(a) Generic network with $9$ nodes and $15$ edges with inputs $[V_{2}, V_{4}, V_{9}] = [0V, 2V, 5V]$ and desired outputs $[V_{5}^D, V_{7}^D] = [3V, 4V]$, delta weights a third of their intial value and learning rates $[0.001, 1, 0.0001, 0.001]$. (b) Cost funtion during training of generic graph for input-output mapping task. The different colors indicate different weight choice}{figure.8}{}}
 \newlabel{fig:mse_general@cref}{{[figure][8][]8}{[1][6][]6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {C}Linear Regression}{6}{section*.8}\protected@file@percent }
 \newlabel{eq:linear_relationship}{{6}{6}{}{equation.3.6}{}}
@@ -89,14 +92,35 @@
 \HyPL@Entry{6<</P(\376\377\0007)>>}
 \@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces }}{7}{figure.9}\protected@file@percent }
 \newlabel{fig:lin_regr1}{{9}{7}{}{figure.9}{}}
-\newlabel{fig:lin_regr1@cref}{{[figure][9][]9}{[1][6][]7}}
+\newlabel{fig:lin_regr1@cref}{{[figure][9][]9}{[1][7][]7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces }}{7}{figure.10}\protected@file@percent }
 \newlabel{fig:lin_regr2}{{10}{7}{}{figure.10}{}}
 \newlabel{fig:lin_regr2@cref}{{[figure][10][]10}{[1][7][]7}}
-\bibdata{paperNotes,biblio}
+\citation{big_neuralnet1,big_neuralnet2}
 \HyPL@Entry{7<</P(\376\377\0008)>>}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Conclusion}{8}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Conclusions}{8}{section*.9}\protected@file@percent }
+\bibdata{paperNotes,biblio}
+\HyPL@Entry{8<</P(\376\377\0009)>>}
 \@writefile{toc}{\appendix }
+\newlabel{app:dyn_evol_steady_state}{{A}{9}{}{section*.10}{}}
+\newlabel{app:dyn_evol_steady_state@cref}{{[appendix][1][2147483647]A}{[1][9][]9}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Dynamical evolution to the steady state }{9}{section*.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces }}{9}{figure.11}\protected@file@percent }
+\newlabel{fig:app_vd}{{11}{9}{}{figure.11}{}}
+\newlabel{fig:app_vd@cref}{{[figure][11][2147483647]11}{[1][9][]9}}
+\newlabel{eq:conduct}{{A1}{9}{}{equation.A.1}{}}
+\newlabel{eq:conduct@cref}{{[equation][1][2147483647,1]A1}{[1][9][]9}}
+\newlabel{eq:potentials}{{A2}{9}{}{equation.A.2}{}}
+\newlabel{eq:potentials@cref}{{[equation][2][2147483647,1]A2}{[1][9][]9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Relaxation toward the steady state when $g_{1,\infty }(V)=g_{2,\infty }(V)$.}}{9}{figure.12}\protected@file@percent }
+\newlabel{fig:memristor_network}{{12}{9}{Relaxation toward the steady state when $g_{1,\infty }(V)=g_{2,\infty }(V)$}{figure.12}{}}
+\newlabel{fig:memristor_network@cref}{{[figure][12][2147483647]12}{[1][9][]9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Relaxation toward the steady state when the system has been trained to give $V_2 = 4V$. The training sets the two different functional forms of $g_{\infty }$ seen in the right figure.}}{9}{figure.13}\protected@file@percent }
+\newlabel{fig:memristor_network}{{13}{9}{Relaxation toward the steady state when the system has been trained to give $V_2 = 4V$. The training sets the two different functional forms of $g_{\infty }$ seen in the right figure}{figure.13}{}}
+\newlabel{fig:memristor_network@cref}{{[figure][13][2147483647]13}{[1][9][]9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces We consider the trained system in Figure 3, but we define the funtion $g_{1, \infty }$ such that it passes througth the steady state point (triangle in Figure 3), now indicated with a red cross, but with a different functional form. Due to the different functinal form, the system reaches a steady state that doesn't coincide with the desired in Figure 3.}}{9}{figure.14}\protected@file@percent }
+\newlabel{fig:memristor_network}{{14}{9}{We consider the trained system in Figure 3, but we define the funtion $g_{1, \infty }$ such that it passes througth the steady state point (triangle in Figure 3), now indicated with a red cross, but with a different functional form. Due to the different functinal form, the system reaches a steady state that doesn't coincide with the desired in Figure 3}{figure.14}{}}
+\newlabel{fig:memristor_network@cref}{{[figure][14][2147483647]14}{[1][9][]9}}
 \bibcite{energy_cost_ml1}{{1}{}{{}}{{}}}
 \bibcite{energy_cost_ml2}{{2}{}{{}}{{}}}
 \bibcite{trainingphysicalneuralnetworks}{{3}{}{{}}{{}}}
@@ -105,11 +129,15 @@
 \bibcite{Rene_IonicNeuromorphic}{{6}{}{{}}{{}}}
 \bibcite{Rene_PressureSensitive}{{7}{}{{}}{{}}}
 \bibcite{steepest_descent_book}{{8}{}{{}}{{}}}
+\bibcite{voltage_controlled_oscillator}{{9}{}{{}}{{}}}
+\bibcite{onchip_powerdistributed}{{10}{}{{}}{{}}}
+\bibcite{big_neuralnet1}{{11}{}{{}}{{}}}
+\bibcite{big_neuralnet2}{{12}{}{{}}{{}}}
 \bibstyle{unsrt}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\HyPL@Entry{8<</P(\376\377\0009)>>}
-\@writefile{toc}{\contentsline {section}{\numberline {}References}{9}{section*.10}\protected@file@percent }
-\newlabel{LastBibItem}{{8}{9}{}{section*.10}{}}
-\newlabel{LastBibItem@cref}{{[section][4][]IV}{[1][9][]9}}
-\newlabel{LastPage}{{}{9}{}{}{}}
-\gdef \@abspage@last{9}
+\HyPL@Entry{9<</P(\376\377\0001\0000)>>}
+\@writefile{toc}{\contentsline {section}{\numberline {}References}{10}{section*.11}\protected@file@percent }
+\newlabel{LastBibItem}{{12}{10}{}{section*.11}{}}
+\newlabel{LastBibItem@cref}{{[appendix][1][2147483647]A}{[1][10][]10}}
+\newlabel{LastPage}{{}{10}{}{}{}}
+\gdef \@abspage@last{10}

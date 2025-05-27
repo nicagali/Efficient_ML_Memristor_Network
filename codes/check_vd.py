@@ -145,8 +145,6 @@ def plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, ph
     
     # Plot potential  
     plot_potentialdiff(ax_bottom, potentials_vec)
-    fig.tight_layout()
-    plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/potential_drops_{phase}.pdf")
     
     # Plot g_infty as func of potential
     plot_ginfty(ax_left, circuit, 'M1', potential_vec=True, steady_state_point=steady_state_point, change_func=change_func)
@@ -170,8 +168,6 @@ def plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, ph
     
     fig.tight_layout()
     plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/grid_{phase}.pdf")
-   
-   
    
    
 # -> DEFINE graph from networks module
@@ -199,6 +195,7 @@ tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-3, x0=None, use_st
 result = ahkab.run(circuit_trained, an_list=tran_analysis) 
 potentials_vec = result[0]
 resistances_vec = result[1]
+resistances_vec_trained = resistances_vec
 
 plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trained')
 
@@ -217,3 +214,37 @@ plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trai
 
 plot_analysis_relaxation_ingrid(circuit_trained, potentials_vec, resistances_vec, 'trained_change_func')
 
+# ANALYSIS WHEN TRAINED ginfinity INITIAL CONDITION FOR LENGTH 
+
+G_updated_initial_cond = G.copy(as_view=False)
+for edge_index, edge in enumerate(G_updated_initial_cond.edges()):
+    G_updated_initial_cond.edges[edge]["resistance"] = resistances_vec_trained[-1][edge_index]
+    print(resistances_vec[-1][edge_index])
+
+circuit_updated_initial_cond = networks.circuit_from_graph(G_updated_initial_cond, type='memristors') 
+
+tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-4, x0=None, change_func = True, use_step_control=False)
+result = ahkab.run(circuit_updated_initial_cond, an_list=tran_analysis) 
+potentials_vec = result[0]
+resistances_vec = result[1]
+
+plot_analysis_relaxation(circuit_updated_initial_cond, potentials_vec, resistances_vec, 'updated_initial_cond_func')
+
+# PLOTTING ginfinity(delta P) for prositive and negative potential 
+
+# pressure_vec = np.linspace(-1, 1)
+# mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id='M1')
+# g_infinity_positive = []
+# g_infinity_negative = []
+# for pressure in pressure_vec:
+#     g_infinity_value = ahkab.transient.g_infinity_func(0.4, pressure, 0, mysistor)*mysistor.g_0
+#     g_infinity_positive.append(g_infinity_value)
+#     g_infinity_value = ahkab.transient.g_infinity_func(-0.4, pressure, 0, mysistor)*mysistor.g_0
+#     g_infinity_positive.append(g_infinity_value)
+
+# fig, ax = plt.subplots()
+# ax.plot(pressure_vec, g_infinity)
+
+# fig.tight_layout()
+# plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/gininifty_pressure.pdf")
+    

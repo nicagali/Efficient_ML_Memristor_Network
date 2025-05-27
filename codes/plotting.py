@@ -232,8 +232,8 @@ def plot_regression(ax, graph_id, weight_type, step):
     
     ax.scatter(x, y1, **style)
     
-    ax.set_ylabel(r'$V_{out}$', fontsize = par.axis_fontsize)
-    ax.set_xlabel(r'$V_{in}$', fontsize = par.axis_fontsize)
+    ax.set_ylabel(r'$V_{out}$', fontsize = (par.axis_fontsize-7))
+    ax.set_xlabel(r'$V_{in}$', fontsize = (par.axis_fontsize-7))
     
     ax.grid(ls=":")
     ax.tick_params(axis='both', labelsize=par.size_ticks)
