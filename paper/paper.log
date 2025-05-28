@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  26 MAY 2025 18:15
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 MAY 2025 14:10
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -690,58 +690,94 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 LaTeX Info: Redefining \frak on input line 111.
 LaTeX Info: Redefining \Bbb on input line 113.
+)) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count348
+\lst@gtempboxa=\box95
+\lst@token=\toks43
+\lst@length=\count349
+\lst@currlwidth=\dimen305
+\lst@column=\count350
+\lst@pos=\count351
+\lst@lostspace=\dimen306
+\lst@width=\dimen307
+\lst@newlines=\count352
+\lst@lineno=\count353
+\lst@maxwidth=\dimen308
+ (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count354
+\lst@skipnumbers=\count355
+\lst@framebox=\box96
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
-Class revtex4-2 Info: Unrecognized array package. Please update this document class! (Proceeding with fingers crossed.) on input line 44.
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+ (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks44
+\c@algorithm=\count356
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+ (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count357
+\c@ALG@rem=\count358
+\c@ALG@nested=\count359
+\ALG@tlm=\skip68
+\ALG@thistlm=\skip69
+\c@ALG@Lnr=\count360
+\c@ALG@blocknr=\count361
+\c@ALG@storecount=\count362
+\c@ALG@tmpcounter=\count363
+\ALG@tmplength=\skip70
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+)
+Class revtex4-2 Info: Unrecognized array package. Please update this document class! (Proceeding with fingers crossed.) on input line 60.
 
 
 Class revtex4-2 Warning: Repair the float package.
 
-Class revtex4-2 Info: cite was not loaded (OK!) on input line 44.
-Class revtex4-2 Info: mcite was not loaded (OK!) on input line 44.
-Class revtex4-2 Info: multicol was not loaded (OK!) on input line 44.
+Class revtex4-2 Info: cite was not loaded (OK!) on input line 60.
+Class revtex4-2 Info: mcite was not loaded (OK!) on input line 60.
+Class revtex4-2 Info: multicol was not loaded (OK!) on input line 60.
 (./paper.aux)
-Runaway argument?
-{\contentsline {section}{\numberline {A}Dynamical evolution to the st\ETC.
-/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:44: File ended while scanning use of \@writefile.
-<inserted text> 
-                \par 
-l.44 \begin{document}
-                     
-I suspect you have forgotten a `}', causing me
-to read past where you wanted me to stop.
-I'll try to recover; but if the error is serious,
-you'd better type `E' or `X' now and fix your file.
-
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 44.
-(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 60.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
+LaTeX Font Info:    ... okay on input line 60.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 44.
+Package hyperref Info: Link coloring OFF on input line 60.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -749,147 +785,286 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count348
+\c@section@level=\count364
 )
-LaTeX Info: Redefining \ref on input line 44.
-LaTeX Info: Redefining \pageref on input line 44.
-LaTeX Info: Redefining \nameref on input line 44.
- (./paper.out) (./paper.out)
+LaTeX Info: Redefining \ref on input line 60.
+LaTeX Info: Redefining \pageref on input line 60.
+LaTeX Info: Redefining \nameref on input line 60.
 \@outlinefile=\write5
 \openout5 = `paper.out'.
 
-Class revtex4-2 Info: Taking \maketitle back from hyperref on input line 44.
-Class revtex4-2 Info: Overriding lineo.sty, restoring output routine, on input line 44.
-Class revtex4-2 Info: Line numbering not turned on yet on input line 44.
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+\c@lstlisting=\count365
+Class revtex4-2 Info: Taking \maketitle back from hyperref on input line 60.
+Class revtex4-2 Info: Overriding lineo.sty, restoring output routine, on input line 60.
+Class revtex4-2 Info: Line numbering not turned on yet on input line 60.
 \openout3 = `paperNotes.bib'.
 
-Class revtex4-2 Info: Overriding \@LN@LLerror on input line 44.
-LaTeX Font Info:    Trying to load font information for U+esvect on input line 56.
- (/usr/share/texlive/texmf-dist/tex/latex/esvect/uesvect.fd
+Class revtex4-2 Info: Overriding \@LN@LLerror on input line 60.
+LaTeX Font Info:    Trying to load font information for U+esvect on input line 72.
+(/usr/share/texlive/texmf-dist/tex/latex/esvect/uesvect.fd
 File: uesvect.fd 
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 56.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 72.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package natbib Warning: Citation `energy_cost_ml1' on page 1 undefined on input line 69.
+Package natbib Warning: Citation `energy_cost_ml1' on page 1 undefined on input line 85.
 
 
-Package natbib Warning: Citation `energy_cost_ml2' on page 1 undefined on input line 69.
+Package natbib Warning: Citation `energy_cost_ml2' on page 1 undefined on input line 85.
 
 
-Package natbib Warning: Citation `trainingphysicalneuralnetworks' on page 1 undefined on input line 69.
+Package natbib Warning: Citation `trainingphysicalneuralnetworks' on page 1 undefined on input line 85.
 
 
-Package natbib Warning: Citation `optics1' on page 1 undefined on input line 71.
+Package natbib Warning: Citation `optics1' on page 1 undefined on input line 87.
 
 
-Package natbib Warning: Citation `electronics1' on page 1 undefined on input line 71.
+Package natbib Warning: Citation `electronics1' on page 1 undefined on input line 87.
 
 
-Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 1 undefined on input line 73.
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 1 undefined on input line 89.
 
 [1]
+
+LaTeX Warning: Reference `fig:memristor_scheme' on page 1 undefined on input line 101.
+
 File: plots/memristor/memristor_scheme.pdf Graphic file (type pdf)
 <use plots/memristor/memristor_scheme.pdf>
 
-
-Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 100.
-
-
-Package natbib Warning: Citation `Rene_PressureSensitive' on page 2 undefined on input line 118.
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 116.
 
 
-Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 132.
+Package natbib Warning: Citation `Rene_PressureSensitive' on page 2 undefined on input line 134.
 
 
-Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 138.
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 148.
+
+
+Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 2 undefined on input line 154.
 
 [2]
+
+LaTeX Warning: Reference `fig:memristor_network' on page 1 undefined on input line 156.
+
 File: plots/memristor/memristor_network.pdf Graphic file (type pdf)
 <use plots/memristor/memristor_network.pdf>
+
+LaTeX Warning: Reference `eq:eqofmotconductance' on page 1 undefined on input line 168.
+
+
+LaTeX Warning: Reference `app:dyn_evol_steady_state' on page 1 undefined on input line 173.
+
 File: plots/training/two_types_weights.pdf Graphic file (type pdf)
 <use plots/training/two_types_weights.pdf>
+
+LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 184.
+
+
+LaTeX Warning: Reference `fig:two_types_weights' on page 1 undefined on input line 184.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `app:dyn_evol_steady_state' on page 1 undefined on input line 186.
+
+[3]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 187.
+
+
+LaTeX Warning: Reference `fig:training_scheme' on page 1 undefined on input line 188.
+
 File: plots/training/training_scheme.pdf Graphic file (type pdf)
 <use plots/training/training_scheme.pdf>
- [3]
 
-Package natbib Warning: Citation `steepest_descent_book' on page 4 undefined on input line 188.
+Package natbib Warning: Citation `steepest_descent_book' on page 4 undefined on input line 207.
 
-[4]
+
+LaTeX Warning: Reference `sec:memristor_network' on page 1 undefined on input line 214.
+
+
+LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 214.
+
+
+LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 214.
+
+
+LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 214.
+
+
+LaTeX Warning: Reference `eq:weight_update' on page 1 undefined on input line 216.
+
+
+LaTeX Warning: Reference `fig:vd_scheme' on page 1 undefined on input line 220.
+
 File: plots/voltage_divider/vd_scheme.pdf Graphic file (type pdf)
 <use plots/voltage_divider/vd_scheme.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 228.
+
+
+LaTeX Warning: Reference `fig:mse_weights_vd' on page 1 undefined on input line 229.
+
+[4]
 File: plots/voltage_divider/mse_weights_vd.pdf Graphic file (type pdf)
 <use plots/voltage_divider/mse_weights_vd.pdf>
-File: plots/voltage_divider/evolution_targets.pdf Graphic file (type pdf)
-<use plots/voltage_divider/evolution_targets.pdf>
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Package natbib Warning: Citation `voltage_controlled_oscillator' on page 5 undefined on input line 228.
+LaTeX Warning: Reference `fig:evolution_targets' on page 1 undefined on input line 237.
 
 
-Package natbib Warning: Citation `onchip_powerdistributed' on page 5 undefined on input line 228.
+LaTeX Warning: Reference `fig:evolution_targets' on page 1 undefined on input line 237.
 
-[5]
+File: plots/voltage_divider/evolution_targets.pdf Graphic file (type pdf)
+<use plots/voltage_divider/evolution_targets.pdf>
 
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 229.
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `fig:mse_general' on page 1 undefined on input line 247.
+
+
+Package natbib Warning: Citation `voltage_controlled_oscillator' on page 5 undefined on input line 247.
+
+
+Package natbib Warning: Citation `onchip_powerdistributed' on page 5 undefined on input line 247.
 
 File: plots/general_network/mse_general.pdf Graphic file (type pdf)
 <use plots/general_network/mse_general.pdf>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 232--233
+Overfull \hbox (9.0pt too wide) in paragraph at lines 251--252
  [][] 
  []
 
 
-Underfull \hbox (badness 6396) in paragraph at lines 245--248
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `fig:mse_general' on page 1 undefined on input line 255.
+
+[5]
+
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 261.
+
+
+LaTeX Warning: Reference `eq:linear_relationship' on page 1 undefined on input line 265.
+
+
+LaTeX Warning: Reference `eq:linear_relationship' on page 1 undefined on input line 266.
+
+
+Underfull \hbox (badness 6396) in paragraph at lines 264--267
 \TU/lmr/m/n/10 We generate two sets of data, a training set
  []
 
+
+LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 268.
+
+
+LaTeX Warning: Reference `eq:gradient_cost_func' on page 1 undefined on input line 270.
+
+
+LaTeX Warning: Reference `eq:cost_func' on page 1 undefined on input line 274.
+
 [6]
+
+LaTeX Warning: Reference `fig:lin_regr1' on page 1 undefined on input line 282.
+
+
+LaTeX Warning: Reference `fig:lin_regr2' on page 1 undefined on input line 284.
+
+
+LaTeX Warning: Reference `fig:lin_regr1' on page 1 undefined on input line 284.
+
 File: plots/regression/G00010001.pdf Graphic file (type pdf)
 <use plots/regression/G00010001.pdf>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 271--272
+Overfull \hbox (9.0pt too wide) in paragraph at lines 290--291
  [][] 
  []
 
 File: plots/regression/G00010002.pdf Graphic file (type pdf)
 <use plots/regression/G00010002.pdf>
 
-Overfull \hbox (9.0pt too wide) in paragraph at lines 277--278
+Overfull \hbox (9.0pt too wide) in paragraph at lines 296--297
  [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+LaTeX Warning: Reference `fig:lin_regr2' on page 1 undefined on input line 301.
+
+
+LaTeX Warning: Reference `fig:lin_regr2' on page 1 undefined on input line 303.
+
+
+LaTeX Warning: Reference `fig:lin_regr2' on page 1 undefined on input line 306.
+
 [7]
 
-Package natbib Warning: Citation `big_neuralnet1' on page 8 undefined on input line 311.
+Package natbib Warning: Citation `big_neuralnet1' on page 8 undefined on input line 330.
 
 
-Package natbib Warning: Citation `big_neuralnet2' on page 8 undefined on input line 311.
+Package natbib Warning: Citation `big_neuralnet2' on page 8 undefined on input line 330.
 
 [8]
 
-LaTeX Warning: Reference `fig:app_vd' on page 1 undefined on input line 326.
+LaTeX Warning: Reference `fig:app_vd' on page 1 undefined on input line 341.
 
 File: plots/appendixA/app_vd.pdf Graphic file (type pdf)
 <use plots/appendixA/app_vd.pdf>
 
-LaTeX Warning: Reference `eq:potentials' on page 1 undefined on input line 350.
+LaTeX Warning: Reference `fig:app_vd' on page 1 undefined on input line 356.
 
 
-LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 351.
+LaTeX Warning: Reference `eq:potentials' on page 1 undefined on input line 367.
+
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 368.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 373.
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Missing \endcsname inserted.
+<to be read again> 
+                   \c@float@type 
+l.387 \end{algorithm}
+                     
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Missing number, treated as zero.
+<to be read again> 
+                   \endcsname 
+l.387 \end{algorithm}
+                     
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Extra \endcsname.
+<recently read> \endcsname 
+                           
+l.387 \end{algorithm}
+                     
+I'm ignoring this, since I wasn't doing a \csname.
 
 File: plots/appendixA/grid_initial_condition.pdf Graphic file (type pdf)
 <use plots/appendixA/grid_initial_condition.pdf>
@@ -908,7 +1083,14 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 (./paper.bbl [9]
 
-LaTeX Warning: Reference `LastBibItem' on page 10 undefined on input line 1.
+LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 1.
+
+
+Class revtex4-2 Warning: Deferred float stuck during \clearpage processing.
+
+[10]
+
+LaTeX Warning: Reference `LastBibItem' on page 11 undefined on input line 1.
 
 
 Underfull \hbox (badness 1199) in paragraph at lines 54--59
@@ -919,7 +1101,7 @@ Underfull \hbox (badness 1199) in paragraph at lines 54--59
 
 Package natbib Warning: There were undefined citations.
 
-[10] (./paper.aux
+[11] (./paper.aux
 
 Package natbib Warning: Citation(s) may have changed.
 (natbib)                Rerun to get citations correct.
@@ -937,556 +1119,16 @@ Package rerunfilecheck Warning: File `paper.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `paper.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             Before: <no file>
 (rerunfilecheck)             After:  53966D747C2217C3BB2273C5F4BDA4B7;2016.
  ) 
 Here is how much of TeX's memory you used:
- 28178 strings out of 476191
- 531076 string characters out of 5812071
- 931101 words of memory out of 5000000
- 48410 multiletter control sequences out of 15000+600000
- 479544 words of font info for 81 fonts, out of 8000000 for 9000
+ 29998 strings out of 476191
+ 559395 string characters out of 5812071
+ 960556 words of memory out of 5000000
+ 50206 multiletter control sequences out of 15000+600000
+ 479552 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,94p,1302b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,94p,1302b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (10 pages, 402448 bytes).
-                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                           ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                              ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                 ^^@^^@^^@^^@^^@^^@^^@^^@^^@...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-A funny symbol that I can't read has just been input.
-Continue, and I'll forget that it ever happened.
-
-./paper.aux:1: Text line contains an invalid character.
-l.1 ...@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@^^@
-                                                  ^^@^^@^^@^^@^^@^^@^^@^^@^^...
-(That makes 100 errors; please try again.) 
-Here is how much of TeX's memory you used:
- 28179 strings out of 476191
- 531030 string characters out of 5812071
- 933500 words of memory out of 5000000
- 48413 multiletter control sequences out of 15000+600000
- 479536 words of font info for 80 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 99i,12n,94p,12419b,436s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-Output written on paper.xdv (10 pages, 404504 bytes).
+Output written on paper.xdv (11 pages, 413168 bytes).

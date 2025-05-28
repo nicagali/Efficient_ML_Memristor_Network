@@ -625,7 +625,7 @@ def test_regression(G, step, weight_type):
         for index, edge in enumerate(G.edges):
             G.edges[edge][f'{weight_type}'] = weight_vec[index]
             
-    reg_file = open(f"{par.DATA_PATH}regression{G.graph['name']}/relations_regression/relations_regression{step}.txt", "w") 
+    reg_file = open(f"{par.DATA_PATH}regression{G.graph['name']}/relations_regression/relations_regression{weight_type}{step}.txt", "w") 
 
     counter_inputs = 0
     for node in G.nodes():

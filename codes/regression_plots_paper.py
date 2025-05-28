@@ -12,8 +12,13 @@ import matplotlib.gridspec as gridspec
 graph_id = 'G00010002'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-training_steps = 400
+training_steps = 391
 training_type = 'regression'
+if graph_id == 'G00010002':
+    weight_type_regression = 'rho'
+else:
+    weight_type_regression = 'length'
+
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
@@ -32,15 +37,15 @@ ax2.legend(fontsize = par.legend_size)
 
 bottom = gridspec.GridSpecFromSubplotSpec(1, 3, subplot_spec=outer[1])
 ax3 = fig.add_subplot(bottom[0, 0])
-plotting.plot_regression(ax3, graph_id, 'length', step=0)
+plotting.plot_regression(ax3, graph_id, weight_type_regression, step=0)
 ax3.legend(fontsize = par.legend_size)
 
 ax4 = fig.add_subplot(bottom[0, 1])
-plotting.plot_regression(ax4, graph_id, 'length', int(50))
+plotting.plot_regression(ax4, graph_id, weight_type_regression, int(training_steps/2))
 ax4.legend(fontsize = par.legend_size)
 
 ax5 = fig.add_subplot(bottom[0, 2])
-plotting.plot_regression(ax5, graph_id, 'length', step=400)
+plotting.plot_regression(ax5, graph_id, weight_type_regression, step=training_steps)
 ax5.legend(fontsize = par.legend_size)
 
 
@@ -61,17 +66,18 @@ ax2.legend(fontsize=par.legend_size)
 
 # Add inset axes inside ax2
 inset_ax1 = ax2.inset_axes([0.07, 0.5, 0.2, 0.2])  # [x0, y0, width, height]
-plotting.plot_regression(inset_ax1, graph_id, 'length', step=0)
+plotting.plot_regression(inset_ax1, graph_id, weight_type_regression, step=0)
 # inset_ax1.set_title("Step 0", fontsize=(par.size_ticks-7))
 inset_ax1.tick_params(axis='both', labelsize=(par.size_ticks-7))
 
 inset_ax2 = ax2.inset_axes([0.55, 0.6, 0.2, 0.2])
-plotting.plot_regression(inset_ax2, graph_id, 'length', step=50)
+plotting.plot_regression(inset_ax2, graph_id, weight_type_regression, step=int(training_steps/2))
+print(int(training_steps/2))
 # inset_ax2.set_title("Step 50", fontsize=(par.size_ticks-7))
 inset_ax2.tick_params(axis='both', labelsize=(par.size_ticks-7))
 
 inset_ax3 = ax2.inset_axes([0.7, 0.1, 0.2, 0.2])
-plotting.plot_regression(inset_ax3, graph_id, 'length', step=400)
+plotting.plot_regression(inset_ax3, graph_id, weight_type_regression, step=training_steps)
 # inset_ax3.set_title("Step 400", fontsize=(par.size_ticks-7))
 inset_ax3.tick_params(axis='both', labelsize=(par.size_ticks-7))
 

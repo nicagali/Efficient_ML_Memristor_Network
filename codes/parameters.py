@@ -48,8 +48,8 @@ memr_resistances_style = dict(marker = 'o', markersize=3, lw=1)
 regression_styles = {
     'length': dict(marker = 'o', s=5, c = cmap.colors[0], lw=0.6, label = rf'$L$'),
     'length_des': dict(c = 'lightpink', lw=2, label = rf'$V^D$'),
-    'rho': dict(marker = 'o', c = cmap.colors[1], lw=1, label = rf'$\rho$'),
-    'rho_des': dict(c = 'moccasin', lw=4, label = rf'$V^D$'),
+    'rho': dict(marker = 'o', s=5, c = cmap.colors[1], lw=1, label = rf'$\rho$'),
+    'rho_des': dict(c = 'moccasin', lw=2, label = rf'$V^D$'),
     'radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$'),
     'radius_base_des': dict(c = 'yellow', lw=4, label = rf'$V^D$'),
     'pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$'),

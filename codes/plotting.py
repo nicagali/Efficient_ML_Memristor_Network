@@ -215,11 +215,9 @@ def plot_final_potential_vd(ax, target_values):
 
 def plot_regression(ax, graph_id, weight_type, step):
     
-    data = np.loadtxt(f"{par.DATA_PATH}regression{graph_id}/relations_regression/relations_regression{step}.txt", unpack=True)
-    
+    data = np.loadtxt(f"{par.DATA_PATH}regression{graph_id}/relations_regression/relations_regression{weight_type}{step}.txt", unpack=True)
     x = data[0]
     y1 = data[1]
-    print(y1)
     
     x_interval = np.linspace(np.min(x),np.max(x))
     y1_desired = training.regression_function(x_interval)

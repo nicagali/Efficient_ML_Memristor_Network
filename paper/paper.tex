@@ -19,6 +19,22 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\usepackage{listings}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    columns=fullflexible,
+    frame=single,
+    breaklines=true,
+    captionpos=b,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    escapeinside={(*@}{@*)}
+}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 %------------- COMMANDS -------------
 
@@ -158,22 +174,25 @@ In this work, we only apply constant voltage supplies to the input nodes of the 
 
 \section{\label{sec:training}Training Algorithm for a Memristor Network}
 
-As in a traditional algorithm for an ANN, the core mechanism of the training is to modify the weights associated to the connections of the network such that it maps specific inputs to desired outputs. In the case of the electrical network at hand, the training algorithm is designed to output desired voltage values in the output nodes, applying specific voltage values in the input nodes.
+We developed a training algorithm that makes use of the physical dependencies of memristor conductivity on both external stimuli and geometric properties to implement a physical neural network. These dependencies allow us to interpret such physical parameters as tunable weights, analogous to standard artificial neural networks, and to encode learning directly into the physical structure of the system. As in traditional ANNs, the goal of the training algorithm is to modify these weights so that the network maps a given set of inputs to a corresponding set of desired outputs. In the case of the memristor network considered here, training aims to produce specific voltage values at designated output nodes, given fixed voltage inputs at the input nodes.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.8\columnwidth]{plots/training/two_types_weights.pdf}
     \caption{(a) Memristor network with weights defined in the nodes. (b) Memristor network where wegiths characterize each edge.}
     \label{fig:two_types_weights}
 \end{figure} 
+Crucially, the physical quantities that influence memristor conductance fall into two distinct categories: external stimuli, such as pressure or concentration, that are applied to the nodes, and geometric parameters, such as channel length or base radius, that are defined on the edges. As a result, we distinguish between two types of training strategies: \emph{node-defined weight training}, as illustrated in \cref{fig:two_types_weights}(a), and \emph{edge-defined weight training}, as shown in \cref{fig:two_types_weights}(b).
+
+A modification to any of these weights affects the network's behavior by altering the functional form of the memristor’s steady-state conductance, $g_{\infty}(\boldsymbol{\Delta})$, which depends on the local potential, pressure, and concentration drops across the device. Importantly, the \emph{entire functional shape} of $g_{\infty}$ plays a role in determining the network’s dynamics and ultimate steady state, as illustrated in \cref{app:dyn_evol_steady_state}.
+
+In this work, we focus on training a single property as the weight, while keeping all other parameters fixed as initially defined. For example, we may select an external stimulus, such as the imposed pressure or the density at each node. Alternatively, we can choose the length or base radius of the channel. The training process is carried out by iterating a scheme, illustrated in \cref{fig:training_scheme}, which consists of two phases: a forward pass and a backward pass.
 \begin{figure*}[t] 
     \centering
     \includegraphics[width=\textwidth]{plots/training/training_scheme.pdf}
-    \caption{}
+    \caption{Scheme representing the two phases of the training algorithm, they are iteraitvely performed for a selected number of training steps.}
     \label{fig:training_scheme}
 \end{figure*}
-Recalling that the dynamics of the memristors we consider depends on both external stimuli and geometrical properties, we have several possibilities for defining the weights of the network. However, there is a fundamental distinction between these two categories: external stimuli are applied to the nodes, while geometrical properties are defined edge-wise. Consequently, we distinguish between a training algorithm where the weights are defined on the nodes, as in \cref{fig:two_types_weights}(a), and one where the weights are defined on the edges, see \cref{fig:two_types_weights}(b). In this work, we focus on training a single property as the weight, while keeping all other parameters fixed as initially defined. For example, we may select an external stimulus, such as the imposed pressure or the density at each node. Alternatively, we can choose the length or base radius of the channel. The training process is carried out by iterating a scheme, illustrated in \cref{fig:training_scheme}, which consists of two phases: a forward pass and a backward pass.
-
-In the feedforward phase, the network is fed with specific electric potentials in the input nodes. Following both circuit laws and memristor's dynamics, the network reaches a steady state where electrical potentials can be measured in the output nodes. Clearly, the output of the network depends on the set of weights imposed on the network $\boldsymbol{w}$, regardless them being node or edge defined. The value of the outputs can be used to quantify the status of the network, meaning how much its answer differs from the desired one. Specifically, we define a cost function that computes the difference squared between the voltage in the output nodes and the values of desired voltages
+In the forward phase, the network is fed with specific electric potentials in the input nodes. Following both circuit laws and memristor's dynamics, the network reaches a steady state where electrical potentials can be measured in the output nodes. Clearly, the output of the network depends on the set of weights imposed on the network $\boldsymbol{w}$, regardless them being node or edge defined. The value of the outputs can be used to quantify the status of the network, meaning how much its answer differs from the desired one. Specifically, we define a cost function that computes the difference squared between the voltage in the output nodes and the values of desired voltages
 \[
 C\left( \boldsymbol{w} \right) = \sum_{i \in \Lambda} \brac{V_i\brac{\boldsymbol{w}} - V_i^D}^2,
 \label{eq:cost_func}
@@ -192,7 +211,7 @@ results in a decrease in the cost funtion until a minimum is reached, for suffic
 \end{equation}
 where $\boldsymbol{\Delta w}$ is a vector with the same number of entries as the weight vector, but every entry has a value $\Delta w$. 
 
-In the training algortihm, we first initialize the system with the memristor parameters specified in \cref{sec:memristor_network} and with some initial pressure and concentration values at each node. With the knowledge of input and desired output voltage values, it is possible to performe the first forward pass, from which we obtain the cost function $C\brac{\boldsymbol{w}}$, that we store since it is needed in the computation its gradient. Subsequently, we proceed with the backward pass. We compute each entry of the gradient in \cref{eq:gradient_cost_func} by selecting the corresponding weight, a node or an edge parameter, increment its value of $\Delta w$ and applying a forward step to obtain the corresponding entry of $C\brac{\boldsymbol{w}+\boldsymbol{\Delta w}}$. With the stored value of $C\brac{\boldsymbol{w}}$, we are able to compute the gradient in \cref{eq:gradient_cost_func} and use it to eventually calculate the weight update in \cref{eq:weight_update}.
+In the training algortihm, we first initialize the system with the memristor parameters specified in \cref{sec:memristor_network}, an initial pressure of $1bar$ and concentration of $0.2mM$ at each node. With the knowledge of input and desired output voltage values, it is possible to performe the first forward pass, from which we obtain the cost function $C\brac{\boldsymbol{w}}$, that we store since it is needed in the computation its gradient. Subsequently, we proceed with the backward pass. We compute each entry of the gradient in \cref{eq:gradient_cost_func} by selecting the corresponding weight, a node or an edge parameter, increment its value of $\Delta w$ and applying a forward step to obtain the corresponding entry of $C\brac{\boldsymbol{w}+\boldsymbol{\Delta w}}$. With the stored value of $C\brac{\boldsymbol{w}}$, we are able to compute the gradient in \cref{eq:gradient_cost_func} and use it to calculate the weight update in \cref{eq:weight_update}. 
 
 Althought performed numerically in this work, we highlight that the feedforward pass is a physical process in which the system natually relaxes to its steady state. Moreover, also the backward pass we use can be translated to a physical event since involves performing the forward pass a number of time as the number of the weights. Once the gradient of the cost function is determined and stored, only the simple algebric calculations of \cref{eq:weight_update} are left to be computed. We propose this method as a hybrid physical and in-silico training algorithm, as a future experimental approach to the probelm.
 
@@ -315,43 +334,58 @@ The core intention behind the algorithm is to enable a physically realizable neu
 \cleardoublepage
 \appendix
 
-
-
-[A change in the chosen weight of a memristor directly influences the functional form of $g_{\infty}(\boldsymbol{\Delta})$. In turn, this functional form guides the evolution toward a steady state that aligns with the desired one. It is important to note that the entire functional form is significant, not just the steady-state value of the potential drop and the corresponding conductance, as explained in Appendix A.] -> add in paper
-
 \section{Dynamical evolution to the steady state \label{app:dyn_evol_steady_state}}
-In this section, we explain more in depth the relaxation toward a steady-state of a memristor network. Specifically, we want to emphasise that in a network where the applied voltage is constant at the input nodes, the dynamical dependence on the steady-state conductance is fundamental to reach desired values of potential drops. 
 
+In this section, we provide a more detailed explanation of how a memristor network relaxes to its steady state. Alongside outlining the algorithm used to solve the circuit, we highlight the importance of the dependence on the functional form of the steady-state conductance, which itself is determined by the values of the weights. Selecting appropriate weights shapes the  staedy-state conductance function in such a way that the network naturally relaxes to a steady state aligned with the training objective.
 
-For simplicity, we consider a voltage divider, as shown in \cref{fig:app_vd}, where we set $\Delta P = 0$ and $\Delta \rho = 0$. 
+For simplicity, we consider the voltage divider shown in \cref{fig:app_vd}, where the memristors are labeled as $ \m_1 $, connecting node 2 to node 1, and $ \m_2 $, connecting node 3 to node 2. We also denote the corresponding potential drops across each memristor as $ \Delta V_1 = V_2 - V_1$ and $ \Delta V_2  = V_3 - V_2$, respectively. To simplify, we set both the pressure difference ($ \Delta P $) and concentration difference ($ \Delta \rho $) to zero. In this example, we choose the channel length as the training weight.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\columnwidth]{plots/appendixA/app_vd.pdf}
-    \caption{}
+    \caption{Schematical representation of a memristor voltage divider. Two memristors, \( M_1 \) and \( M_2 \), connect two input nodes (green dots) with fixed voltages of \( 0\,\mathrm{V} \) and \( 5\,\mathrm{V} \), respectively, to a single output node (purple dot). Each memristor is subject to one external stimulus: the electric potential difference between the nodes it connects.
+    }
     \label{fig:app_vd}
 \end{figure} 
-Therefore, the dynamical evolution of the conductance of each memristor discretized in time-steps $\Delta t$, shown in its general form in Eq. (2), reduces to
+The dynamical evolution of the conductance of each memristor, discretized in time-steps of size $\Delta t$, reduces to the update rule:
 \begin{equation}
-    g_{\m}\brac{t + \Delta t} = g_{\m}\brac{t} +
-     \frac{g_{\m,\infty}\brac{\Delta V_{\m}(t)}-g_{\m}\brac{t}}{\tau}\Delta t,
+g_{\m}(t + \Delta t) = g_{\m}(t) +
+\frac{g_{\m,\infty}(\Delta V_{\m}(t)) - g_{\m}(t)}{\tau} \Delta t,
 \label{eq:conduct}
 \end{equation}
-with initial condition $g_{\m}(t=0)=g_0$. At each time-step, the potential drop $\Delta V_{m}(t)$ across each memristor is calculated using Kirchoff's law, that reduces to the expressions
+with initial condition $g_{\m}(t = 0) = g_0$. The potential drops across the memristors, $\Delta V_1(t)$ and $\Delta V_2(t)$, are computed from Kirchhoff's laws. In the case of a simple voltage divider ,see \cref{fig:app_vd}, these simplify to:
 \begin{equation}
-    \Delta V_1(t) = \frac{5 g_2(t)}{g_1(t)+g_2(t)}, \ \ \ \ \ \ \ \Delta V_2(t) = \frac{5 g_1(t)}{g_1(t)+g_2(t)},
-    \label{eq:potentials}
+\Delta V_1(t) = \frac{5 g_2(t)}{g_1(t)+g_2(t)}, \qquad
+\Delta V_2(t) = \frac{5 g_1(t)}{g_1(t)+g_2(t)},
+\label{eq:potentials}
 \end{equation}
-found by minimizing the power dissipated by the resistances with respect to the free potential $\partial P/\partial V_2=0$.
 
-The algorithm works as follows:
+The simulation proceeds as follows:
 
 \begin{itemize}
-
-    \item At time $t=0$, the potentials $\Delta V_1(t=0)$ and $\Delta V_2(t=0)$ are computed from \cref{eq:potentials} using the initial condition $g_1(t=0)=g_2(t=0)=g_0$.
-    \item In the following time-step $t=\Delta t$, the potentials $\Delta V_1(t=0)$ and $\Delta V_2(t=0)$ are used to compute conductances $g_{\m}(\Delta t)$ using \cref{eq:conduct}.
-    \item The previous step is iterated, and the system reaches the steady-state when $g_{\m}(t)=g_{\m,\infty}(t)$.
-
+\item At $t = 0$, initialize: $g_1(0) = g_2(0) = g_0$.
+\item Compute $\Delta V_1(0)$ and $\Delta V_2(0)$ using \cref{eq:potentials}.
+\item Use \cref{eq:conduct} to update $g_1(\Delta t)$ and $g_2(\Delta t)$.
+\item Repeat the process at each time step until $|g_{\m}(t) - g_{\m,\infty}(t)| < \epsilon$ for all memristors.
 \end{itemize}
+
+\begin{algorithm}
+    \caption{Relaxation of a Memristor Voltage Divider to Steady State}
+    \begin{algorithmic}[1]
+    \State \textbf{Input:} Initial conductance $g_0$, time step $\Delta t$, convergence threshold $\epsilon$, relaxation time $\tau$
+    \State Initialize $g_1 \gets g_0$, $g_2 \gets g_0$, $t \gets 0$
+    \While{not converged}
+        \State Compute $\Delta V_1 \gets \frac{5 \cdot g_2}{g_1 + g_2}$
+        \State Compute $\Delta V_2 \gets \frac{5 \cdot g_1}{g_1 + g_2}$
+        \State $g_1 \gets g_1 + \frac{g_{\infty}(\Delta V_1) - g_1}{\tau} \cdot \Delta t$
+        \State $g_2 \gets g_2 + \frac{g_{\infty}(\Delta V_2) - g_2}{\tau} \cdot \Delta t$
+        \If{$|g_1 - g_{\infty}(\Delta V_1)| < \epsilon$ \textbf{and} $|g_2 - g_{\infty}(\Delta V_2)| < \epsilon$}
+            \State \textbf{break}
+        \EndIf
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+    
 
 \begin{figure}[h]
     \centering
