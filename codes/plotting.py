@@ -75,7 +75,11 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     ax.set_yscale('log')   
     
     # ax.legend(fontsize = par.legend_size)
-    ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
+    if training_type=='regression':
+        ax.set_ylabel(r'$C_{test}(w)$', fontsize = par.axis_fontsize)
+    else:
+        ax.set_ylabel(r'$C(w)$', fontsize = par.axis_fontsize)
+
     if show_xlabel:
         ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 MAY 2025 14:10
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 MAY 2025 16:24
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1035,60 +1035,91 @@ File: plots/appendixA/app_vd.pdf Graphic file (type pdf)
 
 LaTeX Warning: Reference `fig:app_vd' on page 1 undefined on input line 356.
 
-
-LaTeX Warning: Reference `eq:potentials' on page 1 undefined on input line 367.
-
-
-LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 368.
-
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 373.
-/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Missing \endcsname inserted.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 366.
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:380: Missing \endcsname inserted.
 <to be read again> 
                    \c@float@type 
-l.387 \end{algorithm}
+l.380 \end{algorithm}
                      
 The control sequence marked <to be read again> should
 not appear between \csname and \endcsname.
 
-/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Missing number, treated as zero.
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:380: Missing number, treated as zero.
 <to be read again> 
                    \endcsname 
-l.387 \end{algorithm}
+l.380 \end{algorithm}
                      
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
-/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:387: Extra \endcsname.
+/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex:380: Extra \endcsname.
 <recently read> \endcsname 
                            
-l.387 \end{algorithm}
+l.380 \end{algorithm}
                      
 I'm ignoring this, since I wasn't doing a \csname.
+
+
+LaTeX Warning: Reference `fig:equal_memr' on page 1 undefined on input line 382.
+
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 382.
+
+
+LaTeX Warning: Reference `eq:potentials' on page 1 undefined on input line 382.
+
+
+LaTeX Warning: Reference `fig:equal_memr' on page 1 undefined on input line 382.
+
+
+LaTeX Warning: Reference `fig:equal_memr' on page 1 undefined on input line 382.
 
 File: plots/appendixA/grid_initial_condition.pdf Graphic file (type pdf)
 <use plots/appendixA/grid_initial_condition.pdf>
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 387.
 
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 387.
+
+
+LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 391.
+
+
+LaTeX Warning: Reference `fig:trained_memr' on page 1 undefined on input line 391.
+
+
+LaTeX Warning: Reference `fig:trained_memr' on page 1 undefined on input line 391.
+
+[9]
 File: plots/appendixA/grid_trained.pdf Graphic file (type pdf)
 <use plots/appendixA/grid_trained.pdf>
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 397.
+
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 397.
+
+
+LaTeX Warning: Reference `fig:trained_memr' on page 1 undefined on input line 401.
+
+
+LaTeX Warning: Reference `fig:changed_func_ginfty' on page 1 undefined on input line 401.
 
 File: plots/appendixA/grid_trained_change_func.pdf Graphic file (type pdf)
 <use plots/appendixA/grid_trained_change_func.pdf>
 
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 409.
+
+
+LaTeX Warning: Reference `eq:conduct' on page 1 undefined on input line 409.
+
+
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(./paper.bbl [9]
-
-LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix] on input line 1.
-
-
-Class revtex4-2 Warning: Deferred float stuck during \clearpage processing.
-
-[10]
+(./paper.bbl [10]
 
 LaTeX Warning: Reference `LastBibItem' on page 11 undefined on input line 1.
 
@@ -1123,12 +1154,12 @@ Package rerunfilecheck Info: Checksums for `paper.out':
 (rerunfilecheck)             After:  53966D747C2217C3BB2273C5F4BDA4B7;2016.
  ) 
 Here is how much of TeX's memory you used:
- 29998 strings out of 476191
- 559395 string characters out of 5812071
+ 30007 strings out of 476191
+ 559573 string characters out of 5812071
  960556 words of memory out of 5000000
- 50206 multiletter control sequences out of 15000+600000
+ 50215 multiletter control sequences out of 15000+600000
  479552 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,94p,1302b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,94p,1357b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (11 pages, 413168 bytes).
+Output written on paper.xdv (11 pages, 454352 bytes).

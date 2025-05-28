@@ -359,17 +359,10 @@ with initial condition $g_{\m}(t = 0) = g_0$. The potential drops across the mem
 \Delta V_2(t) = \frac{5 g_1(t)}{g_1(t)+g_2(t)},
 \label{eq:potentials}
 \end{equation}
-
-The simulation proceeds as follows:
-
-\begin{itemize}
-\item At $t = 0$, initialize: $g_1(0) = g_2(0) = g_0$.
-\item Compute $\Delta V_1(0)$ and $\Delta V_2(0)$ using \cref{eq:potentials}.
-\item Use \cref{eq:conduct} to update $g_1(\Delta t)$ and $g_2(\Delta t)$.
-\item Repeat the process at each time step until $|g_{\m}(t) - g_{\m,\infty}(t)| < \epsilon$ for all memristors.
-\end{itemize}
+Starting from initial values, the potential drops across the memristors are computed using Kirchhoff’s laws. These potential differences then drive the time evolution of the memristors’ conductances, following the discretized dynamical equation. The process—computing potential drops and updating conductances—is repeated iteratively until the conductance values converge to their steady-state counterparts. This iterative relaxation procedure is outlined in Algorithm 1.
 
 \begin{algorithm}
+    \label{alg:relaxation}
     \caption{Relaxation of a Memristor Voltage Divider to Steady State}
     \begin{algorithmic}[1]
     \State \textbf{Input:} Initial conductance $g_0$, time step $\Delta t$, convergence threshold $\epsilon$, relaxation time $\tau$
@@ -385,28 +378,36 @@ The simulation proceeds as follows:
     \EndWhile
     \end{algorithmic}
 \end{algorithm}
-    
 
+Since the initial conductance is the same, we have $\Delta V_1(0) = \Delta V_2(0) = 2.5\,\text{V}$. When the memristors' channels have the same length, their steady-state function $g_{\infty}$ is identical, as shown in \cref{fig:equal_memr}(a). As a consequence, their conductances will evolve according to \cref{eq:conduct} and \cref{eq:potentials}, remaining equal throughout the simulation, as depicted in \cref{fig:equal_memr}(b). This results in the same, constant potential difference across both memristors, as shown in \cref{fig:equal_memr}(c).
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\columnwidth]{plots/appendixA/grid_initial_condition.pdf}
-    \caption{Relaxation toward the steady
-    state when $g_{1,\infty}(V)=g_{2,\infty}(V)$.}
-    \label{fig:memristor_network}
+    \includegraphics[width=\columnwidth]{plots/appendixA/grid_initial_condition.pdf}
+    \caption{Relaxation toward the steady state of a memristor voltage divider when both memristors have the same length. (a) Steady-state conductance function of memristor $\m_1$ (light green solid line) and memristor $\m_2$ (light blue solid line). The steady-state conductance values reached upon convergence of \cref{eq:conduct} are indicated by a triangular marker for $\m_1$ and a circular marker for $\m_2$. (b) Time evolution of the conductance of memristor $\m_1$ (green) and $\m_2$ (light blue) during relaxation toward the steady state. The final conductance values are indicated by the same triangular and circular markers as in (a). (c) Voltages at the input nodes (green lines) and potential drops across the two memristors (light pink and purple lines) during relaxation.
+    }
+    \label{fig:equal_memr}
 \end{figure} 
 
-\begin{figure}[h]
+Performing the training algorithm outlined in \cref{sec:training}, with the objective of setting the output voltage to $V_2 = 4\,\mathrm{V}$, results in specific values of the channel length for each memristor. Consequently, the steady-state conductance functions deviate from their original forms, as shown in \cref{fig:trained_memr}(a). These updated functions guide the evolution of the memristor conductances toward a steady state that satisfies the training objective, as illustrated in \cref{fig:trained_memr}(c). 
+
+\begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\columnwidth]{plots/appendixA/grid_trained.pdf}
-    \caption{Relaxation toward the steady state when the system has been trained to give $V_2 = 4V$. The training sets the two different functional forms of $g_{\infty}$ seen in the right figure.}
-    \label{fig:memristor_network}
+    \includegraphics[width=\columnwidth]{plots/appendixA/grid_trained.pdf}
+    \caption{Relaxation toward the steady state of a memristor voltage divider, where the memristor lengths have been set by a training algorithm with the objective of producing $V_2 = 4\,\mathrm{V}$. (a) Steady-state conductance functions of memristor $\m_1$ (light green solid line) and memristor $\m_2$ (light blue solid line). The conductance values reached upon convergence of \cref{eq:conduct} are indicated by a triangular marker for $\m_1$ and a circular marker for $\m_2$. (b) Time evolution of the conductance of memristor $\m_1$ (green) and $\m_2$ (light blue) during relaxation toward the steady state. Final conductance values are indicated by the same markers as in (a). (c) Voltages at the input nodes (green lines) and potential drops across the two memristors (light pink and purple lines) during relaxation. The potential drops reflect the trained voltage output at the middle node.
+    }
+    \label{fig:trained_memr}
 \end{figure} 
+
+Once convergence is reached, the final conductance values corresponding to the desired potential drops across the two memristors can be read from \cref{fig:trained_memr}(b). However, knowing only these steady-state conductance values is not sufficient to guarantee relaxation to the desired final state. In fact, if one fixes those points on the $g_{\infty}$ curves while altering the functional form elsewhere, the system may converge to a different steady state, as demonstrated in \cref{fig:changed_func_ginfty}. 
+
+This observation highlights that the complete functional form of $g_{\infty}$, which is determined by the trained weight parameter, is essential in the voltage range relevant to the system’s evolution. While the final steady-state conductances may be sufficient in a purely resistive network with tunable resistors, memristors differ in that their conductance is inherently dynamic and depends on the applied voltage. Therefore, to reliably achieve the desired steady state, control over the entire conductance function is necessary.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\columnwidth]{plots/appendixA/grid_trained_change_func.pdf}
-    \caption{We consider the trained system in Figure 3, but we define the funtion $g_{1, \infty}$ such that it passes througth the steady state point (triangle in Figure 3), now indicated with a red cross, but with a different functional form. Due to the different functinal form, the system reaches a steady state that doesn't coincide with the desired in Figure 3.}
-    \label{fig:memristor_network}
+    \includegraphics[width=\columnwidth]{plots/appendixA/grid_trained_change_func.pdf}
+    \caption{Relaxation toward the steady state of a memristor voltage divider. The steady-state function of $\m_1$ is artificially modified to a sine curve that passes through the final conductance and potential drop point of the trained network (red cross), while the steady-state function of $\m_2$ is kept identical to that of the trained system. (a) Steady-state conductance functions of memristor $\m_1$ (light green solid line) and memristor $\m_2$ (light blue solid line). The conductance values reached upon convergence of \cref{eq:conduct} are indicated by a triangular marker for $\m_1$ and a circular marker for $\m_2$. (b) Time evolution of the conductance of memristor $\m_1$ (green) and $\m_2$ (light blue) during relaxation toward the steady state. Final conductance values are marked as in (a). (c) Voltages at the input nodes (green lines) and potential drops across the two memristors (light pink and purple lines) during relaxation. Due to the altered functional form of the steady-state conductance of $\m_1$, the evolution deviates from the desired one.
+    }
+    \label{fig:changed_func_ginfty}
 \end{figure} 
 
 
