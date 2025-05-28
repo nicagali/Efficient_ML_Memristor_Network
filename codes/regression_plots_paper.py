@@ -69,16 +69,22 @@ inset_ax1 = ax2.inset_axes([0.07, 0.4, 0.23, 0.23])  # [x0, y0, width, height]
 plotting.plot_regression(inset_ax1, graph_id, weight_type_regression, step=0)
 # inset_ax1.set_title("Step 0", fontsize=(par.size_ticks-7))
 inset_ax1.tick_params(axis='both', labelsize=(par.size_ticks-7))
+inset_ax1.legend(fontsize=(par.legend_size-4))
+
 
 inset_ax2 = ax2.inset_axes([0.6, 0.6, 0.23, 0.23])
 plotting.plot_regression(inset_ax2, graph_id, weight_type_regression, step=int(training_steps/2))
 print(int(training_steps/2))
 # inset_ax2.set_title("Step 50", fontsize=(par.size_ticks-7))
 inset_ax2.tick_params(axis='both', labelsize=(par.size_ticks-7))
+inset_ax2.legend(fontsize=(par.legend_size-4))
+
 
 inset_ax3 = ax2.inset_axes([0.25, 0.1, 0.23, 0.23])
 plotting.plot_regression(inset_ax3, graph_id, weight_type_regression, step=training_steps)
 # inset_ax3.set_title("Step 400", fontsize=(par.size_ticks-7))
 inset_ax3.tick_params(axis='both', labelsize=(par.size_ticks-7))
+inset_ax3.legend(fontsize=(par.legend_size-4))
+
 
 fig.savefig(f"../paper/plots/regression/{graph_id}_newformat.pdf")

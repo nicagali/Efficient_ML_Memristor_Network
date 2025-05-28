@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00010001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -56,7 +56,7 @@ constant_source = [11, 4, 4, 11]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [2]:
+for weight_type_index in [0]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 #     G = nx.read_graphml(f'{DATA_PATH}G00050001.graphml')
