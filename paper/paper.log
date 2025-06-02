@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  28 MAY 2025 16:24
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.10.17)  2 JUN 2025 17:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -817,6 +817,18 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
+Package natbib Warning: Citation `pattern_recognition' on page 1 undefined on input line 83.
+
+
+Package natbib Warning: Citation `review_image_rec' on page 1 undefined on input line 83.
+
+
+Package natbib Warning: Citation `speech_rec' on page 1 undefined on input line 83.
+
+
+Package natbib Warning: Citation `ai_tech1' on page 1 undefined on input line 83.
+
+
 Package natbib Warning: Citation `energy_cost_ml1' on page 1 undefined on input line 85.
 
 
@@ -826,13 +838,43 @@ Package natbib Warning: Citation `energy_cost_ml2' on page 1 undefined on input 
 Package natbib Warning: Citation `trainingphysicalneuralnetworks' on page 1 undefined on input line 85.
 
 
+Package natbib Warning: Citation `backporp_pnn' on page 1 undefined on input line 85.
+
+
 Package natbib Warning: Citation `optics1' on page 1 undefined on input line 87.
 
 
 Package natbib Warning: Citation `electronics1' on page 1 undefined on input line 87.
 
 
+Package natbib Warning: Citation `acoustic1' on page 1 undefined on input line 87.
+
+
+Package natbib Warning: Citation `mechanics1' on page 1 undefined on input line 87.
+
+
+Package natbib Warning: Citation `backporp_pnn' on page 1 undefined on input line 87.
+
+
+Package natbib Warning: Citation `supervised_learning' on page 1 undefined on input line 87.
+
+
+Package natbib Warning: Citation `demonstr_coupled_learning' on page 1 undefined on input line 87.
+
+
 Package natbib Warning: Citation `Rene_IonicNeuromorphic' on page 1 undefined on input line 89.
+
+
+LaTeX Warning: Reference `sec:memristor_network' on page 1 undefined on input line 95.
+
+
+LaTeX Warning: Reference `sec:training' on page 1 undefined on input line 95.
+
+
+LaTeX Warning: Reference `sec:train_memr_vd' on page 1 undefined on input line 95.
+
+
+LaTeX Warning: Reference `sec:train_memr_nw' on page 1 undefined on input line 95.
 
 [1]
 
@@ -1124,7 +1166,17 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: Reference `LastBibItem' on page 11 undefined on input line 1.
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 54--59
+Underfull \hbox (badness 1983) in paragraph at lines 67--73
+ \TU/lmr/m/n/9 Parisa Omidvar, Henrik R. Thomsen, Theodor S.
+ []
+
+
+Underfull \hbox (badness 1173) in paragraph at lines 75--81
+ \TU/lmr/m/n/9 Vermaire, Lishuai Jin, Hadrien Bense, and Martin
+ []
+
+
+Underfull \hbox (badness 1199) in paragraph at lines 111--116
  \TU/lmr/m/n/9 SeongHwan Cho.  Analysis and design of voltage-
  []
 
@@ -1154,12 +1206,12 @@ Package rerunfilecheck Info: Checksums for `paper.out':
 (rerunfilecheck)             After:  53966D747C2217C3BB2273C5F4BDA4B7;2016.
  ) 
 Here is how much of TeX's memory you used:
- 30007 strings out of 476191
- 559573 string characters out of 5812071
- 960556 words of memory out of 5000000
- 50215 multiletter control sequences out of 15000+600000
+ 30040 strings out of 476191
+ 560310 string characters out of 5812071
+ 972556 words of memory out of 5000000
+ 50248 multiletter control sequences out of 15000+600000
  479552 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 99i,12n,94p,1357b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 99i,12n,94p,1401b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.xdv (11 pages, 454352 bytes).
+Output written on paper.xdv (11 pages, 478800 bytes).

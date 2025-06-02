@@ -1,0 +1,1 @@
+G00010001 working graph with 3V input

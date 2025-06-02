@@ -1,5 +1,29 @@
 \begin{thebibliography}{10}
 
+\bibitem{pattern_recognition}
+Jayanta~Kumar Basu, Debnath Bhattacharyya, and Tai hoon Kim.
+\newblock Use of artificial neural network in pattern recognition.
+\newblock 2010.
+
+\bibitem{review_image_rec}
+Leiyu Chen, Shaobo Li, Qiang Bai, Jing Yang, Sanlong Jiang, and Yanming Miao.
+\newblock Review of image classification algorithms based on convolutional
+  neural networks.
+\newblock {\em Remote Sensing}, 13(22), 2021.
+
+\bibitem{speech_rec}
+Aditya Amberkar, Parikshit Awasarmol, Gaurav Deshmukh, and Piyush Dave.
+\newblock Speech recognition using recurrent neural networks.
+\newblock In {\em 2018 International Conference on Current Trends towards
+  Converging Technologies (ICCTCT)}, pages 1--4, 2018.
+
+\bibitem{ai_tech1}
+Sandeep Kumar, MohdAnul Haq, Arpit Jain, C.~Andy Jason, Nageswara~Rao Moparthi,
+  Nitin Mittal, and Zamil~S. Alzamil.
+\newblock Multilayer neural network based speech emotion recognition
+  for smart assistance.
+\newblock {\em Computers, Materials and Continua}, 74(1):1523--1540, 2022.
+
 \bibitem{energy_cost_ml1}
 Shih-Kai Chou, Jernej Hribar, Mihael Mohorčič, and Carolina Fortuna.
 \newblock The energy cost of artificial intelligence of things lifecycle, 2024.
@@ -19,6 +43,12 @@ Ali Momeni, Babak Rahmani, Benjamin Scellier, Logan~G. Wright, Peter~L.
   Andrea Alù, and Romain Fleury.
 \newblock Training of physical neural networks, 2024.
 
+\bibitem{backporp_pnn}
+Logan~G. Wright, Tatsuhiro Onodera, Martin~M. Stein, Tianyu Wang, Darren~T.
+  Schachter, Zoey Hu, and Peter~L. McMahon.
+\newblock Deep physical neural networks trained with backpropagation.
+\newblock {\em Nature}, 601(7894):549–555, January 2022.
+
 \bibitem{optics1}
 Xing Lin, Yair Rivenson, Nezih~T. Yardimci, Muhammed Veli, Yi~Luo, Mona
   Jarrahi, and Aydogan Ozcan.
@@ -32,6 +62,33 @@ Xing Lin, Yair Rivenson, Nezih~T. Yardimci, Muhammed Veli, Yi~Luo, Mona
 \newblock A deep-learning approach to realizing functionality in nanoelectronic
   devices.
 \newblock {\em Nature Nanotechnology}, 15(12):992--998, December 2020.
+
+\bibitem{acoustic1}
+Tena Dubček, Daniel Moreno-Garcia, Thomas Haag, Parisa Omidvar, Henrik~R.
+  Thomsen, Theodor~S. Becker, Lars Gebraad, Christoph Bärlocher, Fredrik
+  Andersson, Sebastian~D. Huber, Dirk-Jan van Manen, Luis~Guillermo Villanueva,
+  Johan~O.A. Robertsson, and Marc Serra-Garcia.
+\newblock In-sensor passive speech classification with phononic metamaterials.
+\newblock {\em Advanced Functional Materials}, 34(17):2311877, 2024.
+
+\bibitem{mechanics1}
+Jingran Liu, Margot Teunisse, George Korovin, Ivo~R. Vermaire, Lishuai Jin,
+  Hadrien Bense, and Martin van Hecke.
+\newblock Controlled pathways and sequential information processing in serially
+  coupled mechanical hysterons.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  121(22):e2308414121, 2024.
+
+\bibitem{supervised_learning}
+Menachem Stern, Daniel Hexner, Jason~W. Rocks, and Andrea~J. Liu.
+\newblock Supervised learning in physical networks: From machine learning to
+  learning machines.
+\newblock {\em Phys. Rev. X}, 11:021045, May 2021.
+
+\bibitem{demonstr_coupled_learning}
+Sam Dillavou, Menachem Stern, Andrea~J. Liu, and Douglas~J. Durian.
+\newblock Demonstration of decentralized physics-driven learning.
+\newblock {\em Phys. Rev. Appl.}, 18:014040, Jul 2022.
 
 \bibitem{Rene_IonicNeuromorphic}
 T.~M. Kamsma, W.~Q. Boon, T.~ter Rele, C.~Spitoni, and R.~van Roij.

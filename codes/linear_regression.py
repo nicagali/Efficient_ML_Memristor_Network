@@ -10,21 +10,21 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010001'
+graph_id = 'G00060001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
 
 # -> DEFINE graph from networks module
-# G = networks.random_graph(save_data=True) 
-# G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
-G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
+# G = networks.random_graph(number_edges=20, number_nodes=10, save_data=True) 
+G = nx.read_graphml(f'{par.DATA_PATH}random_graph.graphml')
+# G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 
 # Using graphs:
 # regression_working: wokring nw for length not directed with 3V extra source
 # regression_working_rho: wokring nw for length directed with 6V extra source, working for rho training
 
-# print(G.edges())
+print(G.edges())
 # G.add_edge('1','7')
 # networks.initialize_edges(G)
 # G = networks.to_directed_graph(G, shuffle=True)
@@ -50,13 +50,13 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-# learning_rate_vec = [5e-7, 1e-6, 7e-4, 2e2, 1e3]
-learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e3]
-constant_source = [11, 4, 4, 11]
+# learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3]
+learning_rate_vec = [5e-7, 1e-6, 9e-4, 2e2, 1e3]
+constant_source = [11, 4, 4, 4]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [0]:
+for weight_type_index in [0,1,2,3]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 #     G = nx.read_graphml(f'{DATA_PATH}G00050001.graphml')

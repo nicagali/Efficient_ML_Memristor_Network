@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d14" for="edge" attr.name="delta_rho" attr.type="long" />
+  <key id="d13" for="edge" attr.name="pressure" attr.type="long" />
+  <key id="d12" for="edge" attr.name="radius_base" attr.type="float" />
+  <key id="d11" for="edge" attr.name="length" attr.type="long" />
+  <key id="d10" for="edge" attr.name="conductance" attr.type="double" />
+  <key id="d9" for="edge" attr.name="resistance" attr.type="long" />
+  <key id="d8" for="node" attr.name="voltage" attr.type="float" />
+  <key id="d7" for="node" attr.name="desired" attr.type="float" />
+  <key id="d6" for="node" attr.name="voltage" attr.type="long" />
+  <key id="d5" for="node" attr.name="constant_source" attr.type="boolean" />
+  <key id="d4" for="node" attr.name="pressure" attr.type="long" />
+  <key id="d3" for="node" attr.name="rho" attr.type="double" />
+  <key id="d2" for="node" attr.name="color" attr.type="string" />
+  <key id="d1" for="node" attr.name="type" attr.type="string" />
+  <key id="d0" for="graph" attr.name="name" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="0">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <node id="1">
+      <data key="d1">source</data>
+      <data key="d2">red</data>
+      <data key="d5">True</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+      <data key="d6">0</data>
+    </node>
+    <node id="2">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <node id="3">
+      <data key="d1">source</data>
+      <data key="d2">forestgreen</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+      <data key="d5">True</data>
+      <data key="d6">4</data>
+    </node>
+    <node id="4">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <node id="5">
+      <data key="d1">target</data>
+      <data key="d2">darkslateblue</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+      <data key="d7">1.1</data>
+    </node>
+    <node id="6">
+      <data key="d1">source</data>
+      <data key="d2">red</data>
+      <data key="d5">False</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+      <data key="d8">4.0</data>
+    </node>
+    <node id="7">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <node id="8">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <node id="9">
+      <data key="d1">hidden</data>
+      <data key="d2">silver</data>
+      <data key="d3">0.2</data>
+      <data key="d4">1</data>
+    </node>
+    <edge source="0" target="3">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">199.03509192574</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="0" target="8">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">196.8957486678326</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="1" target="4">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">322.33241717508224</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="1" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">251.10562897785394</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="1" target="2">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">300.0529600092256</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="2" target="4">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">199.83753907657845</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="2" target="5">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">239.9401870824034</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="2" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">189.43474696159814</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="2" target="6">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">35.28985975888013</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="3" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">164.82433670199876</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="3" target="4">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">119.64612663828919</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="4" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">197.67101200772228</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="4" target="7">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">219.24690042770632</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="4" target="6">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">59.288761449920145</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="4" target="5">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">202.11467983874428</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="5" target="7">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">167.294876236272</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="6" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">182.43090375484192</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="6" target="8">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">199.68650037661376</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="6" target="7">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">121.18089042075994</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <edge source="8" target="9">
+      <data key="d9">50</data>
+      <data key="d10">0.02</data>
+      <data key="d11">10</data>
+      <data key="d12">187.5077245501292</data>
+      <data key="d13">0</data>
+      <data key="d14">0</data>
+    </edge>
+    <data key="d0">G00010001</data>
+  </graph>
+</graphml>
