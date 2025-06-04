@@ -53,36 +53,36 @@ ax5.legend(fontsize = par.legend_size)
 fig.savefig(f"../paper/plots/regression/{graph_id}.pdf")
 
 
-fig = plt.figure(figsize=(13, 7), constrained_layout=True)
-outer = gridspec.GridSpec(1, 2, width_ratios=[1, 2], figure=fig)
+fig, ax2 = plt.subplots(figsize=(11, 8), constrained_layout=True)
+# outer = gridspec.GridSpec(1, 2, width_ratios=[1, 2], figure=fig)
 
 # Right column for MSE plot
-ax2 = fig.add_subplot(outer[0, 1])
+# ax2 = fig.add_subplot(outer[0, 1])
 plotting.plot_mse(ax2, fig, graph_id, training_type, 'length')
 plotting.plot_mse(ax2, fig, graph_id, training_type, 'radius_base')
 plotting.plot_mse(ax2, fig, graph_id, training_type, 'rho')
 plotting.plot_mse(ax2, fig, graph_id, training_type, 'pressure')
-ax2.legend(fontsize=par.legend_size)
+ax2.legend(fontsize=par.legend_size, loc = 'upper right')
 
 # Add inset axes inside ax2
-inset_ax1 = ax2.inset_axes([0.07, 0.4, 0.23, 0.23])  # [x0, y0, width, height]
+inset_ax1 = ax2.inset_axes([0.06, 0.25, 0.23, 0.23])  # G00010002
+# inset_ax1 = ax2.inset_axes([0.065, 0.3, 0.23, 0.23])  # G00010001
 plotting.plot_regression(inset_ax1, graph_id, weight_type_regression, step=0)
-# inset_ax1.set_title("Step 0", fontsize=(par.size_ticks-7))
 inset_ax1.tick_params(axis='both', labelsize=(par.size_ticks-7))
 inset_ax1.legend(fontsize=(par.legend_size-4))
 
 
-inset_ax2 = ax2.inset_axes([0.6, 0.6, 0.23, 0.23])
-plotting.plot_regression(inset_ax2, graph_id, weight_type_regression, step=int(training_steps/2))
-print(int(training_steps/2))
-# inset_ax2.set_title("Step 50", fontsize=(par.size_ticks-7))
-inset_ax2.tick_params(axis='both', labelsize=(par.size_ticks-7))
-inset_ax2.legend(fontsize=(par.legend_size-4))
+# inset_ax2 = ax2.inset_axes([0.16, 0.08, 0.23, 0.23]) # G00010002
+# # inset_ax2 = ax2.inset_axes([0.7, 0.75, 0.23, 0.23]) # G00010001
+# plotting.plot_regression(inset_ax2, graph_id, weight_type_regression, step=int(training_steps/2))
+# print(int(training_steps/2))
+# inset_ax2.tick_params(axis='both', labelsize=(par.size_ticks-7))
+# inset_ax2.legend(fontsize=(par.legend_size-4))
 
 
-inset_ax3 = ax2.inset_axes([0.25, 0.1, 0.23, 0.23])
+inset_ax3 = ax2.inset_axes([0.72, 0.53, 0.23, 0.23]) # G00010002
+# inset_ax3 = ax2.inset_axes([0.5, 0.1, 0.23, 0.23]) # G00010001
 plotting.plot_regression(inset_ax3, graph_id, weight_type_regression, step=training_steps)
-# inset_ax3.set_title("Step 400", fontsize=(par.size_ticks-7))
 inset_ax3.tick_params(axis='both', labelsize=(par.size_ticks-7))
 inset_ax3.legend(fontsize=(par.legend_size-4))
 
