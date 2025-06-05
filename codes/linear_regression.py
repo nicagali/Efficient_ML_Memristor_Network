@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00060001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -27,7 +27,7 @@ G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 print(G.edges())
 # G.add_edge('1','7')
 # networks.initialize_edges(G)
-# G = networks.to_directed_graph(G, shuffle=True)
+G = networks.to_directed_graph(G, shuffle=True)
 G.graph['name'] = graph_id
 print(G.graph['name'])
 nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
@@ -51,12 +51,12 @@ training_type = 'regression'    # choose
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
 # learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3]
-learning_rate_vec = [5e-7, 1e-6, 9e-4, 2e2, 1e3]
-constant_source = [11, 4, 4, 4]
+learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4]
+constant_source = [11, 4, 4, 11]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [2]:
+for weight_type_index in [0,1,2,3]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 #     G = nx.read_graphml(f'{DATA_PATH}G00050001.graphml')
@@ -64,7 +64,7 @@ for weight_type_index in [2]:
 #     # G = nx.read_graphml(f'{DATA_PATH}G00010003.graphml')
     G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
-    # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 #     # --------- PLOT ERROR, WEIGHTS & RESISTANCE ---------
 
