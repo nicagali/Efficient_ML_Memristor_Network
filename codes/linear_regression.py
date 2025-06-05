@@ -27,7 +27,7 @@ G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
 print(G.edges())
 # G.add_edge('1','7')
 # networks.initialize_edges(G)
-G = networks.to_directed_graph(G, shuffle=True)
+# G = networks.to_directed_graph(G, shuffle=True)
 G.graph['name'] = graph_id
 print(G.graph['name'])
 nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
@@ -50,8 +50,9 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3]
-# learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3]
-learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4]
+# learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3] #1
+# learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4] #2
+learning_rate_vec = [8e-7, 3e-6, 2e-4, 5e1, 1e4]
 constant_source = [11, 4, 4, 11]
 
 weight_type_index = 0   # choose

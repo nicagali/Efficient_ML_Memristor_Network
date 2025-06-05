@@ -1,19 +1,19 @@
 # Fdb version 3
-["bibtex paper"] 0 "paper.aux" "paper.bbl" "paper" 0
+["bibtex paper"] 1749113481 "paper.aux" "paper.bbl" "paper" 1749114198
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "biblio.bib" 1748872926 17984 7239891e2aa5b85a788031a9dce6b874 ""
-  "paper.aux" 0 -1 0 "xelatex"
-  "paperNotes.bib" 1749044479 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
+  "biblio.bib" 1749110967 17984 7239891e2aa5b85a788031a9dce6b874 ""
+  "paper.aux" 1749114197 24756 3f71d3c1239e99076f8959d3eb4141c0 "xelatex"
+  "paperNotes.bib" 1749114197 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
   (generated)
   "paper.bbl"
   "paper.blg"
-["xdvipdfmx"] 0 "paper.xdv" "paper.pdf" "paper" 0
-  "paper.xdv" 0 -1 0 "xelatex"
+["xdvipdfmx"] 1749114197 "paper.xdv" "paper.pdf" "paper" 1749114198
+  "paper.xdv" 1749114197 488816 34fc7369f8bcfedafdac6629aab1fae9 "xelatex"
   (generated)
   "paper.pdf"
-["xelatex"] 1749044478 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1749044478
+["xelatex"] 1749114196 "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" "paper.xdv" "paper" 1749114198
   "/etc/texmf/web2c/texmf.cnf" 1697810815 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1749044454 53617 94ebce4a50670c0d1a80b14ea735abd7 ""
+  "/home/monicaconte/nica/phd/Projects/Efficient_ML_Memristor_Network/paper/paper.tex" 1749114196 53574 4373590985d9b20d6cf79819a9f2ecfa ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
@@ -209,10 +209,10 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1729165427 5133632 6da276505c61ffff742236c11e5db81e ""
-  "paper.aux" 1749044478 32 3985256e7290058c681f74d7a3565a19 "xelatex"
-  "paper.bbl" 1749044477 5851 b7072a03fcc81194043aead876c51923 "bibtex paper"
-  "paper.out" 0 -1 0 "xelatex"
-  "paper.tex" 1749044454 53617 94ebce4a50670c0d1a80b14ea735abd7 ""
+  "paper.aux" 1749114197 24756 3f71d3c1239e99076f8959d3eb4141c0 "xelatex"
+  "paper.bbl" 1749113481 5851 b7072a03fcc81194043aead876c51923 "bibtex paper"
+  "paper.out" 1749114197 2016 53966d747c2217c3bb2273c5f4bda4b7 "xelatex"
+  "paper.tex" 1749114196 53574 4373590985d9b20d6cf79819a9f2ecfa ""
   "plots/appendixA/app_vd.pdf" 1748337658 44033 cf0d6237a8f017d9785e251c400f1341 ""
   "plots/appendixA/grid_initial_condition.pdf" 1748337658 18773 ba8743bcc99198f70d9c37cd4c9ebcf6 ""
   "plots/appendixA/grid_trained.pdf" 1748337658 16896 b4a9598be23c28d2905ad331bb01e36d ""
@@ -220,12 +220,12 @@
   "plots/general_network/mse_general.pdf" 1744363273 115692 a1527ec22ba7ceb41cede3cfae106760 ""
   "plots/memristor/memristor_network.pdf" 1737037276 55427 88e76c41eca0a3201ee3488c32d62e7c ""
   "plots/memristor/memristor_scheme.pdf" 1737037276 133755 ed59a9f1372df888253042382644dbf4 ""
-  "plots/regression/regression_G00010001.pdf" 1749043663 111349 ed6dd11fb26cb06914fe628ce4f3fc73 ""
-  "plots/regression/regression_G00010002.pdf" 1749043666 110123 193fc2eae6865e997a7cab269fdd0044 ""
+  "plots/regression/regression_G00010001.pdf" 1749110967 111349 ed6dd11fb26cb06914fe628ce4f3fc73 ""
+  "plots/regression/regression_G00010002.pdf" 1749110967 110123 193fc2eae6865e997a7cab269fdd0044 ""
   "plots/training/training_scheme.pdf" 1744380652 140718 64daafe11ff187e67a7293cabe337f39 ""
   "plots/training/two_types_weights.pdf" 1737037276 65085 a8a9cf30f257289908a84292cf19d22a ""
-  "plots/voltage_divider/evolution_targets.pdf" 1749043642 54279 cfe76816a98cf80b93cc6ded6824990a ""
-  "plots/voltage_divider/mse_weights_vd.pdf" 1749043637 115189 59b2b5ef6c40e7ec2f6bb86fe065f6a9 ""
+  "plots/voltage_divider/evolution_targets.pdf" 1749110967 54279 cfe76816a98cf80b93cc6ded6824990a ""
+  "plots/voltage_divider/mse_weights_vd.pdf" 1749110967 115189 59b2b5ef6c40e7ec2f6bb86fe065f6a9 ""
   "plots/voltage_divider/vd_scheme.pdf" 1737037276 42398 3d2bbbcb96e00226623d6a2b17536cc0 ""
   (generated)
   "paper.aux"
