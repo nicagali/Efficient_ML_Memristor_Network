@@ -20,24 +20,25 @@ fig, ax = plt.subplots()
 pos = plotting.plot_graph(G)
 fig.tight_layout()
 fig.savefig(f"../plots/voltage_divider/graph.pdf")
+graph_id = 'voltage_divider'
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 10
+training_steps = 50
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3]
-learning_rate_vec = [3e-6, 3e-6, 5e-4, 1e2]
+learning_rate_vec = [3e-6, 3.5e-6, 5e-4, 1e2]
 # learning_rate_vec = [5e-7, 3e-7, 5e-3, 1e4]
 # learning_rate_vec = [1e-5, 1e-5, 5e-3, 1e3]
 # learning_rate_vec = [1e-5, 2e-6, 5e-3, 5e2]
 
 
 # for weight_type_index in range(len(weight_type_vec)):
-weight_type_index = 3
+weight_type_index = 1
 
 G_ml = G.copy(as_view=False)  
-training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index])
+training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], write_weights=True)
 
 # --------- PLOT EVOLUTION OF TRAINED NW ---------
  
@@ -52,23 +53,23 @@ fig = plt.figure(figsize=(12, 8))
 gs = gridspec.GridSpec(2, 3, height_ratios=[1, 1])
 
 ax1 = fig.add_subplot(gs[0, 0:2]) 
-plotting.plot_mse(ax1, fig, f'pressure', show_xlabel = False)
-plotting.plot_mse(ax1, fig, f'rho', show_xlabel = False)
-plotting.plot_mse(ax1, fig, f'length', show_xlabel = False)
-plotting.plot_mse(ax1, fig, f'radius_base', show_xlabel = False)
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'length')
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'radius_base')
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'rho')
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'pressure')
 ax1.legend()
 
 ax2 = fig.add_subplot(gs[1, 0])
-plotting.plot_weights(ax2, G, training_steps=training_steps, rule=f'allostery_rho', show_xlabel=False)
+plotting.plot_weights(ax2, G, training_steps=training_steps, training_type=training_type, weight_type=f'rho', show_xlabel=False)
 
 ax3 = fig.add_subplot(gs[1, 1])
-plotting.plot_weights(ax3, G, training_steps=training_steps, rule=f'allostery_length')
+plotting.plot_weights(ax3, G, training_steps=training_steps, training_type=training_type, weight_type=f'length')
 
 ax4 = fig.add_subplot(gs[1, 2])
-plotting.plot_weights(ax4, G, training_steps=training_steps, rule=f'allostery_radius_base', show_xlabel=False)
+plotting.plot_weights(ax4, G, training_steps=training_steps, training_type=training_type, weight_type=f'radius_base', show_xlabel=False)
 
 ax5 = fig.add_subplot(gs[0, 2:3])
-plotting.plot_weights(ax5, G, training_steps=training_steps, rule=f'allostery_pressure', show_xlabel=False)
+plotting.plot_weights(ax5, G, training_steps=training_steps, training_type=training_type, weight_type=f'pressure', show_xlabel=False)
 
 fig.tight_layout()
 fig.savefig(f"../paper/plots/voltage_divider/weights_others.pdf")
