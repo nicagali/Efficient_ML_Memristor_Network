@@ -38,7 +38,7 @@ learning_rate_vec = [3e-6, 3.5e-6, 5e-4, 1e2]
 weight_type_index = 1
 
 G_ml = G.copy(as_view=False)  
-training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], write_weights=True)
+# training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], write_weights=True)
 
 # --------- PLOT EVOLUTION OF TRAINED NW ---------
  
@@ -53,10 +53,10 @@ fig = plt.figure(figsize=(12, 8))
 gs = gridspec.GridSpec(2, 3, height_ratios=[1, 1])
 
 ax1 = fig.add_subplot(gs[0, 0:2]) 
-plotting.plot_mse(ax1, fig, graph_id, training_type, f'length')
-plotting.plot_mse(ax1, fig, graph_id, training_type, f'radius_base')
-plotting.plot_mse(ax1, fig, graph_id, training_type, f'rho')
-plotting.plot_mse(ax1, fig, graph_id, training_type, f'pressure')
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'length', show_xlabel=False)
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'radius_base', show_xlabel=False)
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'rho', show_xlabel=False)
+plotting.plot_mse(ax1, fig, graph_id, training_type, f'pressure', show_xlabel=False)
 ax1.legend()
 
 ax2 = fig.add_subplot(gs[1, 0])
