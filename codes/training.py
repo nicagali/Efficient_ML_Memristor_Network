@@ -437,7 +437,7 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
         # batch_size = 1
         number_of_weights = G.number_of_nodes()
     else:
-        batch_size = int(G.number_of_edges()/4)
+        batch_size = int(G.number_of_edges()/2)
         # batch_size = G.number_of_edges()
         number_of_weights = G.number_of_edges()
 
@@ -538,9 +538,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # LOOP over training steps
     for step in range(training_steps): 
 
-        update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
-        # update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
 
         # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
