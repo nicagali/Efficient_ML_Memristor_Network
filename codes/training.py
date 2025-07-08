@@ -164,6 +164,7 @@ def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_outp
 def update_weights(G, training_type, base_error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, datastep):
 
     gradients = []
+    gradients2 = []
     
     if weight_type=='pressure' or weight_type == 'rho':
 
@@ -218,6 +219,33 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             if G.edges[edge][f'{weight_type}'] < 0:
                 G.edges[edge][f'{weight_type}'] += learning_rate*gradients[index]
                 print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
+
+    elif weight_type=='length_radius_base':
+
+        for index, edge in enumerate(G.edges()):
+
+            G_increment = G.copy(as_view=False)
+  
+            G_increment.edges[edge][f'length'] += delta_weight[0]
+            G_increment.edges[edge][f'radius_base'] += delta_weight[1]
+            
+            if training_type == 'allostery':
+                error = cost_function(G_increment, weight_type)  
+            else:
+                error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep, error_type='training')
+
+            denominator = delta_weight[1]*1e-6
+            gradients.append((error - base_error)/denominator)
+            denominator = delta_weight[0]*1e-9
+            gradients2.append((error - base_error)/denominator)
+
+            # print(index, base_error, G_increment.edges[edge][f'{weight_type}'], error)
+
+        for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
+
+            G.edges[edge]['length'] += learning_rate[0]*gradients[index]
+            # print(G.edges[edge]['length'])
+            G.edges[edge]['radius_base'] += learning_rate[1]*gradients2[index]
 
     else:
         # print('updating')
