@@ -569,6 +569,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         weight_type_step = weight_type
         delta_weight_step = delta_weight
+        learning_rate_step = learning_rate
         if weight_type == 'length_radius_base':
             if switch_parameter==0:
                 weight_type_step = 'length'
@@ -580,8 +581,18 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 delta_weight_step = delta_weight[1]
                 learning_rate_step = learning_rate[1]
                 switch_parameter=0
-
-        print(weight_type_step)
+                
+        if weight_type == 'length_pressure':
+            if switch_parameter==0:
+                weight_type_step = 'length'
+                delta_weight_step = delta_weight[0]
+                learning_rate_step = learning_rate[0]
+                switch_parameter=1
+            else:
+                weight_type_step = 'pressure'
+                delta_weight_step = delta_weight[1]
+                learning_rate_step = learning_rate[1]
+                switch_parameter=0
 
         # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
         update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
