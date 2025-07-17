@@ -564,33 +564,49 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         mse_file.write(f"{0}\t{test_error/error_normalization}\n")
 
     # LOOP over training steps
+    switch_parameter = 0
     for step in range(training_steps): 
 
-        # update_weights(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        weight_type_step = weight_type
+        delta_weight_step = delta_weight
+        if weight_type == 'length_radius_base':
+            if switch_parameter==0:
+                weight_type_step = 'length'
+                delta_weight_step = delta_weight[0]
+                learning_rate_step = learning_rate[0]
+                switch_parameter=1
+            else:
+                weight_type_step = 'radius_base'
+                delta_weight_step = delta_weight[1]
+                learning_rate_step = learning_rate[1]
+                switch_parameter=0
 
-        update_weights_parallel(G, training_type, error, weight_type, delta_weight, learning_rate, dataset_input_voltage, dataset_output_voltage, step)
+        print(weight_type_step)
+
+        # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+        update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
 
         # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
         
-            write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type)
+            write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type_step)
             
 
         # COMPUTE error
         if training_type == 'allostery':
-            error = cost_function(G, weight_type, potential_target_file, update_initial_res=False)  
+            error = cost_function(G, weight_type_step, potential_target_file, update_initial_res=False)  
             print('Step:', step+1, error)
             mse_file.write(f"{step+1}\t{error/error_normalization}\n")
         else:
             dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
-            error = cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
+            error = cost_function_regression(G, weight_type_step, dataset_input_voltage, dataset_output_voltage, step +1, error_type='training')
             if step % 10 == 0:
-                test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+                test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage, 0, error_type='test')
                 print('Step:', step+1, test_error)
                 mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
 
     if save_final_graph==True:
-        nx.write_graphml(G, f"{DATA_PATH}/trained_graph_{weight_type}.graphml")
+        nx.write_graphml(G, f"{DATA_PATH}/trained_graph_{weight_type_step}.graphml")
                              
     mse_file.close()
     if G.name == 'voltage_divider':

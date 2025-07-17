@@ -23,17 +23,17 @@ PLOT_PATH = f'{par.PLOT_PATH}allostery{graph_id}/'
 
 # G = nx.read_graphml(f'{DATA_PATH}{graph_id}_original.graphml')
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}shuffled.graphml')
-G.graph['name'] = f'{graph_id}'
+# G.graph['name'] = f'{graph_id}'
 
 G.remove_edge('5', '4')
 G.add_edge('3','0')
 networks.initialize_edges(G)
-print(G.edges())
+# print(G.edges())
 # nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 # G = networks.to_directed_graph(G, shuffle=True)
-# G.graph['name'] = f'{graph_id}'
+G.graph['name'] = f'{graph_id}'
 
-# nx.write_graphml(G, f'{DATA_PATH}{graph_id}shuffled.graphml')
+# nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -46,15 +46,15 @@ fig.savefig(f"{PLOT_PATH}graph.pdf", transparent=True)
 training_steps = 400
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'length_radius_base']
-delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, [1e-3, 1e-3]] 
-learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-7, 1e-7]]
+delta_weight_vec = [1e-3, 1, 1e-4, 1e-3, [1e-3, 1]] 
+learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-6, 8e-7]]
 
-for weight_type_index in [1]:
+for weight_type_index in [4]:
 # weight_type_index = 4
     G_train = G.copy(as_view=False)
     # print(G_train.nodes)
 
-    training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    # training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 
