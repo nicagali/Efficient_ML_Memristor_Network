@@ -89,6 +89,35 @@ def initialize_edges(G, mix_base_tip = False):
 
 # 2 --------- DEFINE DIFFERENT GRAPHS ---------
 
+
+# SINGLE MEMRISTOR: 0 --- 1 
+def single_memristor(save_data=False):
+
+    G = nx.DiGraph()    # I am using directed graphs to keep trak of sign when def circuit
+    G.name = 'single_memristor'
+
+    # ADD nodes
+    attributes = {"type" : "source", 'color' : par.color_dots[0]}
+    G.add_node(0, **attributes)
+    
+    attributes = {"type" : "source", 'color' : par.color_dots[0]}
+    G.add_node(1, **attributes)
+
+    # ADD edges
+    G.add_edge(0,1)
+    
+    # INITIALIZE nodes and edges
+    voltage_input = [5, 0] # node initialized here because different for differnent nw
+
+    initialize_nodes(G, sources=[0,1], targets=None, voltage_input=voltage_input)
+    initialize_edges(G, mix_base_tip=False)
+
+    # SAVE to data folder
+    if save_data:
+        nx.write_graphml(G, f"{par.DATA_PATH}single_memristor.graphml")
+
+    return G
+
 # VOLTAGE DIVIDER: 0 --- 1 --- 2
 def voltage_divider(save_data=False, voltage_desired = [4]):
 

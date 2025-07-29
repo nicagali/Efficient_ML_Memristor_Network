@@ -66,12 +66,30 @@ def plot_graph(G, weight_type = None):
 def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     
     data = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/mse/mse_{weight_type}.txt", unpack=True)
+    choosen_weight = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/weights/best_choice/choosen_weights.txt", unpack=True)
 
     x = data[0]
+    x = x[::5]
     y = data[1]
+    y = y[::5]
+    choosen_weight = choosen_weight[1]
 
-    style = par.weight_styles[f'{weight_type}']
-    ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'])
+    if weight_type == 'best_choice':
+        color_vec = ['#F2CB05FF']
+        possible_weights = ['length', 'radius_base', 'rho', 'pressure']
+        
+        for point in choosen_weight:
+            point = int(point)
+            # weight_type_par = weight_type[choosen_weight]
+            style = par.weight_styles[f'{possible_weights[point]}']
+            color_vec.append(style['c'])
+        # print(color_vec)
+        color_vec = color_vec[::5]
+        ax.scatter(x, y, color = color_vec, marker = '^', s = 50, lw = style['lw'], label = 'best choice', zorder=2)
+        
+    else:
+        style = par.weight_styles[f'{weight_type}']
+        ax.plot(x, y, color = style['c'], marker = style['marker'], lw = style['lw'], label = style['label'], zorder=1)
     ax.set_yscale('log')   
     
     # ax.legend(fontsize = par.legend_size)
@@ -142,7 +160,6 @@ def plot_memristor_resistances(ax, G):
     # DEFINE a transient analysis (analysis of the circuit over time)
     result = ahkab.run(circuit, an_list=analysis) #returns two arrays: resistance over time of the memristors, voltages over time in the nodes
     resistances = result[1]
-    print(1/resistances[-1][0],1/resistances[-1][1] )
     
     # print('Resistanes', len(resistances), len(resistances[0]))
     x = np.array(range(len(resistances)))

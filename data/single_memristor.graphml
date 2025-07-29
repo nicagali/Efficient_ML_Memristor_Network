@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d12" for="edge" attr.name="delta_rho" attr.type="long" />
+  <key id="d11" for="edge" attr.name="pressure" attr.type="long" />
+  <key id="d10" for="edge" attr.name="radius_base" attr.type="long" />
+  <key id="d9" for="edge" attr.name="length" attr.type="long" />
+  <key id="d8" for="edge" attr.name="conductance" attr.type="double" />
+  <key id="d7" for="edge" attr.name="resistance" attr.type="long" />
+  <key id="d6" for="node" attr.name="voltage" attr.type="long" />
+  <key id="d5" for="node" attr.name="pressure" attr.type="long" />
+  <key id="d4" for="node" attr.name="rho" attr.type="double" />
+  <key id="d3" for="node" attr.name="constant_source" attr.type="boolean" />
+  <key id="d2" for="node" attr.name="color" attr.type="string" />
+  <key id="d1" for="node" attr.name="type" attr.type="string" />
+  <key id="d0" for="graph" attr.name="name" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="0">
+      <data key="d1">source</data>
+      <data key="d2">forestgreen</data>
+      <data key="d3">True</data>
+      <data key="d4">0.2</data>
+      <data key="d5">1</data>
+      <data key="d6">5</data>
+    </node>
+    <node id="1">
+      <data key="d1">source</data>
+      <data key="d2">forestgreen</data>
+      <data key="d3">False</data>
+      <data key="d4">0.2</data>
+      <data key="d5">1</data>
+      <data key="d6">0</data>
+    </node>
+    <edge source="0" target="1">
+      <data key="d7">100</data>
+      <data key="d8">0.01</data>
+      <data key="d9">10</data>
+      <data key="d10">200</data>
+      <data key="d11">0</data>
+      <data key="d12">0</data>
+    </edge>
+    <data key="d0">single_memristor</data>
+  </graph>
+</graphml>

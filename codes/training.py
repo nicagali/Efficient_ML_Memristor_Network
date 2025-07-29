@@ -525,6 +525,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     # OPEN files to write results
     DATA_PATH = f"{par.DATA_PATH}{training_type}{G.graph['name']}/"
     mse_file = open(f"{DATA_PATH}mse/mse_{weight_type}.txt", "w") #write error 
+    best_choice_file = open(f"{DATA_PATH}weights/best_choice/choosen_weights.txt", "w")
+    
     if G.name == 'voltage_divider': 
         potential_target_file = open(f"{par.DATA_PATH}potential_targets/potential_targets{G.nodes[1]['desired']}.txt", "w") #write potential target during training (for voltage divider)  
     else:
@@ -594,10 +596,30 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 learning_rate_step = learning_rate[1]
                 switch_parameter=0
 
-        # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
-        update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+        if weight_type == 'best_choice':
+            G_matrices = {}
+            cost_func_vec = np.zeros(4)
+            possible_weights = ['length', 'radius_base', 'rho', 'pressure']
+            for weight_possible_inx in range(len(possible_weights)):
+                G_matrices[f'{possible_weights[weight_possible_inx]}'] = G.copy(as_view=False)
+                weight_type_step = possible_weights[weight_possible_inx]
+                delta_weight_step = delta_weight[weight_possible_inx]
+                learning_rate_step = learning_rate[weight_possible_inx]
+                
+                update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+                cost_func_vec[weight_possible_inx] = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)  
+            
+            choosen_weight = np.argmin(cost_func_vec)
+            best_choice_file.write(f"{step+1}\t{choosen_weight}\n")
+            print(choosen_weight)
+            G = G_matrices[f'{possible_weights[choosen_weight]}'].copy(as_view=False)
 
-        # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
+        else:
+
+            # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+            update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+
+            # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
         
             write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type_step)
@@ -620,6 +642,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         nx.write_graphml(G, f"{DATA_PATH}/trained_graph_{weight_type_step}.graphml")
                              
     mse_file.close()
+    best_choice_file.close()
     if G.name == 'voltage_divider':
         potential_target_file.close()
 

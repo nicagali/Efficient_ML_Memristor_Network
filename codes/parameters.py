@@ -75,6 +75,12 @@ conductances_style = {
     
 }
 
+lengths_style = {
+    'M1': dict(c = 'green', lw=5, label=r'$M_1$'),
+    'M2': dict(c = 'mediumseagreen', lw=2, label=r'$M_2$')
+    
+}
+
 steady_state_point = {    
     'M1': dict(marker = '^', c = 'darkcyan', s=200, edgecolors= 'blue' , label=r'steady state $M_1$'),
     'M2': dict(marker = 'o', c = 'lightblue', s=200, edgecolors= 'blue', label=r'steady state $M_2$')
