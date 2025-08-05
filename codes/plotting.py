@@ -65,16 +65,20 @@ def plot_graph(G, weight_type = None):
 
 def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     
+    # if weight_type
+
     data = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/mse/mse_{weight_type}.txt", unpack=True)
-    choosen_weight = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/weights/best_choice/choosen_weights.txt", unpack=True)
+
 
     x = data[0]
-    x = x[::5]
+    print(len(x))
+    # x = x[::5]
     y = data[1]
-    y = y[::5]
-    choosen_weight = choosen_weight[1]
+    # y = y[::5]
 
     if weight_type == 'best_choice':
+        choosen_weight = np.loadtxt(f"{par.DATA_PATH}{training_type}{graph_id}/weights/best_choice/choosen_weights.txt", unpack=True)
+        choosen_weight = choosen_weight[1]
         color_vec = ['#F2CB05FF']
         possible_weights = ['length', 'radius_base', 'rho', 'pressure']
         
@@ -84,7 +88,7 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
             style = par.weight_styles[f'{possible_weights[point]}']
             color_vec.append(style['c'])
         # print(color_vec)
-        color_vec = color_vec[::5]
+        # color_vec = color_vec[::5]
         ax.scatter(x, y, color = color_vec, marker = '^', s = 50, lw = style['lw'], label = 'best choice', zorder=2)
         
     else:

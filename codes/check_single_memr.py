@@ -22,13 +22,12 @@ def plot_ginfty(ax, circuit, mysistor_id, potential_vec=False, result=None, stea
         
         potential_vec = np.linspace(-5, 5)
         mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id=mysistor_id)
-        print(mysistor.length_channel)
+        # print(mysistor.length_channel)
         g_infinity = []
+        # print(mysistor.pressure)
         for potential in potential_vec:
-            if change_func and mysistor_id=='M1':
-                g_infinity_value = ahkab.transient.g_infinity_func(potential, 0, 0, mysistor, change_func=True)*mysistor.g_0
-            else:
-                g_infinity_value = ahkab.transient.g_infinity_func(potential, 0, 0, mysistor)*mysistor.g_0
+            
+            g_infinity_value = ahkab.transient.g_infinity_func(potential, mysistor.pressure, 0, mysistor)*mysistor.g_0
             g_infinity.append(g_infinity_value)
         ax.plot(potential_vec, g_infinity, **par.g_infinity_style[f'{style}'], zorder=0)
     
@@ -44,10 +43,8 @@ def plot_ginfty(ax, circuit, mysistor_id, potential_vec=False, result=None, stea
         mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id =mysistor_id)
         g_infinity = []
         for potential in deltav:
-            if change_func and mysistor_id=='M1':
-                g_infinity_value = ahkab.transient.g_infinity_func(potential, 0, 0, mysistor, change_func=True)*mysistor.g_0
-            else:
-                g_infinity_value = ahkab.transient.g_infinity_func(potential, 0, 0, mysistor)*mysistor.g_0
+            
+            g_infinity_value = ahkab.transient.g_infinity_func(potential, mysistor.pressure, 0, mysistor)*mysistor.g_0
             g_infinity.append(g_infinity_value)
         ax.plot(result['tran']['T'], g_infinity, **par.g_infinity_style[f'{style}'], zorder = 0)
         ax.legend(fontsize = par.legend_size)   
@@ -136,7 +133,7 @@ def plot_length_function(circuit):
 
     function = ahkab.transient.length_sigmoid(potential) 
     function = function/(function[0])
-    print(function)
+    # print(function)
 
     fig, ax = plt.subplots()
     ax.plot(potential, function, c = 'green', lw=4, label = rf'$\sigma(\Delta V)$')
@@ -164,8 +161,7 @@ circuit = ahkab.circuit.Circuit('Single Memristor')
 circuit.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=0, delta_rho=0)
 
 circuit2 = ahkab.circuit.Circuit('Single Memristor')
-circuit2.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=0, delta_rho=0)
-
+circuit2.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=1e5, delta_rho=0)
 
 period = 0.01
 impulse_period = 10*period
