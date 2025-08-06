@@ -73,7 +73,9 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     x = data[0]
     print(len(x))
     # x = x[::5]
-    y = data[1]
+    y = np.array(data[1])
+    y = y/y[0]
+    
     # y = y[::5]
 
     if weight_type == 'best_choice':

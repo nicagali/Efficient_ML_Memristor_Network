@@ -237,16 +237,20 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
 
             denominator = delta_weight[1]*1e-6
             gradients.append((error - base_error)/denominator)
+            # print(index, (error - base_error), denominator, (error - base_error)/denominator)
+
             denominator = delta_weight[0]*1e-9
             gradients2.append((error - base_error)/denominator)
 
-            # print(index, base_error, G_increment.edges[edge][f'{weight_type}'], error)
+            # print(index, (error - base_error), denominator, (error - base_error)/denominator)
 
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
-
-            G.edges[edge]['length'] += learning_rate[0]*gradients[index]
             # print(G.edges[edge]['length'])
-            G.edges[edge]['radius_base'] += learning_rate[1]*gradients2[index]
+            G.edges[edge]['length'] -= learning_rate[0]*gradients[index]
+            # print(G.edges[edge]['length'])
+            G.edges[edge]['radius_base'] -= learning_rate[1]*gradients2[index]
+            # print(G.edges[edge]['radius_base'])
+
 
     else:
         # print('updating')
@@ -268,6 +272,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 denominator = delta_weight*1e-9
 
             # print(index, base_error, G_increment.edges[edge][f'{weight_type}'], error)
+            # print(index, (error - base_error), denominator, (error - base_error)/denominator)
 
             gradients.append((error - base_error)/denominator)
             
@@ -557,7 +562,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     if training_type == 'allostery':
         error = cost_function(G, weight_type, potential_target_file, update_initial_res=False, varying_len=varying_len) 
         print('Step:', 0, error)
-        error_normalization = 1#error #define it as normalization error
+        error_normalization = error #define it as normalization error
         mse_file.write(f"{0}\t{error/error_normalization}\n")
 
     else:
@@ -574,17 +579,17 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         weight_type_step = weight_type
         delta_weight_step = delta_weight
         learning_rate_step = learning_rate
-        if weight_type == 'length_radius_base':
-            if switch_parameter==0:
-                weight_type_step = 'length'
-                delta_weight_step = delta_weight[0]
-                learning_rate_step = learning_rate[0]
-                switch_parameter=1
-            else:
-                weight_type_step = 'radius_base'
-                delta_weight_step = delta_weight[1]
-                learning_rate_step = learning_rate[1]
-                switch_parameter=0
+        # if weight_type == 'length_radius_base':
+        #     if switch_parameter==0:
+        #         weight_type_step = 'length'
+        #         delta_weight_step = delta_weight[0]
+        #         learning_rate_step = learning_rate[0]
+        #         switch_parameter=1
+        #     else:
+        #         weight_type_step = 'radius_base'
+        #         delta_weight_step = delta_weight[1]
+        #         learning_rate_step = learning_rate[1]
+        #         switch_parameter=0
                 
         if weight_type == 'length_pressure':
             if switch_parameter==0:
@@ -620,14 +625,15 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         else:
 
-            # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
-            update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
+            update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
+            # update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
 
             # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
         
             write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type_step)
             
+        # print('updated')
 
         # COMPUTE error
         if training_type == 'allostery':

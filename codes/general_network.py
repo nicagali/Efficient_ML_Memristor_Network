@@ -47,22 +47,22 @@ training_steps = 400
 training_type = 'allostery'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'length_radius_base', 'length_pressure', 'best_choice']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3, [1e-3, 1], [1e-3, 1e-3], [1e-3, 1, 1e-4, 1e-3]] 
-learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-6, 8e-7], [1e-6, 20], [1e-6, 8e-7, 1e-4, 20]]
+learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-9, 1e-9], [1e-6, 20], [1e-6, 8e-7, 1e-4, 20]]
 
-for weight_type_index in [6]:
+for weight_type_index in [4]:
 # weight_type_index = 4
     G_train = G.copy(as_view=False)
     # print(G_train.nodes)
 
-    # training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
+    training.train(G_train, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True)
 
 # --------- PLOT ERROR AND WEIGHTS ---------
 
 fig, ax = plt.subplots()
-plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
+# plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'length')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'radius_base')
-# plotting.plot_mse(ax, fig, graph_id, training_type, f'length_radius_base')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'length_radius_base')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'rho')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'pressure')
 # plotting.plot_mse(ax, fig, graph_id, training_type, f'length_pressure')
