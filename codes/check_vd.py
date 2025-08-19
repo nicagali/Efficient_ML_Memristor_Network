@@ -169,82 +169,77 @@ def plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, ph
     fig.tight_layout()
     plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/grid_{phase}.pdf")
    
-   
+def plot_length(len_vec, result):
+
+    fig, ax = plt.subplots()
+    for edge_index in range(len(len_vec[0])):
+        y = [(len_vec[time_index][edge_index]) for time_index in range(len(len_vec))]
+        ax.plot(result['tran']['T'], y, **par.lengths_style[f'M{edge_index+1}'], zorder = 0) 
+            
+    ax.set_ylabel(r'$L[\mu m]$', fontsize = par.axis_fontsize)
+    ax.set_xlabel(r'$\Delta V$[$\Omega$]', fontsize = par.axis_fontsize)
+    ax.tick_params(axis='both', labelsize=par.size_ticks)
+    ax.legend(fontsize = par.legend_size)
+    fig.tight_layout()
+    plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/length_time.pdf")
+
 # -> DEFINE graph from networks module
-G = networks.voltage_divider(save_data=True) 
+# G = networks.voltage_divider(save_data=True) 
 
-circuit = networks.circuit_from_graph(G, type='memristors') 
+# circuit = networks.circuit_from_graph(G, type='memristors') 
 
-# ANALYSIS IN INITIAL CONDITION
-tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None, use_step_control=False)
-result = ahkab.run(circuit, an_list=tran_analysis) 
-potentials_vec = result[0]
-resistances_vec = result[1]
+# # ANALYSIS IN INITIAL CONDITION
+# tran_analysis = ahkab.new_tran(tstart=0, tstop=0.1, tstep=1e-3, x0=None, use_step_control=False)
+# result = ahkab.run(circuit, an_list=tran_analysis) 
+# potentials_vec = result[0]
+# resistances_vec = result[1]
 
-plot_analysis_relaxation(circuit, potentials_vec, resistances_vec, 'initial_condition')
+# plot_analysis_relaxation(circuit, potentials_vec, resistances_vec, 'initial_condition')
 
-plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, 'initial_condition')
+# plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, 'initial_condition')
 
 # ANALYSIS WHEN TRAINED FOR LENGTH
 
-G_trained = nx.read_graphml('../plots/importance_ginfinity_dynamics/Gtrained.graphml')
+# G_trained = nx.read_graphml('../plots/importance_ginfinity_dynamics/Gtrained.graphml')
 
-circuit_trained = networks.circuit_from_graph(G_trained, type='memristors') 
+# circuit_trained = networks.circuit_from_graph(G_trained, type='memristors') 
 
-tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-3, x0=None, use_step_control=False)
-result = ahkab.run(circuit_trained, an_list=tran_analysis) 
-potentials_vec = result[0]
-resistances_vec = result[1]
-resistances_vec_trained = resistances_vec
+# tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-3, x0=None, use_step_control=False)
+# result = ahkab.run(circuit_trained, an_list=tran_analysis) 
+# potentials_vec = result[0]
+# resistances_vec = result[1]
+# resistances_vec_trained = resistances_vec
 
-plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trained')
+# plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trained')
 
-plot_analysis_relaxation_ingrid(circuit_trained, potentials_vec, resistances_vec, 'trained')
+# plot_analysis_relaxation_ingrid(circuit_trained, potentials_vec, resistances_vec, 'trained')
 
 # ANALYSIS WHEN TRAINED FOR LENGTH WITH DIFFERENT GINFINITY
 
-circuit_trained = networks.circuit_from_graph(G_trained, type='memristors') 
+# circuit_trained = networks.circuit_from_graph(G_trained, type='memristors') 
 
-tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-4, x0=None, change_func = True, use_step_control=False)
-result = ahkab.run(circuit_trained, an_list=tran_analysis) 
+# tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-4, x0=None, change_func = True, use_step_control=False)
+# result = ahkab.run(circuit_trained, an_list=tran_analysis) 
+# potentials_vec = result[0]
+# resistances_vec = result[1]
+
+# plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trained_change_func')
+
+# plot_analysis_relaxation_ingrid(circuit_trained, potentials_vec, resistances_vec, 'trained_change_func')
+
+# VD
+
+G = networks.voltage_divider(save_data=True) 
+circuit = networks.circuit_from_graph(G, type='memristors')
+mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id='M1')
+# mysistor.length_channel = 11e-6
+# mysistor.initial_length = 11e-6
+# mysistor.init_derived_param()
+circuit.add_vsource("VN1", 'n1', circuit.gnd, dc_value=4)
+analysis = ahkab.new_tran(tstart=0, tstop=0.05, tstep=1e-4, x0=None, varying_len = True)
+result = ahkab.run(circuit, an_list=analysis)
 potentials_vec = result[0]
 resistances_vec = result[1]
-
-plot_analysis_relaxation(circuit_trained, potentials_vec, resistances_vec, 'trained_change_func')
-
-plot_analysis_relaxation_ingrid(circuit_trained, potentials_vec, resistances_vec, 'trained_change_func')
-
-# ANALYSIS WHEN TRAINED ginfinity INITIAL CONDITION FOR LENGTH 
-
-G_updated_initial_cond = G.copy(as_view=False)
-for edge_index, edge in enumerate(G_updated_initial_cond.edges()):
-    G_updated_initial_cond.edges[edge]["resistance"] = resistances_vec_trained[-1][edge_index]
-    print(resistances_vec[-1][edge_index])
-
-circuit_updated_initial_cond = networks.circuit_from_graph(G_updated_initial_cond, type='memristors') 
-
-tran_analysis = ahkab.new_tran(tstart=0, tstop=0.02, tstep=1e-4, x0=None, change_func = True, use_step_control=False)
-result = ahkab.run(circuit_updated_initial_cond, an_list=tran_analysis) 
-potentials_vec = result[0]
-resistances_vec = result[1]
-
-plot_analysis_relaxation(circuit_updated_initial_cond, potentials_vec, resistances_vec, 'updated_initial_cond_func')
-
-# PLOTTING ginfinity(delta P) for prositive and negative potential 
-
-# pressure_vec = np.linspace(-1, 1)
-# mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id='M1')
-# g_infinity_positive = []
-# g_infinity_negative = []
-# for pressure in pressure_vec:
-#     g_infinity_value = ahkab.transient.g_infinity_func(0.4, pressure, 0, mysistor)*mysistor.g_0
-#     g_infinity_positive.append(g_infinity_value)
-#     g_infinity_value = ahkab.transient.g_infinity_func(-0.4, pressure, 0, mysistor)*mysistor.g_0
-#     g_infinity_positive.append(g_infinity_value)
-
-# fig, ax = plt.subplots()
-# ax.plot(pressure_vec, g_infinity)
-
-# fig.tight_layout()
-# plt.savefig(f"../plots/importance_ginfinity_dynamics/plots/gininifty_pressure.pdf")
-    
+len_vec = result[2]
+plot_analysis_relaxation_ingrid(circuit, potentials_vec, resistances_vec, 'changing_len')
+plot_length(len_vec, potentials_vec)

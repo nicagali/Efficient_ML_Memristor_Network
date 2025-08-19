@@ -40,7 +40,10 @@ weight_styles = {
     'pressure': dict(marker = 'o', c = cmap.colors[3], lw=1, label = rf'$P$', ylabel_weights = r'$P$[bar]'),
     'resistance': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$R$', ylabel_weights = r'$R$[$\Omega$]'),
     'length_radius_base': dict(marker = 'o', c = 'mediumblue', lw=1, label = rf'$L/R_b$', ylabel_weights = r'$R$[$\Omega$]'),
-    'length_pressure': dict(marker = 'o', c = 'dodgerblue', lw=1, label = rf'$L/P$', ylabel_weights = r'$R$[$\Omega$]')
+    'length_pressure': dict(marker = 'o', c = 'dodgerblue', lw=1, label = rf'$L/P$', ylabel_weights = r'$R$[$\Omega$]'),
+    'length_var': dict(marker = 'o', c = 'blueviolet', lw=1, label = r'$L_{var}$', ylabel_weights = r'$L$[$\mu$ m]'),
+    'pressure_var': dict(marker = 'o', c = 'darkgreen', lw=1, label = r'$P_{var}$', ylabel_weights = r'$L$[$\mu$ m]'),
+
 }
 
 memr_resistances_style = dict(marker = 'o', markersize=3, lw=1)

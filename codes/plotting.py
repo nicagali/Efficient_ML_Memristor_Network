@@ -71,7 +71,7 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
 
 
     x = data[0]
-    print(len(x))
+    # print(len(x))
     # x = x[::5]
     y = np.array(data[1])
     y = y/y[0]
@@ -91,7 +91,8 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
             color_vec.append(style['c'])
         # print(color_vec)
         # color_vec = color_vec[::5]
-        ax.scatter(x, y, color = color_vec, marker = '^', s = 50, lw = style['lw'], label = 'best choice', zorder=2)
+        ax.scatter(x, y, color = color_vec, marker = '^', lw = style['lw'], zorder=2)
+        ax.plot(x, y, color = 'black', ls = ':', label = 'best choice', zorder=1)
         
     else:
         style = par.weight_styles[f'{weight_type}']
@@ -134,29 +135,47 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
     # palette = plt.get_cmap('tab20')
       
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
+    ax2 = ax.twinx()  
+
     for weight_indx in range(number_weights):
 
         weight = []
+        weight2 = []
         for step in range(training_steps+1):
             data = np.loadtxt(f"{par.DATA_PATH}{training_type}{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
             y = data[1]
             weight.append(y[weight_indx])
+            if weight_type=='length_radius_base':
+                y2 = data[2]
+                weight2.append(y2[weight_indx])
 
-        label_without_weightindex = style['label'][1:-1]
-        ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
-        # ax.plot(x, weight, color=palette(weight_indx), marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
-        # ax.plot(x, weight, marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
-        
-    label = style['ylabel_weights']
-    ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
+        if weight_type=='length_radius_base':
+            plt1 = ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'$L_{{{weight_indx}}}$')
+            plt2 = ax2.plot(x, weight2, color=palette[weight_indx], marker = '^', lw = style['lw'], label = rf'$R_{{b{weight_indx}}}$')
+            if weight_indx==0:
+                plts = plt1 + plt2
+            else:
+                plts += plt1 + plt2
+        else:
+            label_without_weightindex = style['label'][1:-1]
+            ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
+
     if show_xlabel:
         ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
     ax.tick_params(axis='both', labelsize=par.size_ticks)
-    # if weight_type == 'pressure' and starting_step==0:
-    #     ax.legend(fontsize = par.legend_size, loc='lower left')
-    # elif starting_step ==0 :
-    ax.legend(fontsize = par.legend_size)
-        # ax.legend(bbox_to_anchor=(1, 1))
+
+    if weight_type=='length_radius_base':
+        # plts = plt1 + plt2
+        labs = [l.get_label() for l in plts]
+        ax.legend(plts, labs, loc=0)
+        ax.set_ylabel(rf'L[$\mu$m]', fontsize = par.axis_fontsize)
+        ax2.set_ylabel(rf'$R_b$[$n$m]', fontsize = par.axis_fontsize)
+        ax2.tick_params(axis='both', labelsize=par.size_ticks)
+    else:
+        label = style['ylabel_weights']
+        ax.legend(fontsize = par.legend_size)
+        ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
+
 
 def plot_memristor_resistances(ax, G):
 
@@ -173,7 +192,7 @@ def plot_memristor_resistances(ax, G):
     for edge_index in range(len(G.edges())):
         y = [1/(resistances[time_index][edge_index]) for time_index in range(len(resistances))]
         ax.plot(x, y, **par.memr_resistances_style, label = rf'$M_{{{edge_index+1}}}$') 
-    # ax.legend()
+    ax.legend()
 
 def plot_potential_each_node(ax, G, factor_time=1):
 
@@ -364,7 +383,7 @@ def plot_vd(ax, circuit, result, type, voltage_dep=False,
         time = result['tran']['T']
         time = time[start:stop]
         conductance = 1/conductance[start:stop]
-        print(conductance[-1])
+        # print(conductance[-1])
         ax.set_xlabel(r't[s]')
         ax.set_ylabel(r'g[pS]')
         if g_infty_plot:

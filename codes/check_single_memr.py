@@ -17,14 +17,12 @@ def plot_ginfty(ax, circuit, mysistor_id, potential_vec=False, result=None, stea
         style = 'M1'
     else:
         style = 'M2'
-
+        
     if potential_vec == True:
         
         potential_vec = np.linspace(-5, 5)
         mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id=mysistor_id)
-        # print(mysistor.length_channel)
         g_infinity = []
-        # print(mysistor.pressure)
         for potential in potential_vec:
             
             g_infinity_value = ahkab.transient.g_infinity_func(potential, mysistor.pressure, 0, mysistor)*mysistor.g_0
@@ -42,6 +40,7 @@ def plot_ginfty(ax, circuit, mysistor_id, potential_vec=False, result=None, stea
             
         mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id =mysistor_id)
         g_infinity = []
+
         for potential in deltav:
             
             g_infinity_value = ahkab.transient.g_infinity_func(potential, mysistor.pressure, 0, mysistor)*mysistor.g_0
@@ -119,7 +118,7 @@ def plot_analysis_relaxation(circuit, circuit2, result, result2):
 
     # Plot g_infty as func of potential
     fig, ax = plt.subplots()
-    plot_ginfty(ax, circuit, 'M1', potential_vec=True, type='const_l')
+    # plot_ginfty(ax, circuit, 'M1', potential_vec=True, type='const_l')
     plot_ginfty(ax, circuit2, 'M1', potential_vec=True, type='var_l')
     # ax.legend(fontsize = par.legend_size)
     fig.tight_layout()
@@ -131,7 +130,7 @@ def plot_length_function(circuit):
     mysistor = ahkab.Circuit.get_elem_by_name(circuit, part_id = 'M1')
 
 
-    function = ahkab.transient.length_sigmoid(potential) 
+    function = ahkab.transient.length_sigmoid(mysistor, potential) 
     function = function/(function[0])
     # print(function)
 
@@ -161,7 +160,7 @@ circuit = ahkab.circuit.Circuit('Single Memristor')
 circuit.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=0, delta_rho=0)
 
 circuit2 = ahkab.circuit.Circuit('Single Memristor')
-circuit2.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=1e5, delta_rho=0)
+circuit2.add_mysistor('M1', 'n1', circuit.gnd, value=1/4, rho_b=0.1, length_channel=10e-6, radius_base=200e-9, pressure=0, delta_rho=0)
 
 period = 0.01
 impulse_period = 10*period
