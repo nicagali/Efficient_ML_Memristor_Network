@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00010001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -50,8 +50,8 @@ training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance', 'best_choice']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3, [1e-3, 1e-3, 1e-4, 1e-3]]
-learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3] #1
-# learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4] #2
+# learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3] #1
+learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4] #2
 # learning_rate_vec = [5e-7, 3e-6, 2e-4, 5e1, 1e4, [2e-9, 1e-6, 1e-4, 2e2]]
 constant_source = [11, 4, 4, 11, 4, [11, 4, 4, 11]]
 

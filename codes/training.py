@@ -7,6 +7,8 @@ import networkx as nx
 import statistics
 sys.path.append(par.PACKAGE_PATH)
 import ahkab 
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
 # --------- WRITE RESULTS TO FILES ---------
 
@@ -126,30 +128,13 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep):
         
         if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
 
-            # if datastep == None:
-            #     G.nodes[node]['voltage'] = input_voltage[input_index]
-            # else:
             G.nodes[node]['voltage'] = input_voltage[datastep][input_index]
-
-
-            # if datastep == 0:
-                # print(input_voltage)
-                # print(input_index)
-                # print('input voltage', node, input_voltage[input_index][datastep])
 
             input_index += 1
 
-
         if G.nodes[node]['type'] == 'target':
 
-            # if datastep == None:
-            #     G.nodes[node]['desired'] = desired_voltage[output_index]
-            # else:
             G.nodes[node]['desired'] = desired_voltage[datastep][output_index]
-
-
-            # if datastep == 0:
-                # print('output voltage', node, desired_voltage[output_index][datastep])
 
             output_index += 1
 
@@ -162,9 +147,10 @@ def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_outp
     else:
 
         error = 0
-        for datastep in range(len(dataset_input_voltage[0])):
+        for datastep in range(len(dataset_input_voltage)):
             update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage, datastep)
             error += cost_function(G, weight_type) 
+            # print(error)
         error = error/len(dataset_input_voltage[0])
 
     return error
@@ -418,24 +404,6 @@ def update_resistances(G_free, training_type, dataset_input_voltage, dataset_out
 
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 
-# def generate_dataset_single(training_steps, random = True):
-
-#     training_steps += 1
-
-#     if random:
-#         input_voltage = np.random.uniform(1,4, training_steps)
-#     else:
-#         input_voltage = np.linspace(1,4, training_steps)
-
-#     desired_output = regression_function(input_voltage)
-
-#     input_voltage = [input_voltage]
-#     desired_output = [desired_output]
-
-#     # print(input_voltage)
-
-#     return input_voltage, desired_output
-
 def generate_dataset(training_steps):
 
     training_steps +=1
@@ -516,8 +484,8 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
         # batch_size = 1
         number_of_weights = G.number_of_nodes()
     else:
-        batch_size = int(G.number_of_edges()/2)
-        # batch_size = G.number_of_edges()
+        # batch_size = int(G.number_of_edges()/2)
+        batch_size = 11
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
@@ -591,24 +559,22 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         # WRITE initial condition: intialized wieghts and intial error
         write_weights_to_file(G, DATA_PATH, step=0, weight_type=weight_type)
 
-    # dataset_input_voltage=[]
-    # dataset_output_voltage=[]
     if training_type == 'regression':
-        # count_ins = 0
-        # count_outs = 0
-        # for node in G.nodes():
-        #     if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
-        #         count_ins+=1
-        #     if G.nodes[node]['type'] == 'target':
-        #         count_outs+=1
-            # print(node, G.nodes[node]['constant_source'])
-        # if counter_inputs == 1:
-            # dataset_input_voltage, dataset_output_voltage = generate_dataset_single(0)
-            # testset_input_voltage, testset_output_voltage = generate_dataset_single(5, random = False)
-            # print(dataset_input_voltage)
-        # else:
         dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
         testset_input_voltage, testset_output_voltage = generate_dataset(5)
+    if training_type == 'iris':
+        iris = load_iris()
+        dataset_input_voltage, testset_input_voltage, dataset_output, testset_output = train_test_split(iris['data'], iris['target'], test_size=0.2, random_state=7)
+        dataset_output_voltage = []
+        testset_output_voltage = []
+        # print(len(dataset_output), len(testset_output))
+        for datapoint, datavalue in enumerate(dataset_output):
+            vec = np.ones(3)*2
+            vec[datavalue] = 3
+            dataset_output_voltage.append(vec)
+            vec = np.ones(3)*2
+            vec[testset_output[datavalue]] = 3
+            testset_output_voltage.append(vec)
 
     # COMPUTE initial error
     if training_type == 'allostery':
@@ -657,8 +623,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         else:
 
-            update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
-            # update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
+            # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
+            update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
 
             # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
@@ -744,7 +710,6 @@ def test_regression(G, step, weight_type):
 
         reg_file.write(f"{testset_input_voltage[0][datastep]}\t{output_voltage_target[0]}")
         reg_file.write("\n")
-
 
     test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
     print(f"Error step {step}", test_error)
