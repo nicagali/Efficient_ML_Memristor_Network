@@ -423,6 +423,8 @@ def generate_dataset(training_steps):
 
 def compute_single_gradient_parallel_helper(G, weight_index, training_type, base_error, weight_type, delta_weight, dataset_input_voltage, dataset_output_voltage, datastep, varying_len, stored_gradient, lock):
     
+    # print(dataset_input_voltage[datastep], dataset_output_voltage[datastep])
+
     gradient = 0
     G_increment = G.copy(as_view=False)
     if weight_type=='pressure' or weight_type == 'rho':
@@ -569,13 +571,15 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         testset_output_voltage = []
         # print(len(dataset_output), len(testset_output))
         for datapoint, datavalue in enumerate(dataset_output):
-            vec = np.ones(3)*2
-            vec[datavalue] = 3
+            vec = np.ones(3)*3.38
+            vec[datavalue] = 3.39
             dataset_output_voltage.append(vec)
-            vec = np.ones(3)*2
-            vec[testset_output[datavalue]] = 3
+            vec = np.ones(3)*3.38
+            vec[testset_output[datavalue]] = 3.39
             testset_output_voltage.append(vec)
-
+        dataset_input_voltage = np.tile(dataset_input_voltage, (9,1))
+        dataset_output_voltage = np.tile(dataset_output_voltage, (9,1))
+        
     # COMPUTE initial error
     if training_type == 'allostery':
         error = cost_function(G, weight_type, potential_target_file, update_initial_res=False, varying_len=varying_len) 
@@ -641,6 +645,17 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             # if step % 10 == 0:
             test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
             print('Step:', step+1, test_error)
+            if training_type == 'iris':
+                print(dataset_input_voltage[step], dataset_output_voltage[step])
+                circuit = networks.circuit_from_graph(G, type='memristors') 
+                analysis = ahkab.new_tran(tstart=0, tstop=0.05, tstep=1e-3, x0=None, varying_len=varying_len)
+
+                # DEFINE a transient analysis (analysis of the circuit over time)
+                result = ahkab.run(circuit, an_list=analysis)
+                result = result[0]
+                for node in G.nodes():
+                    if G.nodes[node]['type'] == 'target':
+                        print(result['tran'][f'VN{node}'][-1])
             mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
 
     if save_final_graph==True:

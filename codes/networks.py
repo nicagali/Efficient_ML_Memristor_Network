@@ -260,8 +260,9 @@ def to_directed_graph(G_structure, shuffle = False):
     nodes = [node for node in G_structure.nodes()]
     targets = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='target']
     sources = [x for x in G_structure.nodes() if G_structure.nodes[x]['type']=='source']
-    voltage_input = [0, 6, 2] # node initialized here because different for differnent nw
-    voltage_desired = [3, 2, 3]
+    voltage_input = [0, 5, 3, 2, 1] # node initialized here because different for differnent nw
+    voltage_desired = [2, 2, 3]
+
     G.add_nodes_from(nodes)
 
     initialize_nodes(G, sources, targets, voltage_input, voltage_desired)

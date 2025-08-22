@@ -16,19 +16,17 @@ PLOT_PATH = f'{par.PLOT_PATH}iris{graph_id}/'
 
 # -> DEFINE graph from networks module
 
-# G = networks.random_graph(number_nodes=18, number_edges=33 ,save_data=True) 
+# G = networks.random_graph(number_nodes=12, number_edges=22 ,save_data=True) 
 G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-G = nx.DiGraph(G)
+# G = networks.to_directed_graph(G, shuffle=True)
 
-G.graph['name'] = f'{graph_id}'
-# G.remove_edge('12', '16')
-G.remove_edge('0', '3')
-G.add_edge('3','0')
-# G.add_edge('0','3')
-networks.initialize_edges(G)
-nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
-
-print(G.edges())
+# G.graph['name'] = f'{graph_id}'
+# G.remove_edge('9', '12')
+# G.remove_edge('6', '7')
+# G.add_edge('6','10')
+# G.add_edge('7','8')
+# networks.initialize_edges(G)
+# nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 
 # -> PLOT graph in /plots 
 fig, ax = plt.subplots()
@@ -38,11 +36,11 @@ fig.savefig(f"{PLOT_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK WITH DIFFERENT WEIGHTS ---------
 
-training_steps = 300
+training_steps = 1000
 training_type = 'iris'
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'length_radius_base', 'length_pressure', 'best_choice']
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3, [1e-3, 1], [1e-3, 1e-3], [1e-3, 1, 1e-4, 1e-3]] 
-learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-6, 8e-7], [1e-6, 20], [1e-6, 8e-7, 1e-4, 20]]
+learning_rate_vec = [5e-6, 8e-7, 1e-4, 20, [1e-6, 8e-7], [1e-6, 20], [1e-6, 8e-7, 1e-4, 20]]
 
 for weight_type_index in [0]:
     G_train = G.copy(as_view=False)
