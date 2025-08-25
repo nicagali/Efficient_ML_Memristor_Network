@@ -543,6 +543,8 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
 
 def train(G, training_type, training_steps, weight_type, delta_weight, learning_rate, save_final_graph=False, write_weights = False, graph_id=None, constant_source=None, varying_len=False):
 
+    # print(G.graph['name'])
+
     # OPEN files to write results
     DATA_PATH = f"{par.DATA_PATH}{training_type}{G.graph['name']}/"
     if varying_len:
@@ -686,15 +688,8 @@ def test_regression(G, step, weight_type):
             
     reg_file = open(f"{par.DATA_PATH}regression{G.graph['name']}/relations_regression/relations_regression{weight_type}{step}.txt", "w") 
 
-    counter_inputs = 0
-    for node in G.nodes():
-        if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
-            counter_inputs+=1
-    if counter_inputs == 1:
-        testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
-    else:
-        testset_input_voltage, testset_output_voltage = generate_dataset_single(20, random = False)
-        
+    testset_input_voltage, testset_output_voltage = generate_dataset(15)
+
     error = 0
     for datastep in range(len(testset_input_voltage[0])):
 
@@ -727,7 +722,7 @@ def test_regression(G, step, weight_type):
         reg_file.write(f"{testset_input_voltage[0][datastep]}\t{output_voltage_target[0]}")
         reg_file.write("\n")
 
-    test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage, 0, error_type='test')
+    test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage)
     print(f"Error step {step}", test_error)
     reg_file.close()
     
