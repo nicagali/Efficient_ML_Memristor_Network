@@ -135,7 +135,8 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
     # palette = plt.get_cmap('tab20')
       
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
-    ax2 = ax.twinx()  
+    if weight_type == 'length_radius_base':
+        ax2 = ax.twinx()  
 
     for weight_indx in range(number_weights):
 

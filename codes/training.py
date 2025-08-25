@@ -560,7 +560,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     if write_weights:
         # WRITE initial condition: intialized wieghts and intial error
         write_weights_to_file(G, DATA_PATH, step=0, weight_type=weight_type)
-
+    dataset_input_voltage = None
+    dataset_output_voltage = None
     if training_type == 'regression':
         dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
         testset_input_voltage, testset_output_voltage = generate_dataset(5)
@@ -571,14 +572,14 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         testset_output_voltage = []
         # print(len(dataset_output), len(testset_output))
         for datapoint, datavalue in enumerate(dataset_output):
-            vec = np.ones(3)*3.38
-            vec[datavalue] = 3.39
+            vec = np.ones(3)*3
+            vec[datavalue] = 5
             dataset_output_voltage.append(vec)
-            vec = np.ones(3)*3.38
-            vec[testset_output[datavalue]] = 3.39
+            vec = np.ones(3)*3
+            vec[testset_output[datavalue]] = 5
             testset_output_voltage.append(vec)
-        dataset_input_voltage = np.tile(dataset_input_voltage, (9,1))
-        dataset_output_voltage = np.tile(dataset_output_voltage, (9,1))
+        dataset_input_voltage = np.tile(dataset_input_voltage, (20,1))
+        dataset_output_voltage = np.tile(dataset_output_voltage, (20,1))
         
     # COMPUTE initial error
     if training_type == 'allostery':
@@ -627,8 +628,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
 
         else:
 
-            # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
-            update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
+            update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
+            # update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
 
             # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
