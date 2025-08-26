@@ -405,11 +405,15 @@ def update_resistances(G_free, training_type, dataset_input_voltage, dataset_out
 
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 
-def generate_dataset(training_steps):
+def generate_dataset(training_steps, type):
 
     training_steps +=1
 
-    input_voltage = np.linspace(1,4, training_steps)
+    if type == 'train':
+        input_voltage = np.linspace(1,4, training_steps)
+    else:
+        input_voltage = np.linspace(1,4, training_steps)
+
     desired_output = regression_function(input_voltage)
 
     dataset_input = []
