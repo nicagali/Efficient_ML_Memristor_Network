@@ -129,13 +129,14 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep):
         if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
 
             G.nodes[node]['voltage'] = input_voltage[datastep][input_index]
+            print(node, input_voltage[datastep][input_index])
 
             input_index += 1
 
         if G.nodes[node]['type'] == 'target':
 
             G.nodes[node]['desired'] = desired_voltage[datastep][output_index]
-
+            print(node, desired_voltage[datastep][output_index])
             output_index += 1
 
 def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, datastep=None):
@@ -151,7 +152,7 @@ def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_outp
             update_input_output_volt(G, dataset_input_voltage, dataset_output_voltage, datastep)
             error += cost_function(G, weight_type) 
             # print(error)
-        error = error/len(dataset_input_voltage[0])
+        error = error/len(dataset_input_voltage)
 
     return error
 
@@ -408,7 +409,7 @@ def generate_dataset(training_steps):
 
     training_steps +=1
 
-    input_voltage = np.random.uniform(1,4, training_steps)
+    input_voltage = np.linspace(1,4, training_steps)
     desired_output = regression_function(input_voltage)
 
     dataset_input = []
@@ -596,6 +597,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         print('Step:', 0, test_error)
         error_normalization = test_error #define it as normalization error
         mse_file.write(f"{0}\t{test_error/error_normalization}\n")
+
+    # print(dataset_input_voltage, dataset_output_voltage)
 
     # LOOP over training steps
     for step in range(training_steps): 
