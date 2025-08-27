@@ -45,7 +45,7 @@ fig.tight_layout()
 fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 400   # choose
+training_steps = 1   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance', 'best_choice']
@@ -57,7 +57,7 @@ constant_source = [11, 4, 4, 11, 4, [11, 4, 4, 11]]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [5]:
+for weight_type_index in [0]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
     # G.nodes['3']['voltage'] = constant_source[weight_type_index]

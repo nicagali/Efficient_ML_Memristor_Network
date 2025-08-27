@@ -59,12 +59,12 @@ for weight_type_index in [0]:
 # --------- PLOT ERROR AND WEIGHTS ---------
 
 fig, ax = plt.subplots()
-plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'length')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'radius_base')
 # plotting.plot_mse(ax, fig, graph_id, training_type, f'length_radius_base')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'rho')
 plotting.plot_mse(ax, fig, graph_id, training_type, f'pressure')
+plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
 # plotting.plot_mse(ax, fig, graph_id, training_type, f'length_pressure')
 ax.legend(fontsize = par.legend_size)
 fig.tight_layout()

@@ -312,7 +312,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             else:
                 denominator = delta_weight*1e-9
 
-            # print(index, error, base_error)
+            print(index, error, base_error)
 
 
             gradients.append((error - base_error)/denominator)
@@ -320,6 +320,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
             G.edges[edge][f'{weight_type}'] -= learning_rate*gradients[index]
+            print(edge, weight_type, learning_rate, gradients[index], learning_rate*gradients[index])
 
             if G.edges[edge][f'{weight_type}'] < 0:
                 sys.exit(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
