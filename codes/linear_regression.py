@@ -45,7 +45,7 @@ fig.tight_layout()
 fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 30   # choose
+training_steps = 400   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance', 'best_choice']

@@ -129,14 +129,14 @@ def update_input_output_volt(G, input_voltage, desired_voltage, datastep):
         if G.nodes[node]['type'] == 'source' and G.nodes[node]['constant_source']==False:
 
             G.nodes[node]['voltage'] = input_voltage[datastep][input_index]
-            print(node, input_voltage[datastep][input_index])
+            # print(node, input_voltage[datastep][input_index])
 
             input_index += 1
 
         if G.nodes[node]['type'] == 'target':
 
             G.nodes[node]['desired'] = desired_voltage[datastep][output_index]
-            print(node, desired_voltage[datastep][output_index])
+            # print(node, desired_voltage[datastep][output_index])
             output_index += 1
 
 def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_output_voltage, datastep=None):
@@ -405,12 +405,12 @@ def update_resistances(G_free, training_type, dataset_input_voltage, dataset_out
 
 # Returns two arrays with length 15: input voltage and corresponding desired output following the linear relationship
 
-def generate_dataset(training_steps, type):
+def generate_dataset(training_steps, random=False):
 
     training_steps +=1
 
-    if type == 'train':
-        input_voltage = np.linspace(1,4, training_steps)
+    if random:
+        input_voltage = np.random.uniform(1,4, training_steps)
     else:
         input_voltage = np.linspace(1,4, training_steps)
 
@@ -492,7 +492,7 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
         number_of_weights = G.number_of_nodes()
     else:
         # batch_size = int(G.number_of_edges()/2)
-        batch_size = 11
+        batch_size = 10
         number_of_weights = G.number_of_edges()
 
     # Check if numb_nodes is a multiple of batch_size
@@ -570,7 +570,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
     dataset_input_voltage = None
     dataset_output_voltage = None
     if training_type == 'regression':
-        dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps)
+        dataset_input_voltage, dataset_output_voltage = generate_dataset(training_steps, random=True)
         testset_input_voltage, testset_output_voltage = generate_dataset(5)
     if training_type == 'iris':
         iris = load_iris()
@@ -624,9 +624,9 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                     G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
 
                 
-                update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
+                # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
 
-                # update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step)
+                update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=False, step=step)
 
                 cost_func_vec[weight_possible_inx] = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)  
             
