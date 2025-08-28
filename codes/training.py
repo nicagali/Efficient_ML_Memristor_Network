@@ -312,7 +312,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
             else:
                 denominator = delta_weight*1e-9
 
-            print(index, error, base_error)
+            # print(index, error, base_error)
 
 
             gradients.append((error - base_error)/denominator)
@@ -320,7 +320,7 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
         for index, edge in enumerate(G.edges()):    #Different loop cause you don't want to change edges yet
 
             G.edges[edge][f'{weight_type}'] -= learning_rate*gradients[index]
-            print(edge, weight_type, learning_rate, gradients[index], learning_rate*gradients[index])
+            # print(edge, weight_type, learning_rate, gradients[index], learning_rate*gradients[index])
 
             if G.edges[edge][f'{weight_type}'] < 0:
                 sys.exit(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
@@ -541,8 +541,6 @@ def  update_weights_parallel(G, training_type, base_error, weight_type, delta_we
                 G.edges[edge][f'{weight_type}'] += learning_rate*stored_gradient[index]
                 print(f"Error: Negative weight detected for edge {edge} with weight type '{weight_type}'.")
 
-
-
     return G
 
 # --------- TRAINING FUNCTIONS ---------
@@ -653,9 +651,10 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             mse_file.write(f"{step+1}\t{error/error_normalization}\n")
         else:
             error = cost_function_regression(G, weight_type_step, dataset_input_voltage, dataset_output_voltage, step +1)
-            # if step % 10 == 0:
-            test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
-            print('Step:', step+1, test_error)
+            if step % 15 == 0:
+                test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
+                print('Step:', step+1, test_error)
+                mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
             if training_type == 'iris':
                 print(dataset_input_voltage[step], dataset_output_voltage[step])
                 circuit = networks.circuit_from_graph(G, type='memristors') 
@@ -667,7 +666,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 for node in G.nodes():
                     if G.nodes[node]['type'] == 'target':
                         print(result['tran'][f'VN{node}'][-1])
-            mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
 
     if save_final_graph==True:
         nx.write_graphml(G, f"{DATA_PATH}/trained_graph_{weight_type_step}.graphml")
