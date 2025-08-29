@@ -90,7 +90,9 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
             style = par.weight_styles[f'{possible_weights[point]}']
             color_vec.append(style['c'])
         # print(color_vec)
-        # color_vec = color_vec[::5]
+        color_vec = color_vec[::15]
+        # print(color_vec)
+        color_vec.append('#F2CB05FF')
         ax.scatter(x, y, color = color_vec, marker = '^', lw = style['lw'], zorder=2)
         ax.plot(x, y, color = 'black', ls = ':', label = 'best choice', zorder=1)
         

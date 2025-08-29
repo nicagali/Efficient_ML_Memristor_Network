@@ -19,11 +19,13 @@ def write_weights_to_file(G, DATA_PATH, step, weight_type):
     for index, edge in enumerate(G.edges()): 
         if weight_type=='length' or weight_type=='radius_base' or weight_type=='resistance':
             file.write(f"{index}\t{G.edges[edge][weight_type]}\n")
-        if weight_type=='length_radius_base':
+        if weight_type=='length_radius_base' or weight_type=='best_choice':
             file.write(f"{index}\t{G.edges[edge]['length']}\t{G.edges[edge]['radius_base']}\n")
     for node in G.nodes():
         if weight_type=='pressure' or weight_type=='rho':  
             file.write(f"{int(node)}\t{G.nodes[node][weight_type]}\n")
+        if weight_type=='best_choice':
+            file.write(f"{int(node)}\t{G.nodes[node]['pressure']}\t{G.nodes[node]['rho']}\n")
 
     file.close()
     
@@ -601,8 +603,6 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
         error_normalization = test_error #define it as normalization error
         mse_file.write(f"{0}\t{test_error/error_normalization}\n")
 
-    # print(dataset_input_voltage, dataset_output_voltage)
-
     # LOOP over training steps
     for step in range(training_steps): 
 
@@ -619,18 +619,19 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 weight_type_step = possible_weights[weight_possible_inx]
                 delta_weight_step = delta_weight[weight_possible_inx]
                 learning_rate_step = learning_rate[weight_possible_inx]
+                G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
+
                 if training_type == 'voltage_divider': 
                     G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
 
-                print(cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step))
-                
+                initial_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)
+
                 # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
 
                 update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=False, step=step)
-
-                cost_func_vec[weight_possible_inx] = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)  
-
-            print(cost_func_vec)
+                after_update_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)/initial_error
+                print(initial_error, after_update_error, after_update_error/initial_error)
+                cost_func_vec[weight_possible_inx] = after_update_error
             
             choosen_weight = np.argmin(cost_func_vec)
             print(choosen_weight)
