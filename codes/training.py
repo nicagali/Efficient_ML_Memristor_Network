@@ -628,6 +628,8 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=False, step=step)
 
                 cost_func_vec[weight_possible_inx] = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)  
+
+            print(cost_func_vec)
             
             choosen_weight = np.argmin(cost_func_vec)
             print(choosen_weight)
