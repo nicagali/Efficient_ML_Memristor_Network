@@ -622,6 +622,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
                 if training_type == 'voltage_divider': 
                     G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
 
+                print(cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step))
                 
                 # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
 
