@@ -71,10 +71,15 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
 
 
     x = data[0]
+    # x = np.arange(400)
     # print(len(x))
     # x = x[::5]
     y = np.array(data[1])
     y = y/y[0]
+    x = x[:28]
+    y = y[:28]
+    print(len(x))
+    # print(len(y))
     
     # y = y[::5]
 

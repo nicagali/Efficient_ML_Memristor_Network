@@ -155,6 +155,7 @@ def cost_function_regression(G, weight_type, dataset_input_voltage, dataset_outp
             error += cost_function(G, weight_type) 
             # print(error)
         error = error/len(dataset_input_voltage)
+        # print(error)
 
     return error
 
@@ -308,6 +309,11 @@ def update_weights(G, training_type, base_error, weight_type, delta_weight, lear
                 error = cost_function(G_increment, weight_type, varying_len=varying_len)  
             else:
                 error = cost_function_regression(G_increment, weight_type, dataset_input_voltage, dataset_output_voltage, datastep)
+
+            # for edge in G.edges():
+            #     print(edge, G.edges[edge]['length'], G.edges[edge]['radius_base'])
+            # for node in G.nodes():
+            #     print(node, G.nodes[node]['rho'], G.nodes[node]['pressure'])
 
             if weight_type == 'length':
                 denominator = delta_weight*1e-6
@@ -615,33 +621,50 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             cost_func_vec = np.zeros(4)
             possible_weights = ['length', 'radius_base', 'rho', 'pressure']
             for weight_possible_inx in range(len(possible_weights)):
+
                 G_matrices[f'{possible_weights[weight_possible_inx]}'] = G.copy(as_view=False)
+
                 weight_type_step = possible_weights[weight_possible_inx]
                 delta_weight_step = delta_weight[weight_possible_inx]
                 learning_rate_step = learning_rate[weight_possible_inx]
-                G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
 
-                if training_type == 'voltage_divider': 
+                if training_type == 'voltage_divider' or training_type == 'regression': 
                     G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'] = constant_source[weight_possible_inx]
 
-                initial_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)
+                if training_type=='regression':
+                    initial_error = cost_function_regression(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step, testset_input_voltage, testset_output_voltage)
+                    error = cost_function_regression(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type, dataset_input_voltage, dataset_output_voltage, datastep=step)
+                else:
+                    initial_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)
 
-                # update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
-
+                # update_weights(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
+                # print(G_matrices[f'{possible_weights[weight_possible_inx]}'].nodes['3']['voltage'])
                 update_weights_parallel(G_matrices[f'{possible_weights[weight_possible_inx]}'], training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=False, step=step)
-                after_update_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)/initial_error
-                print(initial_error, after_update_error, after_update_error/initial_error)
+
+                if training_type=='regression':
+                    after_update_error = cost_function_regression(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step, testset_input_voltage, testset_output_voltage)
+                else:
+                    after_update_error = cost_function(G_matrices[f'{possible_weights[weight_possible_inx]}'], weight_type_step)
+
+                # print(possible_weights[weight_possible_inx], initial_error, after_update_error, after_update_error/initial_error)
                 cost_func_vec[weight_possible_inx] = after_update_error
             
-            choosen_weight = np.argmin(cost_func_vec)
+            # choosen_weight = np.argmin(cost_func_vec)
+            choosen_weight = np.argmin(cost_func_vec/initial_error)
             print(choosen_weight)
             best_choice_file.write(f"{step+1}\t{choosen_weight}\n")
             G = G_matrices[f'{possible_weights[choosen_weight]}'].copy(as_view=False)
 
         else:
+            initial_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
 
             update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
             # update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
+            # for edge in G.edges():
+            #     print(G.edges[edge])
+            after_update_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
+
+            # print(initial_error, after_update_error)
 
             # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
