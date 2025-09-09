@@ -51,9 +51,9 @@ memr_resistances_style = dict(marker = 'o', markersize=3, lw=1)
 # REGRESSION TRAINING
 
 regression_styles = {
-    'length': dict(marker = 'o', s=12, c = cmap.colors[0], lw=0.6),
+    'length': dict(marker = 'o', s=30, c = cmap.colors[0], lw=0.6),
     'length_des': dict(c = 'lightpink', lw=2, label = rf'$V^D$'),
-    'rho': dict(marker = 'o', s=12, c = cmap.colors[1], lw=1,),
+    'rho': dict(marker = 'o', s=30, c = cmap.colors[1], lw=1,),
     'rho_des': dict(c = 'moccasin', lw=2, label = rf'$V^D$'),
     'radius_base': dict(marker = 'o', c = cmap.colors[2], lw=1, label = rf'$R_b$'),
     'radius_base_des': dict(c = 'yellow', lw=4, label = rf'$V^D$'),

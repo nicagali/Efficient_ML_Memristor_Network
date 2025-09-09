@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010001'
+graph_id = 'G00010002'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
@@ -45,24 +45,26 @@ fig.tight_layout()
 fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 400   # choose
+training_steps = 1000   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance', 'best_choice']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3, [1e-3, 1e-3, 1e-4, 1e-3]]
 # learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3] #1
 # learning_rate_vec = [8e-7, 1e-6, 9e-4, 2e2, 1e4] #2
-learning_rate_vec = [5e-7, 1e-6, 1e-3, 2e2, 1e4, [5e-7, 1e-6, 1e-3, 2e2]]
-# learning_rate_vec = [3e-7, 1e-6, 9e-4, 2e2, 1e4, [2e-9, 1e-6, 9e-4, 2e2]]
+# learning_rate_vec = [5e-7, 1e-6, 1e-3, 2e2, 1e4, [5e-6, 1e-5, 1e-2, 2e3]]
+learning_rate_vec = [8e-7, 1e-6, 9e-4, 2e2, 1e4, [8e-7, 1e-6, 9e-4, 2e2]]
 constant_source = [11, 4, 4, 11, 4, [11, 4, 4, 11]]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [0,1]:
+for weight_type_index in [2]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
-    # G.nodes['3']['voltage'] = constant_source[weight_type_index]
-    G.nodes['3']['voltage'] = constant_source[0]
+    if weight_type_index == 5:
+        G.nodes['3']['voltage'] = constant_source[0]
+    else:
+        G.nodes['3']['voltage'] = constant_source[weight_type_index]
 
     # training.train(G, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], save_final_graph=True, write_weights=True, constant_source=constant_source[weight_type_index])
 
@@ -78,24 +80,30 @@ for weight_type_index in [0,1]:
     plotting.plot_mse(ax, fig, graph_id, training_type, f'radius_base')
     plotting.plot_mse(ax, fig, graph_id, training_type, f'rho')
     plotting.plot_mse(ax, fig, graph_id, training_type, f'pressure')
-    plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
-    ax.legend()
+    # plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
+    ax.legend(fontsize = par.legend_size)
     fig.tight_layout()
     fig.savefig(f"{DATA_PATH}mse.pdf", transparent=True)
 
 #     # --------- TEST REGRESSION AND PLOT RESULT ---------
     training_steps = 391
-    training.test_regression(G, step=0, weight_type=f'{weight_type_vec[weight_type_index]}')
-    training.test_regression(G, step=int(training_steps/2), weight_type=f'{weight_type_vec[weight_type_index]}')
-    training.test_regression(G, step=training_steps, weight_type=f'{weight_type_vec[weight_type_index]}')
+    # training.test_regression(G, step=0, weight_type=f'{weight_type_vec[weight_type_index]}')
+    # training.test_regression(G, step=int(training_steps/2), weight_type=f'{weight_type_vec[weight_type_index]}')
+    # training.test_regression(G, step=training_steps, weight_type=f'{weight_type_vec[weight_type_index]}')
 
-    fig, ax = plt.subplots(1, 3, figsize=(15,5))
-    plotting.plot_regression(ax[0], graph_id, weight_type_vec[weight_type_index], step=0)
-    plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=int(training_steps/2))
-    # plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=50)
-    plotting.plot_regression(ax[2], graph_id, weight_type_vec[weight_type_index], step=training_steps)
+    # fig, ax = plt.subplots(1, 3, figsize=(15,5))
+    # plotting.plot_regression(ax[0], graph_id, weight_type_vec[weight_type_index], step=0)
+    # plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=int(training_steps/2))
+    # # plotting.plot_regression(ax[1], graph_id, weight_type_vec[weight_type_index], step=50)
+    # plotting.plot_regression(ax[2], graph_id, weight_type_vec[weight_type_index], step=training_steps)
+    # fig.tight_layout()
+    # fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}.pdf", transparent=True)
+
+    fig, ax = plt.subplots(figsize=(5,4))
+    plotting.plot_regression(ax, graph_id, weight_type_vec[weight_type_index], step=training_steps)
+    ax.legend(fontsize = par.legend_size)
     fig.tight_layout()
-    fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}.pdf", transparent=True)
+    fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}_final.pdf", transparent=True)
 
 #     # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
 

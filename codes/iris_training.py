@@ -63,6 +63,5 @@ fig.tight_layout()
 fig.savefig(f"{PLOT_PATH}mse.pdf", transparent=True)
 
 
-
 end = time.time()
 print("Running time = ", end-start, "seconds")

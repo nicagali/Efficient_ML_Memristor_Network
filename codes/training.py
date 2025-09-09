@@ -669,7 +669,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             # update_resistances(G, training_type, dataset_input_voltage, dataset_output_voltage)
         if write_weights:
         
-            write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type_step)
+            write_weights_to_file(G, DATA_PATH, step=step+1, weight_type=weight_type)
             
         # COMPUTE error
         if training_type == 'allostery':
@@ -678,7 +678,7 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             mse_file.write(f"{step+1}\t{error/error_normalization}\n")
         else:
             error = cost_function_regression(G, weight_type_step, dataset_input_voltage, dataset_output_voltage, step +1)
-            if step % 15 == 0:
+            if step % 100 == 0:
                 test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
                 print('Step:', step+1, test_error)
                 mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
@@ -724,7 +724,7 @@ def test_regression(G, step, weight_type):
     testset_input_voltage, testset_output_voltage = generate_dataset(15)
 
     error = 0
-    for datastep in range(len(testset_input_voltage[0])):
+    for datastep in range(len(testset_input_voltage)):
 
         update_input_output_volt(G, testset_input_voltage, testset_output_voltage, datastep)
 
@@ -752,7 +752,7 @@ def test_regression(G, step, weight_type):
                 else: 
                     output_voltage_target.append(result['tran'][f'VN{node}'][-1])
 
-        reg_file.write(f"{testset_input_voltage[0][datastep]}\t{output_voltage_target[0]}")
+        reg_file.write(f"{testset_input_voltage[datastep][0]}\t{output_voltage_target[0]}")
         reg_file.write("\n")
 
     test_error = cost_function_regression(G, weight_type, testset_input_voltage, testset_output_voltage)

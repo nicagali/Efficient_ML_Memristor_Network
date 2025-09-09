@@ -76,9 +76,9 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
     # x = x[::5]
     y = np.array(data[1])
     y = y/y[0]
-    x = x[:28]
-    y = y[:28]
-    print(len(x))
+    # x = x[:28]
+    # y = y[:28]
+    # print(len(x))
     # print(len(y))
     
     # y = y[::5]
@@ -95,9 +95,9 @@ def plot_mse(ax, fig, graph_id, training_type, weight_type, show_xlabel=True):
             style = par.weight_styles[f'{possible_weights[point]}']
             color_vec.append(style['c'])
         # print(color_vec)
-        color_vec = color_vec[::15]
+        # color_vec = color_vec[::100]
         # print(color_vec)
-        color_vec.append('#F2CB05FF')
+        # color_vec.append('#F2CB05FF')
         ax.scatter(x, y, color = color_vec, marker = '^', lw = style['lw'], zorder=2)
         ax.plot(x, y, color = 'black', ls = ':', label = 'best choice', zorder=1)
         
@@ -284,8 +284,8 @@ def plot_regression(ax, graph_id, weight_type, step):
     
     ax.scatter(x, y1, **style)
     
-    ax.set_ylabel(r'$V_{out}$', fontsize = (par.axis_fontsize-7))
-    ax.set_xlabel(r'$V_{in}$', fontsize = (par.axis_fontsize-7))
+    ax.set_ylabel(r'$V_{out}$', fontsize = (par.axis_fontsize))
+    ax.set_xlabel(r'$V_{in}$', fontsize = (par.axis_fontsize))
     
     ax.grid(ls=":")
     ax.tick_params(axis='both', labelsize=par.size_ticks)
