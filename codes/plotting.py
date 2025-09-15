@@ -144,6 +144,16 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
     # GET data: data/training_job/weight_type contains files weight_type{step} with the list of weights per step
     if weight_type == 'length_radius_base':
         ax2 = ax.twinx()  
+            
+        color_factor = 0.6
+        
+        style = par.weight_styles[f'length']
+        base_color = style['c']
+        palette = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
+        
+        style = par.weight_styles[f'radius_base']
+        base_color = style['c']
+        palette_rad = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights)]
 
     for weight_indx in range(number_weights):
 
@@ -159,7 +169,7 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
 
         if weight_type=='length_radius_base':
             plt1 = ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'$L_{{{weight_indx}}}$')
-            plt2 = ax2.plot(x, weight2, color=palette[weight_indx], marker = '^', lw = style['lw'], label = rf'$R_{{b{weight_indx}}}$')
+            plt2 = ax2.plot(x, weight2, color=palette_rad[weight_indx], marker = '^', lw = style['lw'], label = rf'$R_{{b{weight_indx}}}$')
             if weight_indx==0:
                 plts = plt1 + plt2
             else:
@@ -178,11 +188,65 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
         ax.legend(plts, labs, loc=0)
         ax.set_ylabel(rf'L[$\mu$m]', fontsize = par.axis_fontsize)
         ax2.set_ylabel(rf'$R_b$[$n$m]', fontsize = par.axis_fontsize)
+        ax2.set_ylim(70,310)
         ax2.tick_params(axis='both', labelsize=par.size_ticks)
     else:
         label = style['ylabel_weights']
-        ax.legend(fontsize = par.legend_size)
+        # ax.legend(fontsize = par.legend_size)
         ax.set_ylabel(f'{label}', fontsize = par.axis_fontsize)
+
+def plot_weights_len_press(ax, G, training_steps, training_type, weight_type, show_xlabel=True, starting_step = 0):
+
+    x =list(range(starting_step, starting_step + training_steps+1))
+
+    number_weights_pres = G.number_of_nodes()
+
+    number_weights_len = G.number_of_edges()
+        
+
+    color_factor = 0.6
+    
+    style = par.weight_styles[f'length']
+    base_color = style['c']
+    palette_len = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights_len)]
+    
+    style = par.weight_styles[f'pressure']
+    base_color = style['c']
+    palette_pres = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights_len)]
+    
+    ax2 = ax.twinx()  
+
+    for weight_indx in range(number_weights_len):
+
+        weight_len = []
+        weight_pres = []
+        for step in range(training_steps+1):
+            data = np.loadtxt(f"{par.DATA_PATH}{training_type}{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
+            y = data[1]
+            weight_len.append(y[weight_indx])
+            weight_pres.append(y[weight_indx+number_weights_len])
+
+        plt1 = ax.plot(x, weight_len, color=palette_len[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'$L_{{{weight_indx}}}$')
+        plt2 = ax2.plot(x, weight_pres, color=palette_pres[weight_indx], marker = '^', lw = style['lw'], label = rf'$R_{{b{weight_indx}}}$')
+        if weight_indx==0:
+            plts = plt1 + plt2
+        else:
+            plts += plt1 + plt2
+
+    if show_xlabel:
+        ax.set_xlabel(r'Training steps', fontsize = par.axis_fontsize)
+    ax.tick_params(axis='both', labelsize=par.size_ticks)
+
+    ax.set_ylim(4,13 * 1.1)
+    ax2.set_ylim(0.999,1.001)
+    # ax2.set_ylim(np.min(weight_pres), np.max(weight_pres) * 1.1)
+
+    # plts = plt1 + plt2
+    labs = [l.get_label() for l in plts]
+    ax.legend(plts, labs, loc=0, fontsize = 9)
+    ax.set_ylabel(rf'L[$\mu$m]', fontsize = par.axis_fontsize)
+    ax2.set_ylabel(rf'$P$[bar]', fontsize = par.axis_fontsize)
+    ax2.tick_params(axis='both', labelsize=par.size_ticks)
 
 
 def plot_memristor_resistances(ax, G):

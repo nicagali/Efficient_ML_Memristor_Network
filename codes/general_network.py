@@ -49,7 +49,7 @@ weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'length_radius_ba
 delta_weight_vec = [1e-3, 1, 1e-4, 1e-3, [1e-3, 1], [1e-3, 1e-3], [1e-3, 1, 1e-4, 1e-3]] 
 learning_rate_vec = [1e-6, 8e-7, 1e-4, 20, [1e-6, 8e-7], [1e-6, 20], [1e-6, 8e-7, 1e-4, 20]]
 
-for weight_type_index in [0]:
+for weight_type_index in [3]:
 # weight_type_index = 4
     G_train = G.copy(as_view=False)
     # print(G_train.nodes)
@@ -70,7 +70,25 @@ ax.legend(fontsize = par.legend_size)
 fig.tight_layout()
 fig.savefig(f"{PLOT_PATH}mse.pdf", transparent=True)
 
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_length.pdf", transparent=True)
 
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'radius_base', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_radius_base.pdf", transparent=True)
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'rho', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_rho.pdf", transparent=True)
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'pressure', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_pressure.pdf", transparent=True)
 
 end = time.time()
 print("Running time = ", end-start, "seconds")

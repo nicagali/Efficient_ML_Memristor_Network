@@ -36,7 +36,7 @@ learning_rate_vec = [2e-6, 3.5e-6, 5e-4, 1e2, [1e-6, 2*1e-6], [5e-6, 1], [2e-6, 
 
 
 # for weight_type_index in range(len(weight_type_vec)):
-weight_type_index = 4
+weight_type_index = 5
 
 G_ml = G.copy(as_view=False)  
 # training.train(G_ml, training_type=training_type, training_steps=training_steps, weight_type=weight_type_vec[weight_type_index], delta_weight = delta_weight_vec[weight_type_index], learning_rate=learning_rate_vec[weight_type_index], write_weights=True, varying_len=False)
@@ -99,20 +99,29 @@ fig.savefig(f"../paper/plots/voltage_divider/mse_weights.pdf")
 # plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length_radius_base', show_xlabel=False)
 # fig.tight_layout()
 # fig.savefig(f"../paper/plots/voltage_divider/weights_length_radius_base.pdf")
-# fig, ax = plt.subplots(figsize = (5.5,4))
-# plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length_pressure', show_xlabel=False)
-# fig.tight_layout()
-# fig.savefig(f"../paper/plots/voltage_divider/weights_length_pressure.pdf")
 fig, ax = plt.subplots(figsize = (5.5,4))
-plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length', show_xlabel=False)
+plotting.plot_weights_len_press(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length_pressure', show_xlabel=False)
 fig.tight_layout()
-fig.savefig(f"../paper/plots/voltage_divider/weights_length.pdf")
+fig.savefig(f"../paper/plots/voltage_divider/weights_length_pressure.pdf")
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length_radius_base', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"../paper/plots/voltage_divider/weights_length_radius_base.pdf")
+# fig, ax = plt.subplots(figsize = (5.5,4))
+# plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length', show_xlabel=False)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/voltage_divider/weights_length.pdf")
+
+# fig, ax = plt.subplots(figsize = (5.5,4))
+# plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length', show_xlabel=False)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/voltage_divider/weights_length.pdf")
 # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
 
-fig, ax = plt.subplots(figsize = par.figsize_1)
-plotting.plot_memristor_resistances(ax, G)
-fig.tight_layout()
-fig.savefig(f"../paper/plots/voltage_divider/memristors_resisatnces.pdf")
+# fig, ax = plt.subplots(figsize = par.figsize_1)
+# plotting.plot_memristor_resistances(ax, G)
+# fig.tight_layout()
+# fig.savefig(f"../paper/plots/voltage_divider/memristors_resisatnces.pdf")
 
 # --------- TRAIN NETWORK WITH DIFFERENT TARGETS ---------
 

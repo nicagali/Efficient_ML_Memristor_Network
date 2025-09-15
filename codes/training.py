@@ -21,12 +21,20 @@ def write_weights_to_file(G, DATA_PATH, step, weight_type):
             file.write(f"{index}\t{G.edges[edge][weight_type]}\n")
         if weight_type=='length_radius_base' or weight_type=='best_choice':
             file.write(f"{index}\t{G.edges[edge]['length']}\t{G.edges[edge]['radius_base']}\n")
+
     for node in G.nodes():
         if weight_type=='pressure' or weight_type=='rho':  
+            print(G.nodes[node][weight_type])
             file.write(f"{int(node)}\t{G.nodes[node][weight_type]}\n")
         if weight_type=='best_choice':
             file.write(f"{int(node)}\t{G.nodes[node]['pressure']}\t{G.nodes[node]['rho']}\n")
 
+    if weight_type=='length_pressure':
+        for index, edge in enumerate(G.edges()): 
+            file.write(f"{index}\t{G.edges[edge]['length']}\n")
+        for node in G.nodes():
+            file.write(f"{int(node)}\t{G.nodes[node]['pressure']}\n")
+            
     file.close()
     
     return
@@ -656,13 +664,13 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             G = G_matrices[f'{possible_weights[choosen_weight]}'].copy(as_view=False)
 
         else:
-            initial_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
+            # initial_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
 
             update_weights(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, step, varying_len=varying_len)
             # update_weights_parallel(G, training_type, error, weight_type_step, delta_weight_step, learning_rate_step, dataset_input_voltage, dataset_output_voltage, varying_len=varying_len, step=step)
             # for edge in G.edges():
             #     print(G.edges[edge])
-            after_update_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
+            # after_update_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
 
             # print(initial_error, after_update_error)
 
@@ -678,10 +686,10 @@ def train(G, training_type, training_steps, weight_type, delta_weight, learning_
             mse_file.write(f"{step+1}\t{error/error_normalization}\n")
         else:
             error = cost_function_regression(G, weight_type_step, dataset_input_voltage, dataset_output_voltage, step +1)
-            if step % 100 == 0:
-                test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
-                print('Step:', step+1, test_error)
-                mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
+            # if step % 100 == 0:
+            test_error = cost_function_regression(G, weight_type_step, testset_input_voltage, testset_output_voltage)
+            print('Step:', step+1, test_error)
+            mse_file.write(f"{step+1}\t{test_error/error_normalization}\n")
             if training_type == 'iris':
                 print(dataset_input_voltage[step], dataset_output_voltage[step])
                 circuit = networks.circuit_from_graph(G, type='memristors') 

@@ -12,6 +12,7 @@ start = time.time()
 
 graph_id = 'G00010002'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
+PLOT_PATH = f'{par.PLOT_PATH}regression{graph_id}/'
 
 # --------- INITIALIZE NETWORK ---------
 
@@ -42,23 +43,23 @@ nx.write_graphml(G, f'{DATA_PATH}{graph_id}.graphml')
 fig, ax = plt.subplots()
 pos = plotting.plot_graph(G)
 fig.tight_layout()
-fig.savefig(f"{DATA_PATH}graph.pdf", transparent=True)
+fig.savefig(f"{PLOT_PATH}graph.pdf", transparent=True)
 
 # --------- TRAIN NETWORK ---------
-training_steps = 1000   # choose
+training_steps = 400   # choose
 training_type = 'regression'    # choose
 
 weight_type_vec = ['length', 'radius_base', 'rho', 'pressure', 'resistance', 'best_choice']
 delta_weight_vec = [1e-3, 1e-3, 1e-4, 1e-3, 1e-3, [1e-3, 1e-3, 1e-4, 1e-3]]
 # learning_rate_vec = [2e-7, 1e-6, 1e-4, 2e2, 1e3] #1
 # learning_rate_vec = [8e-7, 1e-6, 9e-4, 2e2, 1e4] #2
-# learning_rate_vec = [5e-7, 1e-6, 1e-3, 2e2, 1e4, [5e-6, 1e-5, 1e-2, 2e3]]
-learning_rate_vec = [8e-7, 1e-6, 9e-4, 2e2, 1e4, [8e-7, 1e-6, 9e-4, 2e2]]
+learning_rate_vec = [5e-7, 1e-6, 1e-3, 2e2, 1e4, [5e-6, 1e-5, 1e-2, 2e3]]
+# learning_rate_vec = [8e-7, 1e-6, 9e-4, 2e2, 1e4, [8e-7, 1e-6, 9e-4, 2e2]]
 constant_source = [11, 4, 4, 11, 4, [11, 4, 4, 11]]
 
 weight_type_index = 0   # choose
 
-for weight_type_index in [2]:
+for weight_type_index in [5]:
     
     G = nx.read_graphml(f'{DATA_PATH}{graph_id}.graphml')
     if weight_type_index == 5:
@@ -83,7 +84,7 @@ for weight_type_index in [2]:
     # plotting.plot_mse(ax, fig, graph_id, training_type, f'best_choice')
     ax.legend(fontsize = par.legend_size)
     fig.tight_layout()
-    fig.savefig(f"{DATA_PATH}mse.pdf", transparent=True)
+    fig.savefig(f"{PLOT_PATH}mse.pdf", transparent=True)
 
 #     # --------- TEST REGRESSION AND PLOT RESULT ---------
     training_steps = 391
@@ -99,11 +100,11 @@ for weight_type_index in [2]:
     # fig.tight_layout()
     # fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}.pdf", transparent=True)
 
-    fig, ax = plt.subplots(figsize=(5,4))
-    plotting.plot_regression(ax, graph_id, weight_type_vec[weight_type_index], step=training_steps)
-    ax.legend(fontsize = par.legend_size)
-    fig.tight_layout()
-    fig.savefig(f"{DATA_PATH}snapshots_{weight_type_vec[weight_type_index]}_final.pdf", transparent=True)
+    # fig, ax = plt.subplots(figsize=(5,4))
+    # plotting.plot_regression(ax, graph_id, weight_type_vec[weight_type_index], step=training_steps)
+    # ax.legend(fontsize = par.legend_size)
+    # fig.tight_layout()
+    # fig.savefig(f"{PLOT_PATH}snapshots_{weight_type_vec[weight_type_index]}_final.pdf", transparent=True)
 
 #     # --------- PLOT RESISTANCES OF MEMRISTORS DURING TRAINING ---------
 
@@ -113,6 +114,28 @@ for weight_type_index in [2]:
 #     plotting.plot_memristor_resistances(ax, G)
 #     fig.tight_layout()
 #     fig.savefig(f"{DATA_PATH}memristors_resistances_{weight_type_vec[weight_type_index]}.pdf")
+
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'length', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_length.pdf", transparent=True)
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'radius_base', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_radius_base.pdf", transparent=True)
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'rho', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_rho.pdf", transparent=True)
+
+fig, ax = plt.subplots(figsize = (5.5,4))
+plotting.plot_weights(ax, G, training_steps=training_steps, training_type=training_type, weight_type=f'pressure', show_xlabel=False)
+fig.tight_layout()
+fig.savefig(f"{PLOT_PATH}weights_pressure.pdf", transparent=True)
+
 
 end = time.time()
 print("Running time = ", end-start, "seconds")
