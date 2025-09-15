@@ -204,7 +204,7 @@ def plot_weights_len_press(ax, G, training_steps, training_type, weight_type, sh
     number_weights_len = G.number_of_edges()
         
 
-    color_factor = 0.6
+    color_factor = 0.4
     
     style = par.weight_styles[f'length']
     base_color = style['c']
@@ -212,22 +212,29 @@ def plot_weights_len_press(ax, G, training_steps, training_type, weight_type, sh
     
     style = par.weight_styles[f'pressure']
     base_color = style['c']
-    palette_pres = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights_len)]
+    palette_pres = [lighten_color(base_color, factor = i * color_factor) for i in range(number_weights_pres)]
     
     ax2 = ax.twinx()  
 
     for weight_indx in range(number_weights_len):
 
         weight_len = []
-        weight_pres = []
         for step in range(training_steps+1):
             data = np.loadtxt(f"{par.DATA_PATH}{training_type}{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
             y = data[1]
             weight_len.append(y[weight_indx])
-            weight_pres.append(y[weight_indx+number_weights_len])
 
         plt1 = ax.plot(x, weight_len, color=palette_len[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'$L_{{{weight_indx}}}$')
-        plt2 = ax2.plot(x, weight_pres, color=palette_pres[weight_indx], marker = '^', lw = style['lw'], label = rf'$R_{{b{weight_indx}}}$')
+
+    for weight_indx in range(number_weights_pres):
+
+        weight_pres = []
+        for step in range(training_steps+1):
+            data = np.loadtxt(f"{par.DATA_PATH}{training_type}{G.graph['name']}/weights/{weight_type}/{weight_type}{step}.txt", unpack=True)
+            y = data[1]
+            weight_pres.append(y[weight_indx+number_weights_len])
+
+        plt2 = ax2.plot(x, weight_pres, color=palette_pres[weight_indx], marker = '^', lw = style['lw'], label = rf'$P_{{{weight_indx+1}}}$', zorder=1)
         if weight_indx==0:
             plts = plt1 + plt2
         else:
@@ -243,7 +250,7 @@ def plot_weights_len_press(ax, G, training_steps, training_type, weight_type, sh
 
     # plts = plt1 + plt2
     labs = [l.get_label() for l in plts]
-    ax.legend(plts, labs, loc=0, fontsize = 9)
+    ax2.legend(plts, labs)
     ax.set_ylabel(rf'L[$\mu$m]', fontsize = par.axis_fontsize)
     ax2.set_ylabel(rf'$P$[bar]', fontsize = par.axis_fontsize)
     ax2.tick_params(axis='both', labelsize=par.size_ticks)
