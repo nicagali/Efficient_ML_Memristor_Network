@@ -134,7 +134,7 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
     elif number_weights == 3:
         color_factor = 0.4
     else:
-        color_factor = 1 / (number_weights - 1)
+        color_factor = 0.9 / ((number_weights) - 1)
     
     style = par.weight_styles[f'{weight_type}']
     base_color = style['c']
@@ -175,6 +175,7 @@ def plot_weights(ax, G, training_steps, training_type, weight_type, show_xlabel=
             else:
                 plts += plt1 + plt2
         else:
+            
             label_without_weightindex = style['label'][1:-1]
             ax.plot(x, weight, color=palette[weight_indx], marker = style['marker'], lw = style['lw'], label = rf'${{{label_without_weightindex}}}_{{{weight_indx+1}}}$')
 

@@ -10,7 +10,7 @@ import numpy as np
 
 start = time.time()
 
-graph_id = 'G00010002'
+graph_id = 'G00010001'
 DATA_PATH = f'{par.DATA_PATH}regression{graph_id}/'
 PLOT_PATH = f'{par.PLOT_PATH}regression{graph_id}/'
 
